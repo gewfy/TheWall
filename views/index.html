@@ -10,29 +10,61 @@
 
       <nav>
         <ul>
-          <li class="text"><a href="#">Add text</a></li>
-          <li class="code"><a href="#">Code</a></li>
-          <li class="image"><a href="#">Add image</a></li>
-          <li class="online"><a href="#">Online</a> <span id="text-clientCount">${clients.count}</span></li>
-          <li class="layers"><a href="#">Layers</a> <span id="text-messageCount">${messages.count}</span></li>
+          <li class="online"><a href="#">Online</a> <span id="text-clientCount">${clients.length}</span></li>
+          <li class="layers"><a href="#">Layers</a> <span id="text-messageCount">${messages.length}</span></li>
         </ul>
       </nav>
     </header>
 
     <div id="messages">
-      {{each(i) messages.messages}}
+      {{each(i) messages}}
         {{partial({id: i}) "iframe"}}
       {{/each}}
     </div>
 
-    <form action="/message" id="submit">
-      <textarea id="message"></textarea>
+    <ul id="clients">
+      {{partial(clients) "client"}}
+    </ul>
+
+    <form action="/client" id="form-setName">
+      <label for="name">Name</label>
+      <input type="text" id="input-name"/>
+      <label for="input-email">E-mail</label>
+      <input type="text" id="input-email"/>
+      <input type="submit" value="set"/>
+    </form>
+
+    <form action="/message" id="form-sendMessage">
+      <textarea id="input-message"></textarea>
       <input type="submit" value="send"/>
     </form>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js" type="text/javascript"></script>
+    <div id="mouseFollower">Right click me!</div>
 
+    <ul id="contextMenu">
+        <li class="edit">
+            <a href="#edit">Add text</a>
+        </li>
+    </ul>
+
+    <script type="text/javascript">
+      var app = {
+        clientId: '${session.clientId}',
+        name:     '${client.name}'
+      };
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js" type="text/javascript"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/faye-browser-min.js"></script>
+    <script type="text/javascript" src="js/jquery.contextMenu.js"></script>
     <script type="text/javascript" src="js/global.js"></script>
+
+    <script type="text/x-jquery-tmpl" id="tpl-client">
+      {{html includeTemplate('views/client.html')}}
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="tpl-iframe">
+      {{html includeTemplate('views/iframe.html')}}
+    </script>
   </body>
 </html>
