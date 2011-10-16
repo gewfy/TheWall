@@ -48,17 +48,15 @@ $(document).bind('ready', function() {
     );
   });
 
-  var $mouseFollower  = $('#mouseFollower'),
-      outerWidth      = $mouseFollower.outerWidth(),
-      outerHeight     = $mouseFollower.outerHeight();
+  var $mouseFollower  = $('#mouseFollower');
 
   $mouseFollower.show();
 
   $('#messages')
     .bind('mousemove', function(e) {
       $mouseFollower.css({
-        left: e.clientX - (outerWidth / 2),
-        top:  e.clientY - (outerHeight / 2)
+        left: e.clientX,
+        top:  e.clientY
       });
     })
     .bind('mouseleave', function(e) {
@@ -70,12 +68,14 @@ $(document).bind('ready', function() {
     .contextMenu(
       { menu: 'contextMenu' },
       function(action, el, pos) {
-        alert(
-            'Action: ' + action + '\n\n' +
-            'Element ID: ' + $(el).attr('id') + '\n\n' +
-            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
-            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-            );
+        $('#form-sendMessage')
+          .css({
+            left: pos.docX,
+            top:  pos.docY
+          })
+          .show();
+
+        $('#input-message').focus();
       }
     );
 });

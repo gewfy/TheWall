@@ -36,17 +36,17 @@
 
     <form action="/message" id="form-sendMessage">
       <textarea id="input-message"></textarea>
-      <input type="submit" value="send"/>
     </form>
 
-    <div id="mouseFollower">Right click me!</div>
+    <div id="mouseFollower"><span></span>Right click me!</div>
 
     <ul id="contextMenu">
-        <li class="edit">
-            <a href="#edit">Add text</a>
-        </li>
+        <li><a href="#text">Add text</a></li>
+        <li><a href="#image">Add image</a></li>
+        <li><a href="#video">Add video</a></li>
+        <li class="delimited"><a href="#code">Add custom code</a></li>
     </ul>
-
+    
     <script type="text/javascript">
       var app = {
         clientId: '${session.clientId}',
