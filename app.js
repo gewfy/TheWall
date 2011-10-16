@@ -20,6 +20,12 @@ app.express.configure(function(){
   app.express.use(express.static(__dirname + '/public'));
 });
 
+app.express.dynamicHelpers({
+  session: function(req, res){
+    return req.session;
+  }
+});
+
 app.express.configure('development', function(){
   app.express.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });

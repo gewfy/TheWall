@@ -11,7 +11,7 @@ app.express.get('/message', expressController.message);
 var faye        = require('faye'),
     bayeux      = new faye.NodeAdapter({
       mount:    '/faye',
-      timeout:  45
+      timeout:  10
     }),
     fayeController = require('./controllers/faye_controller');
 
@@ -25,6 +25,7 @@ app.faye = {
 
 /* Set up routes */
 app.faye.client.subscribe('/message', fayeController.receiveMessage);
+app.faye.client.subscribe('/client',  fayeController.receiveClient);
 
 /* Set up purge interval */
-setInterval(fayeController.purgeClients, 30000);
+setInterval(fayeController.purgeClients, 9000);

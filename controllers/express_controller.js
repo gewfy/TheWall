@@ -1,21 +1,26 @@
 module.exports = (function() {
   return new function() {
     var self      = this,
-    
+
+        fs        = require('fs'),
+
         clients   = require('../models/clients'),
         messages  = require('../models/messages');
 
     this.index = function(req, res) {
+      if (!req.session.hasOwnProperty('clientId')) {
+        req.session.clientId = clients.getUniqueId();
+      }
 
       res.render('index', {
-        messages: {
-          messages: messages.getMessages(),
-          count:    messages.messagesCount()
+        as: global,
+        client: {
+          name: clients.getClientMeta(req.session.clientId, 'name'),
+          hash: clients.getClientMeta(req.session.clientId, 'gravatar')
         },
-        clients: {
-          clients:  clients.getClients(),
-          count:    clients.clientsCount()
-        }
+        messages:         messages.getMessages(),
+        clients:          clients.getClientsWithMeta('name'),
+        includeTemplate:  includeTemplate
       });
     };
 
@@ -28,5 +33,9 @@ module.exports = (function() {
         });
       }
     };
+
+    function includeTemplate(name) {
+      return fs.readFileSync(name, 'utf8');
+    }
   };
 })();

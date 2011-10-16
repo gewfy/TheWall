@@ -8,27 +8,22 @@ module.exports = (function() {
         clients   = require('../models/clients'),
         messages  = require('../models/messages');
 
-    fs.readFile('views/iframe.html', 'binary', function(err, file) {
-      jqtpl.template('iframe', file);
-    });
-
     this.incoming = function(message, callback) {
-      if (message.clientId) {
+      if (message.hasOwnProperty('ext')) {
         if (message.channel == '/meta/disconnect') {
-          clients.removeClient(message.clientId);
+          clients.removeClient(message.ext.clientId);
           self.publishClients();
         }
-        else if (message.clientId) {
-          if(!clients.getClient(message.clientId)) {
-            clients.addClient(message.clientId);
+        else {
+          if(!clients.getClient(message.ext.clientId)) {
+            clients.addClient(message.ext.clientId);
             self.publishClients();
           }
           else {
-            clients.touchClient(message.clientId);
+            clients.touchClient(message.ext.clientId);
           }
         }
       }
-
       callback(message);
     };
 
@@ -38,7 +33,10 @@ module.exports = (function() {
     };
 
     this.publishMessage = function(id) {
-      app.faye.client.publish('/messages', jqtpl.tmpl('iframe', { id: id }));
+      app.faye.client.publish('/messages', {
+        id:     id,
+        count:  messages.getMessagesCount()
+      });
     };
 
     this.purgeClients = function() {
@@ -48,10 +46,16 @@ module.exports = (function() {
     };
 
     this.publishClients = function() {
-      app.faye.client.publish('/clients', {
-        clients:  clients.getClients(),
-        count:    clients.clientsCount()
+      app.faye.client.publish('/clients', clients.getClientsWithMeta('name'));
+    };
+
+    this.receiveClient = function(client) {
+      clients.setClientMetaValues(client.clientId, {
+        'name': client.name,
+        'hash': clients.getEmailHash(client.email)
       });
+
+      self.publishClients();
     };
   };
 })();
