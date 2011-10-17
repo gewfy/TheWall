@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Satisfy);
+@import url(http://fonts.googleapis.com/css?family=Salsa);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
+
 body > div.text {
   position: absolute;
   font: normal 20px "Helvetica Neue", Helvetica, Arial, sans-serif;

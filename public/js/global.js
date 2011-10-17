@@ -146,6 +146,14 @@ $(document).bind('ready', function() {
     editIframe.contentDocument.execCommand('italic', null, false);
   });
 
+  $('#font-face').bind('change', function(e) {
+    editIframe.contentDocument.execCommand('fontname', false, $(this).val());
+  });
+
+  $('#font-size').bind('change', function() {
+    editIframe.contentDocument.execCommand('fontsize', false, $(this).val());
+  });
+
   $imageControl.find('input').bind('keypress', function(e) {
     var code = (e.keyCode ? e.keyCode : e.which);
 
