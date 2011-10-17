@@ -16,6 +16,41 @@
       </nav>
     </header>
 
+    <iframe src="/edit" id="edit" allowTransparency="true"></iframe>
+
+    <div id="fontControl">
+      <div>
+        <button id="font-bold">B</button>
+        <button id="font-italic">I</button>
+        <div class="select typeface">
+          <span>Fertigo Pro</span>
+          <select>
+            <option>Fertigo Pro</option>
+            <option>Designosaur</option>
+            <option>Delicious</option>
+            <option>Arial</option>
+            <option>Helvetica</option>
+          </select>
+        </div>
+        <div class="select font-size">
+          <span>12px</span>
+          <select>
+            <option>9px</option>
+            <option>12px</option>
+            <option>14px</option>
+            <option>16px</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="imageControl">
+      <div>
+        <input type="text" id="input-image" placeholder="Image URL"/>
+        <button>Add</button>
+      </div>
+    </div>
+
     <div id="messages">
       {{each(i) messages}}
         {{partial({id: i}) "iframe"}}
@@ -34,11 +69,10 @@
       <input type="submit" value="set"/>
     </form>
 
-    <form action="/message" id="form-sendMessage">
-      <textarea id="input-message"></textarea>
-    </form>
-
-    <div id="mouseFollower"><span></span>Right click me!</div>
+    <div id="mouseFollower">
+      <div></div>
+      <span>S</span>
+    </div>
 
     <ul id="contextMenu">
         <li><a href="#text">Add text</a></li>
@@ -46,6 +80,8 @@
         <li><a href="#video">Add video</a></li>
         <li class="delimited"><a href="#code">Add custom code</a></li>
     </ul>
+
+    <button id="button-send">Send</button>
     
     <script type="text/javascript">
       var app = {

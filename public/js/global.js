@@ -28,13 +28,6 @@ $(document).bind('ready', function() {
     $('#text-clientCount').text(clients.length);
   });
 
-
-  $('#form-sendMessage').submit(function(e) {
-    e.preventDefault();
-
-    app.faye.client.publish($(this).attr('action'), $('#input-message').val());
-  });
-
   $('#form-setName').submit(function(e) {
     e.preventDefault();
 
@@ -48,34 +41,126 @@ $(document).bind('ready', function() {
     );
   });
 
+  var editIframe    = $('#edit').get(0),
+      $editCanvas   = $('body', editIframe.contentDocument),
+      $contextMenu  = $('#contextMenu'),
+      $fontControl  = $('#fontControl'),
+      $imageControl = $('#imageControl');
+
+  $('#button-send').bind('click', function(e) {
+    e.preventDefault();
+
+    $editCanvas.find('*').removeAttr('contenteditable');
+
+    app.faye.client.publish('/message', $editCanvas.html());
+
+    $editCanvas.empty();
+    $('#fontControl').hide();
+  });
+
   var $mouseFollower  = $('#mouseFollower');
 
   $mouseFollower.show();
 
-  $('#messages')
+  $editCanvas
     .bind('mousemove', function(e) {
       $mouseFollower.css({
         left: e.clientX,
         top:  e.clientY
       });
     })
-    .bind('mouseleave', function(e) {
-      $mouseFollower.hide();
-    })
-    .bind('mouseenter', function(e) {
-      $mouseFollower.show();
+    .bind('click', function() {
+      $contextMenu.hide();
+      $fontControl.hide();
+      $imageControl.hide();
     })
     .contextMenu(
       { menu: 'contextMenu' },
       function(action, el, pos) {
-        $('#form-sendMessage')
-          .css({
-            left: pos.docX,
-            top:  pos.docY
-          })
-          .show();
+        $mouseFollower.addClass('disable');
+        $fontControl.hide();
+        $imageControl.hide();
+        
+        switch (action) {
+          case 'text':
 
-        $('#input-message').focus();
+            var $div = $('<div class="text"><div><p></p></div></div>')
+              .css({
+                left: pos.docX,
+                top:  pos.docY
+              })
+              .appendTo($editCanvas);
+
+            $div.find('div')
+              .attr('contenteditable', 'true')
+              .bind('click', function(e) {
+                e.stopPropagation();
+              })
+              .bind('focus keydown keyup', function() {
+                var $this         = $(this).parent(),
+                    position      = $this.position();
+
+                $imageControl.hide();
+
+                $fontControl.css({
+                  left: (position.left + (($this.width() / 2) - ($fontControl.width() / 2))),
+                  top:  position.top + $this.height()
+                }).show();
+              })
+              .bind('blur', function(e) {
+                if (!$(this).text()) {
+                  $(this).parent().remove();
+                }
+              })
+              .focus();
+
+          break;
+          case 'image':
+
+            $imageControl
+              .css({
+                left: pos.docX,
+                top:  pos.docY - ($imageControl.height() / 2)
+              })
+              .show()
+              .find('input').focus();
+
+          break;
+        }
       }
     );
+
+  $contextMenu
+    .bind('mouseenter', function() {
+      $mouseFollower.hide();
+    })
+    .bind('mouseleave', function() {
+      $mouseFollower.show();
+    });
+
+  $('#font-bold').bind('click', function(e) {
+    editIframe.contentDocument.execCommand('bold', null, false);
+  });
+
+  $('#font-italic').bind('click', function() {
+    editIframe.contentDocument.execCommand('italic', null, false);
+  });
+
+  $imageControl.find('input').bind('keypress', function(e) {
+    var code = (e.keyCode ? e.keyCode : e.which);
+
+    if(code == 13) {
+      var url       = $('#input-image').val(),
+          position  = $imageControl.position();
+
+      $('<div class="image"><img src="' + url + '"/></div>')
+        .css({
+          left: position.left,
+          top:  position.top + ($imageControl.height() / 2)
+        })
+        .appendTo($editCanvas);
+
+      $imageControl.hide();
+    }
+  });
 });
