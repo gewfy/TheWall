@@ -1,0 +1,22 @@
+body > div.text {
+  position: absolute;
+  font: normal 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  text-shadow: 0 0 3px red;
+}
+
+body > div.text > div > p:empty {
+  width: 2px;
+  height: 25px;
+  box-shadow: 0 0 10px red;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+body > div.image {
+  position: absolute;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+body > div.image > img {
+  display: block;
+}
