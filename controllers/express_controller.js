@@ -34,6 +34,10 @@ module.exports = (function() {
       }
     };
 
+    this.edit = function(req, res) {
+      res.render('edit');
+    };
+
     function includeTemplate(name) {
       return fs.readFileSync(name, 'utf8');
     }

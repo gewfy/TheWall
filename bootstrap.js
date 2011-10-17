@@ -5,6 +5,7 @@ var expressController = require('./controllers/express_controller');
 /* Set up routes */
 app.express.get('/',        expressController.index);
 app.express.get('/message', expressController.message);
+app.express.get('/edit',    expressController.edit);
 
 
 /* FAYE BAYEUX */
