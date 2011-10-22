@@ -347,6 +347,10 @@ body {
   -webkit-appearance: none;
 }
 
+#fontControl > div > .select > select > option {
+  color: #000;
+}
+
 #fontControl > div {
   padding: 5px;
   border-radius: 5px;
