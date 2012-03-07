@@ -51,6 +51,14 @@ $(document).bind('ready', function() {
     e.preventDefault();
 
     $editCanvas.find('*').removeAttr('contenteditable');
+    
+    if ($(this).hasClass('draw')) {
+      var canvas = $editCanvas.find('canvas').get(0),
+          imgSrc = canvas.toDataURL("image/png"),
+          $image = $(document.createElement('img')).attr('src', imgSrc);
+          
+      $editCanvas.html($image);
+    }
 
     app.faye.client.publish('/message', $editCanvas.html());
 
@@ -82,6 +90,19 @@ $(document).bind('ready', function() {
         $imageControl.hide();
         
         switch (action) {
+          case 'draw':
+            var $div = $('<div class="drawCanvas" />')
+              .css({
+                left: '50px',
+                top:  '36px',
+                width: $editCanvas.width() - 100,
+                height: $editCanvas.height() - 50
+              })
+              .appendTo($editCanvas);
+              
+            $div.harmony();
+            $('#button-send').addClass('draw');
+          break;
           case 'text':
 
             var $div = $('<div class="text"><div><p></p></div></div>')
@@ -113,6 +134,8 @@ $(document).bind('ready', function() {
                 }
               })
               .focus();
+              
+              $('#button-send').removeClass('draw');
 
           break;
           case 'image':
@@ -124,6 +147,8 @@ $(document).bind('ready', function() {
               })
               .show()
               .find('input').focus();
+              
+            $('#button-send').removeClass('draw');
 
           break;
         }
