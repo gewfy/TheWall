@@ -4,7 +4,7 @@
 
 body > div.text {
   position: absolute;
-  font: normal 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: normal 20px Helvetica, Arial, sans-serif;
   color: white;
   text-shadow: 0 0 3px black;
 }

@@ -5,14 +5,17 @@
 
 body > div.text {
   position: absolute;
-  font: normal 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: normal 24px Helvetica, Arial, sans-serif;
   color: white;
   text-shadow: 0 0 3px red;
 }
 
-body > div.text > div > p:empty {
-  width: 2px;
-  height: 25px;
+body > div.text > div > p {
+  width: 200px;
+  height: 200px;
+}
+
+body > div.text > div:focus {
   box-shadow: 0 0 10px red;
   background: rgba(255, 0, 0, 0.1);
 }
