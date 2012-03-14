@@ -4,7 +4,8 @@ jQuery(document).ready(function ($) {
       $contextMenu  = $('#contextMenu'),
       $textEditor   = $('#tpl-text'),
       $imageControl = $('#tpl-image'),
-      $sketchboard  = $('#tpl-sketchboard');
+      $sketchboard  = $('#tpl-sketchboard'),
+      $publishAll   = $('.publish-all');
   
   // Faye
   app.faye = {
@@ -44,6 +45,11 @@ jQuery(document).ready(function ($) {
 	// Cancel buttons
 	$('body').on('click', '.message button.action.cancel', function (e) {
 	  e.preventDefault();
+	  
+	  if ($('body').find('.message').length < 2) {
+	    $publishAll.css('opacity', 0);
+	  }
+	  
 	  $(this).closest('.message').remove();
 	});
 	
@@ -51,7 +57,7 @@ jQuery(document).ready(function ($) {
 	$('body').on('click', '.message button.action.publish', function (e) {
 	  e.preventDefault();
 	  
-	  $('body').find('.message').each(function () {
+	  $(this).closest('.message').each(function () {
 	    if ($(this).hasClass('sketchboard')) {
 	      var canvas = $(this).find('canvas').get(0),
 	          imgSrc = canvas.toDataURL("image/png"),
@@ -67,6 +73,27 @@ jQuery(document).ready(function ($) {
 	    app.faye.client.publish('/message', $editCanvas.html());
       $editCanvas.empty();
 	  });
+	});
+	
+	$('body').on('click', '.publish-all > a', function (e) {
+	  e.preventDefault();
+	  
+	  $('body').find('.message').each(function () {
+	    if ($(this).hasClass('sketchboard')) {
+	      var canvas = $(this).find('canvas').get(0),
+	          imgSrc = canvas.toDataURL("image/png"),
+	          $image = $(document.createElement('img')).attr('src', imgSrc);
+	          
+	      $(this).html($image).appendTo($editCanvas);
+	    } else {
+	      $(this).find('.toolbox').remove();
+	      $(this).appendTo($editCanvas);
+	      $editCanvas.find('*').removeAttr('contenteditable');
+	    }
+	  });
+	  
+	  app.faye.client.publish('/message', $editCanvas.html());
+	  $editCanvas.empty();
 	});
 	
 	// Font-face
@@ -100,6 +127,8 @@ jQuery(document).ready(function ($) {
 	
 	// Context menu
 	$editCanvas.contextMenu({menu: 'contextMenu'}, function (action, el, pos) {
+	  $publishAll.css('opacity', 1);
+	  
 	  switch (action) {
 	    case 'draw':
 	      $sketchboard.tmpl().appendTo($('body')).css({left: pos.docX - 340, top: pos.docY}).sketchboard({style: 'ribbon'}).draggable({handle: '.toolbox'});
