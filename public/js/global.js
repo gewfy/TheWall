@@ -1,4 +1,12 @@
-$(document).bind('ready', function() {
+jQuery(document).ready(function ($) {
+  var editIframe    = $('#edit').get(0),
+      $editCanvas   = $('body', editIframe.contentDocument),
+      $contextMenu  = $('#contextMenu'),
+      $textEditor   = $('#tpl-text'),
+      $imageControl = $('#tpl-image'),
+      $sketchboard  = $('#tpl-sketchboard');
+  
+  // Faye
   app.faye = {
     client: new Faye.Client('/faye')
   };
@@ -27,173 +35,96 @@ $(document).bind('ready', function() {
 
     $('#text-clientCount').text(clients.length);
   });
-
-  $('#form-setName').submit(function(e) {
-    e.preventDefault();
-
-    app.faye.client.publish(
-      $(this).attr('action'),
-      {
-        clientId: app.clientId,
-        name:     $('#input-name').val(),
-        email:    $('#input-email').val()
-      }
-    );
-  });
-
-  var editIframe    = $('#edit').get(0),
-      $editCanvas   = $('body', editIframe.contentDocument),
-      $contextMenu  = $('#contextMenu'),
-      $fontControl  = $('#fontControl'),
-      $imageControl = $('#imageControl');
-
-  $('#button-send').bind('click', function(e) {
-    e.preventDefault();
-
-    $editCanvas.find('*').removeAttr('contenteditable');
-    
-    if ($(this).hasClass('draw')) {
-      var canvas = $editCanvas.find('canvas').get(0),
-          imgSrc = canvas.toDataURL("image/png"),
-          $image = $(document.createElement('img')).attr('src', imgSrc);
-          
-      $editCanvas.html($image);
-    }
-
-    app.faye.client.publish('/message', $editCanvas.html());
-
-    $editCanvas.empty();
-    $('#fontControl').hide();
-  });
-
-  var $mouseFollower  = $('#mouseFollower');
-
-  $mouseFollower.show();
-
-  $editCanvas
-    .bind('mousemove', function(e) {
-      $mouseFollower.css({
-        left: e.clientX,
-        top:  e.clientY
-      });
-    })
-    .bind('click', function() {
-      $contextMenu.hide();
-      $fontControl.hide();
-      $imageControl.hide();
-    })
-    .contextMenu(
-      { menu: 'contextMenu' },
-      function(action, el, pos) {
-        $mouseFollower.addClass('disable');
-        $fontControl.hide();
-        $imageControl.hide();
-        
-        switch (action) {
-          case 'draw':
-            var $div = $('<div class="drawCanvas" />')
-              .css({
-                left: '50px',
-                top:  '36px',
-                width: $editCanvas.width() - 100,
-                height: $editCanvas.height() - 50
-              })
-              .appendTo($editCanvas);
-              
-            $div.harmony();
-            $('#button-send').addClass('draw');
-          break;
-          case 'text':
-
-            var $div = $('<div class="text"><div><p></p></div></div>')
-              .css({
-                left: pos.docX,
-                top:  pos.docY
-              })
-              .appendTo($editCanvas);
-
-            $div.find('div')
-              .attr('contenteditable', 'true')
-              .bind('click', function(e) {
-                e.stopPropagation();
-              })
-              .bind('focus keydown keyup', function() {
-                var $this         = $(this).parent(),
-                    position      = $this.position();
-
-                $imageControl.hide();
-
-                $fontControl.css({
-                  left: (position.left + (($this.width() / 2) - ($fontControl.width() / 2))),
-                  top:  position.top + $this.height()
-                }).show();
-              })
-              .bind('blur', function(e) {
-                if (!$(this).text()) {
-                  $(this).parent().remove();
-                }
-              })
-              .focus();
-              
-              $('#button-send').removeClass('draw');
-
-          break;
-          case 'image':
-
-            $imageControl
-              .css({
-                left: pos.docX,
-                top:  pos.docY - ($imageControl.height() / 2)
-              })
-              .show()
-              .find('input').focus();
-              
-            $('#button-send').removeClass('draw');
-
-          break;
-        }
-      }
-    );
-
-  $contextMenu
-    .bind('mouseenter', function() {
-      $mouseFollower.hide();
-    })
-    .bind('mouseleave', function() {
-      $mouseFollower.show();
-    });
-
-  $('#font-bold').bind('click', function(e) {
-    editIframe.contentDocument.execCommand('bold', null, false);
-  });
-
-  $('#font-italic').bind('click', function() {
-    editIframe.contentDocument.execCommand('italic', null, false);
-  });
-
-  $('#font-face').bind('change', function(e) {
-    editIframe.contentDocument.execCommand('fontname', false, $(this).val());
-  });
-
-  $('#font-size').bind('change', function() {
-    editIframe.contentDocument.execCommand('fontsize', false, $(this).val());
-  });
-
-  $imageControl.find('input').bind('keypress', function(e) {
-    var code = (e.keyCode ? e.keyCode : e.which);
-
-    if(code == 13) {
-      var url       = $('#input-image').val(),
-          position  = $imageControl.position();
-
-      $('<div class="image"><img src="' + url + '"/></div>')
-        .css({
-          left: position.left,
-          top:  position.top + ($imageControl.height() / 2)
-        })
-        .appendTo($editCanvas);
-
-      $imageControl.hide();
-    }
-  });
+	
+	// Custom dropdowns
+	$('body').on('change', '.dropdown > select', function () {
+    $(this).parent().children('span').html($(this).children('option:selected').text());
+	});
+	
+	// Cancel buttons
+	$('body').on('click', '.message button.action.cancel', function (e) {
+	  e.preventDefault();
+	  $(this).closest('.message').remove();
+	});
+	
+	// Publish buttons
+	$('body').on('click', '.message button.action.publish', function (e) {
+	  e.preventDefault();
+	  
+	  $('body').find('.message').each(function () {
+	    if ($(this).hasClass('sketchboard')) {
+	      var canvas = $(this).find('canvas').get(0),
+	          imgSrc = canvas.toDataURL("image/png"),
+	          $image = $(document.createElement('img')).attr('src', imgSrc);
+	          
+	      $(this).html($image).appendTo($editCanvas);
+	    } else {
+	      $(this).find('.toolbox').remove();
+	      $(this).appendTo($editCanvas);
+	      $editCanvas.find('*').removeAttr('contenteditable');
+	    }
+	    
+	    app.faye.client.publish('/message', $editCanvas.html());
+      $editCanvas.empty();
+	  });
+	});
+	
+	// Font-face
+	$('body').on('change', '.message .action.dropdown > .font-face', function () {
+	  var $input = $(this).closest('.message').children('input');
+	  $(document).get(0).execCommand('fontname', false, $(this).val());
+	});
+	
+	// Font-size
+	$('body').on('change', '.message .action.dropdown > .font-size', function () {
+	  var $input = $(this).closest('.message').children('input');
+	  $(document).get(0).execCommand('fontsize', false, $(this).val());
+	});
+	
+	// Font-style
+	$('body').on('click', '.message .action.font-style', function (e) {
+	  e.preventDefault();
+	  var style  = $(this).attr('rel'),
+	      $input = $(this).closest('.message').children('input');
+	      
+	  $(document).get(0).execCommand(style, false);
+	});
+	
+	// Image control
+	$('body').on('keydown', '.message.image input.url', throttle(function (event) {
+	  var $image = $(document.createElement('img')),
+	      url    = $(this).val();
+	      
+	  $(this).closest('.message').children('.input').html($image.load().attr('src', url));
+	}, 250));
+	
+	// Context menu
+	$editCanvas.contextMenu({menu: 'contextMenu'}, function (action, el, pos) {
+	  switch (action) {
+	    case 'draw':
+	      $sketchboard.tmpl().appendTo($('body')).css({left: pos.docX - 340, top: pos.docY}).sketchboard({style: 'ribbon'}).draggable({handle: '.toolbox'});
+	    break;
+	    case 'text':
+	      $textEditor.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'}).find('p').on('focus', function () {
+	        $(this).parent().parent().addClass('focus');
+	      }).on('blur', function () {
+	        $(this).parent().parent().removeClass('focus');
+	      }).focus();
+	    break;
+	    case 'image':
+	      $imageControl.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'});
+	    break;
+	  }
+	});
 });
+
+function throttle(fn, delay) {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}

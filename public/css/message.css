@@ -2,13 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Salsa);
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
 
-body > div.text {
-  position: absolute;
-  font: normal 20px Helvetica, Arial, sans-serif;
-  color: white;
-  text-shadow: 0 0 3px black;
-}
+.message { position: absolute; }
 
 body > div.image {
   position: absolute;
 }
+
+  .text-editor > .input > p { outline: none; font: normal 24px/1 Helvetica, Arial, sans-serif; }
