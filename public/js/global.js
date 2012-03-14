@@ -36,6 +36,22 @@ jQuery(document).ready(function ($) {
 
     $('#text-clientCount').text(clients.length);
   });
+  
+  // Sign in
+  $('#form-setName').submit(function(e) {
+      e.preventDefault();
+  
+      app.faye.client.publish(
+        $(this).attr('action'),
+        {
+          clientId: app.clientId,
+          name:     $('#input-name').val(),
+          email:    $('#input-email').val()
+        }
+      );
+      
+      $('.signin').remove();
+    });
 	
 	// Custom dropdowns
 	$('body').on('change', '.dropdown > select', function () {

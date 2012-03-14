@@ -23,6 +23,18 @@
     {{/each}}
   </div>
   
+  {{if !client.name}}
+  <div class="signin">
+    <form action="/client" id="form-setName">
+      <label for="name">Name</label>
+      <input type="text" id="input-name"/>
+      <label for="input-email">E-mail</label>
+      <input type="text" id="input-email"/>
+      <input type="submit" value="set"/>
+    </form>
+  </div>
+  {{/if}}
+  
   <ul id="contextMenu">
     <li><a href="#text">Add text</a></li>
     <li><a href="#image">Add image</a></li>
@@ -31,10 +43,14 @@
     <li class="delimited"><a href="#code">Add custom code</a></li>
   </ul>
   
+  <ul id="clients">
+    {{partial(clients) "client"}}
+  </ul>
+  
   <script type="text/javascript">
     var app = {
       clientId: '${session.clientId}',
-      name:     '${client.name}'
+      name:     '${session.clientId.name}'
     };
   </script>
   
