@@ -1,11 +1,12 @@
 jQuery(document).ready(function ($) {
-  var editIframe    = $('#edit').get(0),
-      $editCanvas   = $('body', editIframe.contentDocument),
-      $contextMenu  = $('#contextMenu'),
-      $textEditor   = $('#tpl-text'),
-      $imageControl = $('#tpl-image'),
-      $sketchboard  = $('#tpl-sketchboard'),
-      $publishAll   = $('.publish-all');
+  var editIframe     = $('#edit').get(0),
+      $editCanvas    = $('body', editIframe.contentDocument),
+      $contextMenu   = $('#contextMenu'),
+      $textEditor    = $('#tpl-text'),
+      $imageControl  = $('#tpl-image'),
+      $sketchboard   = $('#tpl-sketchboard'),
+      $publishAll    = $('.publish-all'),
+      $mouseFollower = $('#mouseFollower');
   
   // Faye
   app.faye = {
@@ -62,7 +63,7 @@ jQuery(document).ready(function ($) {
 	$('body').on('click', '.message button.action.cancel', function (e) {
 	  e.preventDefault();
 	  
-	  if ($('body').find('.message').length < 2) {
+	  if ($('body').find('.message').length < 1) {
 	    $publishAll.css('opacity', 0);
 	  }
 	  
@@ -89,6 +90,10 @@ jQuery(document).ready(function ($) {
 	    app.faye.client.publish('/message', $editCanvas.html());
       $editCanvas.empty();
 	  });
+	  
+	  if ($('body').find('.message').length < 1) {
+	    $publishAll.css('opacity', 0);
+	  }
 	});
 	
 	$('body').on('click', '.publish-all > a', function (e) {
@@ -107,6 +112,10 @@ jQuery(document).ready(function ($) {
 	      $editCanvas.find('*').removeAttr('contenteditable');
 	    }
 	  });
+	  
+	  if ($('body').find('.message').length < 1) {
+	    $publishAll.css('opacity', 0);
+	  }
 	  
 	  app.faye.client.publish('/message', $editCanvas.html());
 	  $editCanvas.empty();
@@ -160,6 +169,11 @@ jQuery(document).ready(function ($) {
 	      $imageControl.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'});
 	    break;
 	  }
+	}).on('mousemove', function (e) {
+	  $mouseFollower.css({
+	    left: e.clientX,
+	    top:  e.clientY
+	  });
 	});
 });
 

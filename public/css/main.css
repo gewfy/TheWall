@@ -26,6 +26,13 @@ p { margin: 0 0 10px; }
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Amatic SC';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Amatic SC Regular'), local('AmaticSC-Regular'), url('http://themes.googleusercontent.com/static/fonts/amaticsc/v2/DPPfSFKxRTXvae2bKDzp5LO3LdcAZYWl9Si6vvxL-qU.woff') format('woff');
+}
+
 /* =Layout
 ------------------------------------------------------------------------------------------------------- */
 body { background: #faf7ee url(/css/gfx/bg.png) repeat; }
@@ -59,6 +66,109 @@ body > nav { position: absolute; right: 20px; top: 0; z-index: 100; }
 
 /* =Misc
 ------------------------------------------------------------------------------------------------------- */      
+#mouseFollower {
+  display: none;
+  position: absolute;
+  width: 16px;
+  height: 25px;
+  position: absolute;
+  font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  text-shadow: 0 0 3px black;
+  white-space: nowrap;
+  border-radius: 5px;
+  background: #eee;
+  margin: 20px 0 0 19px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 7777;
+}
+
+#mouseFollower.disable {
+  display: none !important;
+}
+
+#mouseFollower > div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: -40px;
+  top: -40px;
+  border: 4px solid black;
+  border-radius: 40px;
+  -webkit-animation: pulse 0.7s infinite;
+  -moz-animation: pulse 0.7s infinite;
+}
+
+#mouseFollower:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  width: 8px;
+  background: #d03e3e;
+  height: 12px;
+  border-radius: 0 5px 0 0;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#mouseFollower:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 8px;
+  background: #dfdfdf;
+  height: 12px;
+  border-radius: 5px 0 0 0;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#mouseFollower > span {
+  position: absolute;
+  top: -19px;
+  left: -5px;
+  font: 26px 'Amatic SC', Helvetica;
+  font-weight: 200;
+  -webkit-transform: rotate(100deg);
+  -moz-transform: rotate(100deg);
+  color: #333;
+  text-shadow: 0 0px 1px #fff;
+}
+
+@-moz-keyframes pulse {
+  from {
+    left: -24px;
+    top: -24px;
+    width: 0;
+    height: 0;
+    border-color: rgba(0, 0, 0, 1);
+  }
+  to {
+    left: -44px;
+    top: -44px;
+    width: 40px;
+    height: 40px;
+    border-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@-webkit-keyframes pulse {
+  from {
+    left: -24px;
+    top: -24px;
+    width: 0;
+    height: 0;
+    border-color: rgba(0, 0, 0, 1);
+  }
+  to {
+    left: -44px;
+    top: -44px;
+    width: 40px;
+    height: 40px;
+    border-color: rgba(0, 0, 0, 0);
+  }
+}
+
 #edit {
   position:     absolute;
   left:         0;
