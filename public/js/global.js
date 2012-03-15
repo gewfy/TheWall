@@ -6,7 +6,8 @@ jQuery(document).ready(function ($) {
       $imageControl  = $('#tpl-image'),
       $sketchboard   = $('#tpl-sketchboard'),
       $publishAll    = $('.publish-all'),
-      $mouseFollower = $('#mouseFollower');
+      $mouseFollower = $('#mouseFollower'),
+      sliderTimeout;
   
   // Faye
   app.faye = {
@@ -36,6 +37,25 @@ jQuery(document).ready(function ($) {
     }
 
     $('#text-clientCount').text(clients.length);
+  });
+  
+  // Layers
+  $('body').on('mouseenter', '#layers li', function () {
+    $('#messages > iframe').not($('#messages > iframe').eq($(this).index())).fadeOut();
+  });
+  
+  $('body').on('mouseleave', '#layers li', function () {
+    $('#messages > iframe').fadeIn();
+  });
+  
+  // Slider
+  $('body').on('change', '.message input[type="range"]', function () {
+    var $this = $(this);
+    clearTimeout(sliderTimeout);
+    
+    sliderTimeout = setTimeout(function () {
+      $this.closest('.message').children('.input').children('img').width($this.val());
+    }, 300);
   });
   
   // Sign in
@@ -83,6 +103,7 @@ jQuery(document).ready(function ($) {
 	      $(this).html($image).appendTo($editCanvas);
 	    } else {
 	      $(this).find('.toolbox').remove();
+	      $(this).find('.slider').remove();
 	      $(this).appendTo($editCanvas);
 	      $editCanvas.find('*').removeAttr('contenteditable');
 	    }
@@ -147,7 +168,10 @@ jQuery(document).ready(function ($) {
 	  var $image = $(document.createElement('img')),
 	      url    = $(this).val();
 	      
-	  $(this).closest('.message').children('.input').html($image.load().attr('src', url));
+	  $(this).closest('.message').children('.input').html($image.load(function () {
+	    $(this).closest('.message').find('.slider > input').attr({max: $(this).width() * 2, value: $(this).width()});
+	    $(this).closest('.message').addClass('has');
+	  }).attr('src', url));
 	}, 250));
 	
 	// Context menu
@@ -166,7 +190,11 @@ jQuery(document).ready(function ($) {
 	      }).focus();
 	    break;
 	    case 'image':
-	      $imageControl.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'});
+	      $imageControl.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'}).on('focus', function () {
+	        $(this).closest('.message').addClass('focus');
+	      }).on('blur', function () {
+	        $(this).closest('.message').removeClass('focus');
+	      }).focus();
 	    break;
 	  }
 	}).on('mousemove', function (e) {

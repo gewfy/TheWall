@@ -10,7 +10,14 @@
 
   <nav>
     <ul>
-      <li><a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a></li>
+      <li>
+        <a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a>
+        <ul id="layers">
+          {{each(i) messages}}
+            {{partial({id: i}) "layer"}}
+          {{/each}}
+        </ul>
+      </li>
       <li>
         <a href="#">Online(<span id="text-clientCount">${clients.length}</span>)</a>
         <ul id="clients">
@@ -89,6 +96,9 @@
         </div>
       </div>
       <div class="input">
+      </div>
+      <div class="slider">
+        <input type="range" step="1" min="10" value="2000" max="2000" name="range">
       </div>
     </div>
   </script>
