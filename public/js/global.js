@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
   // Sign in
   $('#form-setName').submit(function(e) {
       e.preventDefault();
-  
+
       app.faye.client.publish(
         $(this).attr('action'),
         {
@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
         }
       );
       
-      $('.signin').remove();
+      $('#splash').fadeOut();
     });
 	
 	// Custom dropdowns

@@ -11,7 +11,12 @@
   <nav>
     <ul>
       <li><a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a></li>
-      <li><a href="#">Online(<span id="text-clientCount">${clients.length}</span>)</a></li>
+      <li>
+        <a href="#">Online(<span id="text-clientCount">${clients.length}</span>)</a>
+        <ul id="clients">
+          {{partial(clients) "client"}}
+        </ul>
+      </li>
     </ul>
   </nav>
   
@@ -24,14 +29,17 @@
   </div>
   
   {{if !client.name}}
-  <div class="signin">
-    <form action="/client" id="form-setName">
-      <label for="name">Name</label>
-      <input type="text" id="input-name"/>
-      <label for="input-email">E-mail</label>
-      <input type="text" id="input-email"/>
-      <input type="submit" value="set"/>
-    </form>
+  <div id="splash">
+    <div>
+      <h1><span>Welcome to</span> THE WALL</h1>
+      
+      <form id="form-setName" action="/client">
+        <p><input type="text" id="input-name" placeholder="choose a username…"> <input type="text" id="input-email" placeholder="email (not visible)…"> <div class="gravatar-use"><span>Gravatar use only</span></div></p>
+        <p><button type="submit"><span>Sign in!</span></button></p>
+      </form>
+      
+      <a href="#" class="what">What is this?</a>
+    </div>
   </div>
   {{/if}}
   
@@ -41,10 +49,6 @@
     <li><a href="#video">Add video</a></li>
     <li><a href="#draw">Add drawing</a></li>
     <li class="delimited"><a href="#code">Add custom code</a></li>
-  </ul>
-  
-  <ul id="clients">
-    {{partial(clients) "client"}}
   </ul>
   
   <script type="text/javascript">
@@ -93,6 +97,8 @@
             <span>Helvetica</span>
             <select class="font-face">
               <option>Satisfy</option>
+              <option>Designosaur</option>
+              <option>Journal</option>
               <option>Salsa</option>
               <option>Ubuntu Mono</option>
               <option>Arial</option>
