@@ -3,6 +3,7 @@
 <head>
   <title>New design</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/codemirror.css">
 </head>
 
 <body>
@@ -76,6 +77,11 @@
   <script src="/js/faye-browser-min.js"></script>
   <script src="/js/jquery.contextMenu.js"></script>
   <script src="/js/sketchboard.js"></script>
+  <script src="/js/codemirror.js"></script>
+  <script src="/js/mode/css/css.js"></script>
+  <script src="/js/mode/javascript/javascript.js"></script>
+  <script src="/js/mode/xml/xml.js"></script>
+  <script src="/js/mode/htmlmixed/htmlmixed.js"></script>
   <script src="/js/global.js"></script>
   
   <script type="text/x-jquery-tmpl" id="tpl-client">
@@ -84,6 +90,21 @@
 
   <script type="text/x-jquery-tmpl" id="tpl-iframe">
     {{html includeTemplate('views/iframe.html')}}
+  </script>
+  
+  <script type="text/x-jquery-tmpl" id="tpl-layer">
+    {{html includeTemplate('views/layer.html')}}
+  </script>
+  
+  <script type="text/x-jquery-tmpl" id="tpl-code">
+    <div class="code-editor message">
+      <div class="toolbox">
+        <button class="action publish">Publish</button>
+        <button class="action hide">Hide</button>
+        <button class="action cancel">Cancel</button>
+      </div>
+      <textarea name="code"></textarea>
+    </div>
   </script>
   
   <script type="text/x-jquery-tmpl" id="tpl-image">

@@ -5,8 +5,11 @@ jQuery(document).ready(function ($) {
       $textEditor    = $('#tpl-text'),
       $imageControl  = $('#tpl-image'),
       $sketchboard   = $('#tpl-sketchboard'),
+      $codeEditor    = $('#tpl-code'),
       $publishAll    = $('.publish-all'),
       $mouseFollower = $('#mouseFollower'),
+      editor,
+      delay,
       sliderTimeout;
   
   // Faye
@@ -23,6 +26,7 @@ jQuery(document).ready(function ($) {
 
   app.faye.client.subscribe('/messages', function(messages) {
     $('#tpl-iframe').tmpl(messages).appendTo('#messages');
+    $('#tpl-layer').tmpl(messages).appendTo('#layers');
 
     $('#text-messageCount').text(messages.count);
   });
@@ -41,11 +45,11 @@ jQuery(document).ready(function ($) {
   
   // Layers
   $('body').on('mouseenter', '#layers li', function () {
-    $('#messages > iframe').not($('#messages > iframe').eq($(this).index())).fadeOut();
+    $('#messages > iframe').not($('#messages > iframe').eq($(this).index())).fadeOut('fast');
   });
   
   $('body').on('mouseleave', '#layers li', function () {
-    $('#messages > iframe').fadeIn();
+    $('#messages > iframe').fadeIn('fast');
   });
   
   // Slider
@@ -90,6 +94,22 @@ jQuery(document).ready(function ($) {
 	  $(this).closest('.message').remove();
 	});
 	
+	// Hide code editor
+	$('body').on('click', '.message.code-editor button.action.hide', function (e) {
+	  e.preventDefault();
+	  
+	  $(this).closest('.message').css('bottom', '-300px'),
+	  $(this).removeClass('hide').addClass('show').html('Show');
+	}); 
+	
+	// Show code editor
+	$('body').on('click', '.message.code-editor button.action.show', function (e) {
+	  e.preventDefault();
+	  
+	  $(this).closest('.message').css('bottom', '0'),
+	  $(this).removeClass('show').addClass('hide').html('Hide');
+	}); 
+	
 	// Publish buttons
 	$('body').on('click', '.message button.action.publish', function (e) {
 	  e.preventDefault();
@@ -101,6 +121,8 @@ jQuery(document).ready(function ($) {
 	          $image = $(document.createElement('img')).attr('src', imgSrc);
 	          
 	      $(this).html($image).appendTo($editCanvas);
+	    } else if ($(this).hasClass('code-editor')) {
+        $(this).remove();	      
 	    } else {
 	      $(this).find('.toolbox').remove();
 	      $(this).find('.slider').remove();
@@ -195,6 +217,40 @@ jQuery(document).ready(function ($) {
 	      }).on('blur', function () {
 	        $(this).closest('.message').removeClass('focus');
 	      }).focus();
+	    break;
+	    case 'code':
+	      $codeEditor.tmpl().appendTo($('body')).css('bottom', 0);
+	      
+	      editor = CodeMirror.fromTextArea($('.message.code-editor > textarea').get(0), {
+	        mode: "application/xml",
+	        lineNumbers: true,
+	        lineWrapping: true,
+	        onCursorActivity: function() {
+	          editor.setLineClass(hlLine, null);
+	          hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
+	        },
+	        onChange: function() {
+	          clearTimeout(delay);
+	          delay = setTimeout(updatePreview, 300);
+	        }
+	      });
+	      
+	      function updatePreview () {
+	        var $codeHolder = $(document.createElement('div')).addClass('message custom-code'),
+	            $message    = $(this).closest('.message').css('bottom', '-300px'),
+	            code        = editor.getValue();
+	            
+	        $(this).removeClass('preview').addClass('edit').html('Edit');
+	            
+	        if ($editCanvas.find('.message.custom-code').length > 0) {
+	          $editCanvas.find('.message.custom-code').html(code);
+	        } else {    
+	          $codeHolder.html(code);
+	          $editCanvas.append($codeHolder);
+	        }
+	      }
+	      
+	      var hlLine = editor.setLineClass(0, "activeline");
 	    break;
 	  }
 	}).on('mousemove', function (e) {
