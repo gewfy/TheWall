@@ -253,8 +253,8 @@ body > nav { position: absolute; right: 20px; top: 0; z-index: 100; }
 
 /* =Modals
 ------------------------------------------------------------------------------------------------------- */
-.code-editor { -webkit-transition: bottom .3s; width: 100%; height: 300px; background: #d8d6cb url(/css/gfx/bg.png) repeat; position: absolute; bottom: -300px; left: 0; z-index: 100000; }  
-  .code-editor > .toolbox { width: 100%; text-align: center; cursor: move; padding: 3px 5px; box-sizing: border-box; border-radius: 3px 3px 0 0; background: #25acbc url(/css/gfx/bg.png) repeat; position: absolute; left: 0; height: 35px; top: -35px; }
+.code-editor { -webkit-transition: height .3s; overflow: hidden; width: 100%; height: 35px; background: #d8d6cb url(/css/gfx/bg.png) repeat; position: absolute; bottom: 0; left: 0; z-index: 100000; }  
+  .code-editor > .toolbox { width: 100%; text-align: center; cursor: move; padding: 3px 5px; box-sizing: border-box; border-radius: 3px 3px 0 0; background: #25acbc url(/css/gfx/bg.png) repeat; height: 35px; }
 
 
 .image > .toolbox { -webkit-transition: opacity .3s; width: 300px; text-align: center; opacity: 0; cursor: move; padding: 0 5px; border-radius: 3px; background: #25acbc url(/css/gfx/bg.png) repeat; position: absolute; left: 50%; margin-left: -150px; bottom: -53px; }

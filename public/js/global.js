@@ -98,7 +98,7 @@ jQuery(document).ready(function ($) {
 	$('body').on('click', '.message.code-editor button.action.hide', function (e) {
 	  e.preventDefault();
 	  
-	  $(this).closest('.message').css('bottom', '-300px'),
+	  $(this).closest('.message').css('height', '35px'),
 	  $(this).removeClass('hide').addClass('show').html('Show');
 	}); 
 	
@@ -106,7 +106,7 @@ jQuery(document).ready(function ($) {
 	$('body').on('click', '.message.code-editor button.action.show', function (e) {
 	  e.preventDefault();
 	  
-	  $(this).closest('.message').css('bottom', '0'),
+	  $(this).closest('.message').css('height', '335px'),
 	  $(this).removeClass('show').addClass('hide').html('Hide');
 	}); 
 	
@@ -219,7 +219,11 @@ jQuery(document).ready(function ($) {
 	      }).focus();
 	    break;
 	    case 'code':
-	      $codeEditor.tmpl().appendTo($('body')).css('bottom', 0);
+	      $codeEditor.tmpl().appendTo($('body'));
+	      
+	      setTimeout(function () {
+          $('.message.code-editor').css('height', '335px');
+	      }, 50);
 	      
 	      editor = CodeMirror.fromTextArea($('.message.code-editor > textarea').get(0), {
 	        mode: "application/xml",
@@ -236,14 +240,13 @@ jQuery(document).ready(function ($) {
 	      });
 	      
 	      function updatePreview () {
-	        var $codeHolder = $(document.createElement('div')).addClass('message custom-code'),
-	            $message    = $(this).closest('.message').css('bottom', '-300px'),
+	        var $codeHolder = $(document.createElement('div')).addClass('custom-code'),
 	            code        = editor.getValue();
 	            
 	        $(this).removeClass('preview').addClass('edit').html('Edit');
 	            
-	        if ($editCanvas.find('.message.custom-code').length > 0) {
-	          $editCanvas.find('.message.custom-code').html(code);
+	        if ($editCanvas.find('.custom-code').length > 0) {
+	          $editCanvas.find('.custom-code').html(code);
 	        } else {    
 	          $codeHolder.html(code);
 	          $editCanvas.append($codeHolder);
