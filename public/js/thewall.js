@@ -36,7 +36,7 @@
       
         $clients.empty();
       
-        for (i in clients) {
+        for (var i in clients) {
           $('#tpl-client').tmpl(clients[i]).appendTo($clients);
         }
       
@@ -120,13 +120,23 @@
     closeMessageBox: function (element, options) {
       var $thewall = this.$element;
       
-      $(element).animate({top: '+=50px', opacity: 0}, 200, function () {
-        $(this).remove();
-        
-        if ($thewall.find('.message').length < 1) {
-          $('.publish-all').css('opacity', 0);
-        }
-      });
+      if ($(element).hasClass('code-editor')) {
+        $(element).animate({height: '0'}, 300, function () {
+          $(this).remove();
+          
+          if ($thewall.find('.message').length < 1) {
+            $('.publish-all').css('opacity', 0);
+          }
+        });
+      } else {
+        $(element).animate({top: '+=50px', opacity: 0}, 200, function () {
+          $(this).remove();
+          
+          if ($thewall.find('.message').length < 1) {
+            $('.publish-all').css('opacity', 0);
+          }
+        });
+      }
     },
     
     sendMessage: function (element) {
