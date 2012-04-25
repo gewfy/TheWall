@@ -8,6 +8,22 @@ jQuery(document).ready(function ($) {
   $thewall.thewall();
   thewall = $thewall.data('thewall');
   
+  // Signin
+  $('#form-setName').submit(function(e) {
+    e.preventDefault();
+
+    app.faye.client.publish(
+      $(this).attr('action'),
+      {
+        clientId: app.clientId,
+        name:     $('#input-name').val(),
+        email:    $('#input-email').val()
+      }
+    );
+    
+    $('#splash').fadeOut();
+  });
+  
   // Dropdowns
   $('body').on('change', '.select > select', function () {
     $(this).parent().children('span').html($(this).children('option:selected').text());
