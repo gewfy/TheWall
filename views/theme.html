@@ -2,12 +2,12 @@
 <html>
 <head>
   <title>New design</title>
-  <link rel="stylesheet" href="../public/css/theme/normalize.css">
-  <link rel="stylesheet" href="../public/css/theme/typography.css">
-  <link rel="stylesheet" href="../public/css/theme/layout.css">
-  <link rel="stylesheet" href="../public/css/theme/misc.css">
+  <link rel="stylesheet" href="../public/css/lib/normalize.css">
+  <link rel="stylesheet" href="../public/css/lib/typography.css">
+  <link rel="stylesheet" href="../public/css/lib/layout.css">
+  <link rel="stylesheet" href="../public/css/lib/misc.css">
   <style>
-    .playground { width: 800px; margin: 100px auto; }
+    .playground { width: 800px; margin: auto; padding-top: 100px; }
       .playground > * {
         margin-bottom: 10px;
       }
@@ -15,19 +15,22 @@
 </head>
 
 <body>
+  <div id="thewall"></div>
+
   <div class="playground">
     <div class="toolbox"></div>
     <div class="toolbox arrow"></div>
     
-    <a class="btn" href="#">En knapp</a>
-    <a class="btn" href="#"><i class="icon-user icon-large"></i> Online (5)</a>
-    <a class="btn publish" href="#"><i class="icon-ok icon-large"></i> Publish</a>
-    <a class="btn cancel" href="#"><i class="icon-remove icon-large"></i> Cancel</a>
+    <button class="btn">En knapp</button>
+    <button class="btn"><i class="icon-user icon-large"></i> Online (5)</button>
+    <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</button>
+    <button class="btn cancel"><i class="icon-remove icon-large"></i> Cancel</button>
     
     <input type="text" class="input" placeholder="Placeholder..">
     
     <div class="select">
-      <span>Helvetica <i class="icon-chevron-down icon-large"></i></span>
+      <span>Helvetica</span>
+      <i class="icon-chevron-down icon-large"></i>
     
       <select>
         <option>Helvetica</option>
@@ -36,21 +39,76 @@
     </div>
     
     <div class="toolbox rounded arrow">
-      <a class="btn publish" href="#"><i class="icon-ok icon-large"></i> Publish</a>
-      <a class="btn" href="#"><strong>B</strong></a>
-      <a class="btn" href="#"><em>I</em></a>
-      <a class="btn" href="#"><ins>U</ins></a>
+      <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</a>
+      <button class="btn"><strong>B</strong></button>
+      <button class="btn"><em>I</em></button>
+      <button class="btn"><ins>U</ins></button>
       <div class="select">
-        <span>Helvetica <i class="icon-chevron-down icon-large"></i></span>
+        <span>Helvetica</span>
+        <i class="icon-chevron-down icon-large"></i>
       
         <select>
           <option>Helvetica</option>
           <option>Arial</option>
         </select>
       </div>
-      <a class="btn cancel right" href="#"><i class="icon-remove icon-large"></i> Remove</a>
+      <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
+    </div>
+    
+    <div class="toolbox rounded vertical">
+      <button class="btn publish"><i class="icon-ok icon-large"></i></button>
+      <button class="btn"><i class="icon-pencil icon-large"></i></button>
+      <button class="btn colorpick"><span></span></button>
+      <button class="btn cancel"><i class="icon-remove icon-large"></i></button>
     </div>
   </div>
+  
+  <ul id="contextMenu">
+    <li><a href="#text">Add text</a></li>
+    <li><a href="#image">Add image</a></li>
+    <li><a href="#video">Add video</a></li>
+    <li><a href="#draw">Add drawing</a></li>
+    <li class="delimited"><a href="#code">Add custom code</a></li>
+  </ul>
+  
+  <script type="text/javascript">
+    var app = {
+      clientId: '${session.clientId}',
+      name:     '${session.clientId.name}'
+    };
+  </script>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+  <script src="../public/js/faye-browser-min.js"></script>
+  <script src="../public/js/jquery-ui-1.8.18.custom.min.js"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript"></script>
+  <script src="../public//js/jquery.contextMenu.js"></script>
+  <script src="../public/js/thewall.js"></script>
+  <script src="../public/js/global_new.js"></script>
+  
+  <script id="text-message" type="text/x-jquery-tmpl">
+    <div class="message text">
+      <div class="input">
+        <p contenteditable="true"></p>
+      </div>
+      <div class="toolbox rounded arrow">
+        <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</a>
+        <button class="btn"><strong>B</strong></button>
+        <button class="btn"><em>I</em></button>
+        <button class="btn"><ins>U</ins></button>
+        <div class="select">
+          <span>Helvetica</span>
+          <i class="icon-chevron-down icon-large"></i>
+        
+          <select>
+            <option>Helvetica</option>
+            <option>Arial</option>
+          </select>
+        </div>
+        <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
+      </div>
+    </div>
+  </script>
 
 </body>
 </html>

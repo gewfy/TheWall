@@ -8,4 +8,4 @@ body > div.image {
   position: absolute;
 }
 
-  .text-editor > .input > p { outline: none; font: normal 24px/1 Helvetica, Arial, sans-serif; }
+  .message.text > .input > p { outline: none; font: normal 24px/1 Helvetica, Arial, sans-serif; }

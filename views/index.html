@@ -7,6 +7,8 @@
 </head>
 
 <body>
+  <div id="thewall"></div>
+
   <span class="publish-all"><a href="#">Publish</a> you have unpublished messages</span>
 
   <nav>
@@ -36,7 +38,7 @@
     {{/each}}
   </div>
   
-  {{if !client.name}}
+  {{if client.name}}
   <div id="splash">
     <div>
       <h1><span>Welcome to</span> THE WALL</h1>
@@ -59,10 +61,10 @@
     <li class="delimited"><a href="#code">Add custom code</a></li>
   </ul>
   
-  <div id="mouseFollower">
+  <!--div id="mouseFollower">
     <div></div>
     <span>S</span>
-  </div>
+  </div-->
   
   <script type="text/javascript">
     var app = {
@@ -75,13 +77,13 @@
   <script src="/js/jquery-ui-1.8.18.custom.min.js"></script>
   <script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript"></script>
   <script src="/js/faye-browser-min.js"></script>
-  <script src="/js/jquery.contextMenu.js"></script>
   <script src="/js/sketchboard.js"></script>
   <script src="/js/codemirror.js"></script>
   <script src="/js/mode/css/css.js"></script>
   <script src="/js/mode/javascript/javascript.js"></script>
   <script src="/js/mode/xml/xml.js"></script>
   <script src="/js/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="/js/thewall.js"></script>
   <script src="/js/global.js"></script>
   
   <script type="text/x-jquery-tmpl" id="tpl-client">
@@ -96,119 +98,83 @@
     {{html includeTemplate('views/layer.html')}}
   </script>
   
-  <script type="text/x-jquery-tmpl" id="tpl-code">
-    <div class="code-editor message">
+  <script type="text/x-jquery-tmpl" id="code-message">
+    <div class="message code-editor">
       <div class="toolbox">
-        <button class="action publish">Publish</button>
-        <button class="action hide">Hide</button>
-        <button class="action cancel">Cancel</button>
+        <button class="btn publish inline">Publish</button>
+        <button class="btn hide inline">Hide</button>
+        <button class="btn cancel inline">Cancel</button>
       </div>
-      <textarea name="code"></textarea>
+      <div class="input">
+        <textarea name="code"></textarea>
+      </div>
     </div>
   </script>
   
-  <script type="text/x-jquery-tmpl" id="tpl-image">
-    <div class="image message" style="left: ${left}; top: ${top};">
-      <div class="toolbox">
-        <div class="row">
-          <button class="action publish">Publish</button>
-          <input type="text" class="url" placeholder="Image url">
-          <button class="action cancel">Cancel</button>
-        </div>
-      </div>
-      <div class="input">
-      </div>
+  <script type="text/x-jquery-tmpl" id="img-message">
+    <div class="message image">
       <div class="slider">
         <input type="range" step="1" min="10" value="2000" max="2000" name="range">
       </div>
-    </div>
-  </script>
-  
-  <script type="text/x-jquery-tmpl" id="tpl-text">
-    <div class="text-editor message" style="left: ${left}; top: ${top};">
-      <div class="toolbox">
-        <div class="row">
-          <button class="action publish">Publish</button>
-          <div class="dropdown action">
-            <span>Helvetica</span>
-            <select class="font-face">
-              <option>Satisfy</option>
-              <option>Designosaur</option>
-              <option>Journal</option>
-              <option>Salsa</option>
-              <option>Ubuntu Mono</option>
-              <option>Arial</option>
-              <option selected="selected">Helvetica</option>
-            </select>
-          </div>
-          <div class="dropdown action">
-            <span>Medium</span>
-            <select class="font-size">
-              <option value="1">Tiny</option>
-              <option value="3">Small</option>
-              <option value="5" selected="selected">Medium</option>
-              <option value="7">Large</option>
-            </select>
-          </div>
-          
-          <button class="action cancel">Cancel</button>
-          <button class="action font-style" rel="bold">B</button>
-          <button class="action font-style" rel="italic">I</button>
-          <button class="action font-style" rel="underline">U</button>
-        </div>
-      </div>
       <div class="input">
-        <p contenteditable="true"></p>
+      </div>
+      <div class="toolbox rounded arrow">
+        <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</a></button>
+        <input type="text" class="input url" placeholder="Image url">
+        <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
       </div>
     </div>
   </script>
   
   <script type="text/x-jquery-tmpl" id="tpl-sketchboard">
-    <div class="sketchboard message" style="left: ${left}; top: ${top};">
-      <div class="toolbox">
-        <button class="action publish">Publish</button>
-        <button class="action cancel">Cancel</button>
-        <!--span class="action grouped">
-          <button class="colorpick background"></button>
-          <button class="colorpick transparent"><span></span></button>
-        </span-->
-        
-        <span class="action grouped">
-          <button class="colorpick foreground"></button>
-        </span>
-        
-        <div class="dropdown action">
-          <span>Ribbon</span>
-          <select class="brush-style">
-            <option value="simple">Simple</option>
-            <option value="ribbon" selected="selected">Ribbon</option>
-            <option value="circles">Circles</option>
-            <option value="longfur">Longfur</option>
-            <option value="sketchy">Sketch</option>
-            <option value="squares">Squares</option>
-            <option value="web">Web</option>
-            <option value="chrome">Chrome</option>
-          </select>
-        </div>
-        
-        <div class="dropdown action">
-          <span>Size 1</span>
-          <select class="brush-size">
-            <option value="1">Size 1</option>
-            <option value="2">Size 2</option>
-            <option value="3">Size 3</option>
-            <option value="4">Size 4</option>
-            <option value="5">Size 5</option>
-            <option value="6">Size 6</option>
-            <option value="7">Size 7</option>
-            <option value="8">Size 8</option>
-            <option value="7">Size 9</option>
-            <option value="8">Size 10</option>
-          </select>
-        </div>
+    <div class="sketchboard message">
+      <div class="toolbox rounded vertical">
+        <button class="btn publish"><i class="icon-ok icon-large"></i></button>
+        <button class="btn"><i class="icon-pencil icon-large"></i></button>
+        <button class="btn colorpick"><span></span></button>
+        <button class="btn cancel"><i class="icon-remove icon-large"></i></button>
       </div>
       <div class="inner">
-      
+      </div>
+    </div>
+  </script>
+  
+  <script id="text-message" type="text/x-jquery-tmpl">
+    <div class="message text">
+      <div class="input">
+        <p contenteditable="true"></p>
+      </div>
+      <div class="toolbox rounded arrow">
+        <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</button>
+        <button class="btn font-style" rel="bold"><strong>B</strong></button>
+        <button class="btn font-style" rel="italic"><em>I</em></button>
+        <button class="btn font-style" rel="underline"><ins>U</ins></button>
+        <div class="select">
+          <span>Helvetica</span>
+          <i class="icon-chevron-down icon-large"></i>
+        
+          <select class="font-face">
+            <option>Satisfy</option>
+            <option>Designosaur</option>
+            <option>Journal</option>
+            <option>Salsa</option>
+            <option>Ubuntu Mono</option>
+            <option>Arial</option>
+            <option selected="selected">Helvetica</option>
+          </select>
+        </div>
+        <div class="select">
+          <span>Medium</span>
+          <i class="icon-chevron-down icon-large"></i>
+        
+          <select class="font-size">
+            <option value="1">Tiny</option>
+            <option value="3">Small</option>
+            <option value="5" selected="selected">Medium</option>
+            <option value="7">Large</option>
+          </select>
+        </div>
+        <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
       </div>
     </div>
   </script>

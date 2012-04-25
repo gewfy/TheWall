@@ -5,7 +5,7 @@ p { margin: 0 0 10px; }
 @font-face {
   font-family: 'Designosaur';
   src: url('/css/fonts/designosaur-regular-webfont.eot');
-  src: local('☺'), url('fonts/designosaur-regular-webfont.woff') format('woff'), url('/css/fonts/designosaur-regular-webfont.ttf') format('truetype'), url('/css/fonts/designosaur-regular-webfont.svg#DesignosaurRegular') format('svg');
+  src: local('☺'), url('/css/fonts/designosaur-regular-webfont.woff') format('woff'), url('/css/fonts/designosaur-regular-webfont.ttf') format('truetype'), url('/css/fonts/designosaur-regular-webfont.svg#DesignosaurRegular') format('svg');
   font-weight: normal;
   font-style: normal;
 }

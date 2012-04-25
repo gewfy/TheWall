@@ -1,55 +1,16 @@
-jQuery(document).ready(function ($) {
-  var editIframe     = $('#edit').get(0),
-      $editCanvas    = $('body', editIframe.contentDocument),
-      $contextMenu   = $('#contextMenu'),
-      $textEditor    = $('#tpl-text'),
-      $imageControl  = $('#tpl-image'),
-      $sketchboard   = $('#tpl-sketchboard'),
-      $codeEditor    = $('#tpl-code'),
-      $publishAll    = $('.publish-all'),
-      $mouseFollower = $('#mouseFollower'),
-      editor,
-      delay,
-      sliderTimeout;
+jQuery(document).ready(function ($) { 
+  var thewall, 
+      sliderTimeout, 
+      $thewall = $('#thewall'), 
+      $contextMenu = $('#contextMenu'),
+      $publishAll    = $('.publish-all');
   
-  // Faye
-  app.faye = {
-    client: new Faye.Client('/faye')
-  };
-
-  app.faye.client.addExtension({ outgoing: function(message, callback) {
-   if (!message.ext) message.ext = {};
-
-    message.ext.clientId = app.clientId;
-    callback(message);
-  }});
-
-  app.faye.client.subscribe('/messages', function(messages) {
-    $('#tpl-iframe').tmpl(messages).appendTo('#messages');
-    $('#tpl-layer').tmpl(messages).appendTo('#layers');
-
-    $('#text-messageCount').text(messages.count);
-  });
-
-  app.faye.client.subscribe('/clients', function(clients) {
-    var $clients = $('#clients');
-
-    $clients.empty();
-
-    for (i in clients) {
-      $('#tpl-client').tmpl(clients[i]).appendTo($clients);
-    }
-
-    $('#text-clientCount').text(clients.length);
-  });
+  $thewall.thewall();
+  thewall = $thewall.data('thewall');
   
-  // Layers
-  $('body').on('mouseenter', '#layers li', function () {
-    $('#messages > iframe').not($('#messages > iframe').eq($(this).index())).fadeOut('fast');
-  });
-  
-  $('body').on('mouseleave', '#layers li', function () {
-    $('#messages > iframe').fadeIn('fast');
+  // Dropdowns
+  $('body').on('change', '.select > select', function () {
+    $(this).parent().children('span').html($(this).children('option:selected').text());
   });
   
   // Slider
@@ -62,122 +23,37 @@ jQuery(document).ready(function ($) {
     }, 300);
   });
   
-  // Sign in
-  $('#form-setName').submit(function(e) {
-      e.preventDefault();
-
-      app.faye.client.publish(
-        $(this).attr('action'),
-        {
-          clientId: app.clientId,
-          name:     $('#input-name').val(),
-          email:    $('#input-email').val()
-        }
-      );
-      
-      $('#splash').fadeOut();
-    });
-	
-	// Custom dropdowns
-	$('body').on('change', '.dropdown > select', function () {
-    $(this).parent().children('span').html($(this).children('option:selected').text());
+  // Destroy
+  $('body').on('click', '.message > .toolbox .cancel', function (e) {
+    e.preventDefault();
+    thewall.closeMessageBox($(this).closest('.message').get(0), '');
+  });
+  
+  // Publish single
+	$('body').on('click', '.message > .toolbox .publish', function (e) {
+    thewall.sendMessage($(this).closest('.message').get(0));
 	});
 	
-	// Cancel buttons
-	$('body').on('click', '.message button.action.cancel', function (e) {
-	  e.preventDefault();
-	  
-	  if ($('body').find('.message').length < 1) {
-	    $publishAll.css('opacity', 0);
-	  }
-	  
-	  $(this).closest('.message').remove();
-	});
-	
-	// Hide code editor
-	$('body').on('click', '.message.code-editor button.action.hide', function (e) {
-	  e.preventDefault();
-	  
-	  $(this).closest('.message').css('height', '35px'),
-	  $(this).removeClass('hide').addClass('show').html('Show');
-	}); 
-	
-	// Show code editor
-	$('body').on('click', '.message.code-editor button.action.show', function (e) {
-	  e.preventDefault();
-	  
-	  $(this).closest('.message').css('height', '335px'),
-	  $(this).removeClass('show').addClass('hide').html('Hide');
-	}); 
-	
-	// Publish buttons
-	$('body').on('click', '.message button.action.publish', function (e) {
-	  e.preventDefault();
-	  
-	  $(this).closest('.message').each(function () {
-	    if ($(this).hasClass('sketchboard')) {
-	      var canvas = $(this).find('canvas').get(0),
-	          imgSrc = canvas.toDataURL("image/png"),
-	          $image = $(document.createElement('img')).attr('src', imgSrc);
-	          
-	      $(this).html($image).appendTo($editCanvas);
-	    } else if ($(this).hasClass('code-editor')) {
-        $(this).remove();	      
-	    } else {
-	      $(this).find('.toolbox').remove();
-	      $(this).find('.slider').remove();
-	      $(this).appendTo($editCanvas);
-	      $editCanvas.find('*').removeAttr('contenteditable');
-	    }
-	    
-	    app.faye.client.publish('/message', $editCanvas.html());
-      $editCanvas.empty();
-	  });
-	  
-	  if ($('body').find('.message').length < 1) {
-	    $publishAll.css('opacity', 0);
-	  }
-	});
-	
+	// Publish all
 	$('body').on('click', '.publish-all > a', function (e) {
-	  e.preventDefault();
-	  
-	  $('body').find('.message').each(function () {
-	    if ($(this).hasClass('sketchboard')) {
-	      var canvas = $(this).find('canvas').get(0),
-	          imgSrc = canvas.toDataURL("image/png"),
-	          $image = $(document.createElement('img')).attr('src', imgSrc);
-	          
-	      $(this).html($image).appendTo($editCanvas);
-	    } else {
-	      $(this).find('.toolbox').remove();
-	      $(this).appendTo($editCanvas);
-	      $editCanvas.find('*').removeAttr('contenteditable');
-	    }
-	  });
-	  
-	  if ($('body').find('.message').length < 1) {
-	    $publishAll.css('opacity', 0);
-	  }
-	  
-	  app.faye.client.publish('/message', $editCanvas.html());
-	  $editCanvas.empty();
+	  thewall.sendMessages();
+	  $publishAll.css('opacity', 0);
 	});
 	
 	// Font-face
-	$('body').on('change', '.message .action.dropdown > .font-face', function () {
+	$('body').on('change', '.message .select > .font-face', function () {
 	  var $input = $(this).closest('.message').children('input');
 	  $(document).get(0).execCommand('fontname', false, $(this).val());
 	});
 	
 	// Font-size
-	$('body').on('change', '.message .action.dropdown > .font-size', function () {
+	$('body').on('change', '.message .select > .font-size', function () {
 	  var $input = $(this).closest('.message').children('input');
 	  $(document).get(0).execCommand('fontsize', false, $(this).val());
 	});
 	
 	// Font-style
-	$('body').on('click', '.message .action.font-style', function (e) {
+	$('body').on('click', '.message .btn.font-style', function (e) {
 	  e.preventDefault();
 	  var style  = $(this).attr('rel'),
 	      $input = $(this).closest('.message').children('input');
@@ -195,73 +71,45 @@ jQuery(document).ready(function ($) {
 	    $(this).closest('.message').addClass('has');
 	  }).attr('src', url));
 	}, 250));
-	
-	// Context menu
-	$editCanvas.contextMenu({menu: 'contextMenu'}, function (action, el, pos) {
-	  $publishAll.css('opacity', 1);
-	  
-	  switch (action) {
-	    case 'draw':
-	      $sketchboard.tmpl().appendTo($('body')).css({left: pos.docX - 340, top: pos.docY}).sketchboard({style: 'ribbon'}).draggable({handle: '.toolbox'});
-	    break;
-	    case 'text':
-	      $textEditor.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'}).find('p').on('focus', function () {
-	        $(this).parent().parent().addClass('focus');
-	      }).on('blur', function () {
-	        $(this).parent().parent().removeClass('focus');
-	      }).focus();
-	    break;
-	    case 'image':
-	      $imageControl.tmpl().appendTo($('body')).css({left: pos.docX, top: pos.docY}).draggable({handle: '.toolbox'}).on('focus', function () {
-	        $(this).closest('.message').addClass('focus');
-	      }).on('blur', function () {
-	        $(this).closest('.message').removeClass('focus');
-	      }).focus();
-	    break;
-	    case 'code':
-	      $codeEditor.tmpl().appendTo($('body'));
-	      
-	      setTimeout(function () {
-          $('.message.code-editor').css('height', '335px');
-	      }, 50);
-	      
-	      editor = CodeMirror.fromTextArea($('.message.code-editor > textarea').get(0), {
-	        mode: "application/xml",
-	        lineNumbers: true,
-	        lineWrapping: true,
-	        onCursorActivity: function() {
-	          editor.setLineClass(hlLine, null);
-	          hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
-	        },
-	        onChange: function() {
-	          clearTimeout(delay);
-	          delay = setTimeout(updatePreview, 300);
-	        }
-	      });
-	      
-	      function updatePreview () {
-	        var $codeHolder = $(document.createElement('div')).addClass('custom-code'),
-	            code        = editor.getValue();
-	            
-	        $(this).removeClass('preview').addClass('edit').html('Edit');
-	            
-	        if ($editCanvas.find('.custom-code').length > 0) {
-	          $editCanvas.find('.custom-code').html(code);
-	        } else {    
-	          $codeHolder.html(code);
-	          $editCanvas.append($codeHolder);
-	        }
-	      }
-	      
-	      var hlLine = editor.setLineClass(0, "activeline");
-	    break;
-	  }
-	}).on('mousemove', function (e) {
-	  $mouseFollower.css({
-	    left: e.clientX,
-	    top:  e.clientY
-	  });
-	});
+
+  // Context menu 
+  $thewall.bind("contextmenu",function(e){
+    return false;
+  });
+ 
+  $thewall.on('mousedown', function (e) {
+    var left = e.clientX,
+        top  = e.clientY;
+    
+    if (e.which == 3) {
+      e.preventDefault();
+      
+      $contextMenu.css({left: e.clientX, top: e.clientY}).fadeIn('fast').on('click', 'li > a', function (e) {
+        e.preventDefault();
+        var action = $(this).attr('href').replace('#', '');
+        $contextMenu.fadeOut('fast').off('click', 'li > a', false);
+        
+        $publishAll.css('opacity', 1);
+        
+        switch (action) {
+          case 'draw':
+            thewall.openMessageBox({animation: 'slideUp', tmpl: '#tpl-sketchboard'});
+          break;
+          case 'text':
+            thewall.openMessageBox({animation: 'slideUp', tmpl: '#text-message', pos: {docX: left, docY: top}});
+          break;
+          case 'image':
+            thewall.openMessageBox({animation: 'slideUp', tmpl: '#img-message', pos: {docX: left, docY: top}});
+          break;
+          case 'code':
+            thewall.openMessageBox({animation: 'slideUp', tmpl: '#code-message'});
+          break;
+        }
+      });
+    } else if (e.which == 1) {
+      $contextMenu.fadeOut('fast').off('click', 'li > a');
+    }
+  }); 
 });
 
 function throttle(fn, delay) {
