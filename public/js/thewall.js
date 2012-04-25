@@ -118,11 +118,15 @@
     },
     
     closeMessageBox: function (element, options) {
-      var $thewall = this.$element;
+      var $thewall = this.$element,
+          $editCanvas = this.$editCanvas,
+          $editFrame  = $('#edit').show();
       
       if ($(element).hasClass('code-editor')) {
         $(element).animate({height: '0'}, 300, function () {
           $(this).remove();
+          $editCanvas.empty();
+          $editFrame.hide();
           
           if ($thewall.find('.message').length < 1) {
             $('.publish-all').css('opacity', 0);
@@ -141,6 +145,7 @@
     
     sendMessage: function (element) {
       var $message    = $(element),
+          $thewall    = this.$element,
           $editCanvas = this.$editCanvas,
           $dummy      = $(document.createElement('div'));
       
@@ -156,10 +161,18 @@
           app.faye.client.publish('/message', $message.html());
           
           $message.remove();
+          
+          if ($thewall.find('.message').length < 1) {
+            $('.publish-all').css('opacity', 0);
+          }
         });
 	    } else if ($message.hasClass('code-editor')) {
         $message.animate({height: 0}, 300, function () {
           $(this).remove();
+          
+          if ($thewall.find('.message').length < 1) {
+            $('.publish-all').css('opacity', 0);
+          }
         });
         
         app.faye.client.publish('/message', $editCanvas.html()); 
@@ -172,6 +185,10 @@
 	      $message.find('.toolbox').animate({bottom: '-=50px', opacity: 0}, 200, function () {
           $message.remove();
           app.faye.client.publish('/message', $dummy.html());
+          
+          if ($thewall.find('.message').length < 1) {
+            $('.publish-all').css('opacity', 0);
+          }
         });
 	    }
     },
