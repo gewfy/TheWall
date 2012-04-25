@@ -29,6 +29,15 @@ jQuery(document).ready(function ($) {
     $(this).parent().children('span').html($(this).children('option:selected').text());
   });
   
+  // Layers
+  $('body').on('mouseenter', '#layers li', function () {
+    $('#messages > iframe').not($('#messages > iframe').eq($(this).index())).fadeOut('fast');
+  });
+  
+  $('body').on('mouseleave', '#layers li', function () {
+    $('#messages > iframe').fadeIn('fast');
+  });
+  
   // Slider
   $('body').on('change', '.message input[type="range"]', function () {
     var $this = $(this);
