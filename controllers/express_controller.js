@@ -25,12 +25,15 @@ module.exports = (function() {
     };
 
     this.message = function(req, res) {
-      var id = req.param('id');
+      var id      = req.param('id'),
+          message = messages.getMessage(id);
 
-      if ((id - 0) == id && id.length > 0) {
-        res.render('message', {
-          message: messages.getMessage(id)
-        });
+      if (message) {
+        if ((id - 0) == id && id.length > 0) {
+          res.render('message', {
+            message: message
+          });
+        }
       }
     };
 

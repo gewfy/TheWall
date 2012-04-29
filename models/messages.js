@@ -8,19 +8,38 @@ module.exports = (function() {
     };
 
     this.getMessage = function(messageId) {
-      return messages[messageId];
+      if (messages.hasOwnProperty(messageId)) {
+        return messages[messageId].message;
+      }
+
+      return false;
+    };
+
+    this.getMessageMeta = function(messageId) {
+      if (messages.hasOwnProperty(messageId)) {
+        return messages[messageId].meta;
+      }
+
+      return false;
     };
 
     this.getMessagesCount = function() {
       return Object.keys(messages).length;
     };
 
-    this.addMessage = function(message) {
-      return messages.push(message) - 1;
+    this.addMessage = function(message, meta) {
+      var nextId = messages.push({
+          message:  message,
+          meta:     meta
+      });
+
+      return nextId - 1;
     };
 
     this.removeMessage = function(messageId) {
-      delete messages[messageId];
+      if (messages.hasOwnProperty(messageId)) {
+        delete messages[messageId];
+      }
     };
   };
 })();

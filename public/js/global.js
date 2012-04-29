@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
   });
   
   $('body').on('mouseleave', '#layers li', function () {
-    $('#messages > iframe').fadeIn('fast');
+    $('#messages > iframe').show();
   });
   
   // Slider

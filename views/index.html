@@ -17,7 +17,7 @@
         <a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a>
         <ul id="layers">
           {{each(i) messages}}
-            {{partial({id: i}) "layer"}}
+            {{partial((messages[i].meta)) "layer"}}
           {{/each}}
         </ul>
       </li>
@@ -67,10 +67,7 @@
   </div-->
   
   <script type="text/javascript">
-    var app = {
-      clientId: '${session.clientId}',
-      name:     '${session.clientId.name}'
-    };
+    var app = { clientId: '${session.clientId}'};
   </script>
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
