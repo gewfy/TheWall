@@ -17,7 +17,9 @@
           'messageCount': $('#text-messageCount'),
           'clientCount':  $('#text-clientCount'),
 
-          editIframe:     $('#edit')
+          'editIframe':   $('#edit'),
+
+          'messages':     $('#messages')
         },
 
         editIframe  = $elements.editIframe.get(0),
@@ -113,6 +115,15 @@
 
     this.hidePublishAll = function() {
       $elements.publishAll.hide();
+    };
+
+    this.focusLayer = function(index) {
+      var $iframes = $elements.messages.find('iframe');
+      $iframes.not($iframes.eq(index)).hide();
+    };
+
+    this.unfocusLayers = function() {
+      $elements.messages.find('iframe').show();
     };
   };
 })(jQuery, this);

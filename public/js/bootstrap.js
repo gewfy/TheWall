@@ -19,10 +19,16 @@ jQuery(function($) {
       });
     })
 
-    .on('contextmenu',  '#thewall', function(){ return false; })
-    .on('mousedown',    '#thewall', app.theWall.contextMenu)
+    .on('contextmenu',  '#thewall',         function(){ return false; })
+    .on('mousedown',    '#thewall',         app.theWall.contextMenu)
 
-    .on('click',        '#publish-all > a', app.theWall.publish);
+    .on('click',        '#publish-all > a', app.theWall.publish)
+
+    .on('mouseenter',   '#layers li',       function () {
+      app.theWall.focusLayer($(this).index());
+    })
+
+    .on('mouseleave',   '#layers li',       app.theWall.unfocusLayers);
 
   $($('#edit').get(0).contentDocument).on('DOMSubtreeModified', app.theWall.showPublishAll);
 
