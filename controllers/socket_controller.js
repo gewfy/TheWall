@@ -61,12 +61,19 @@ module.exports = function(socket) {
       clients.touchClient(clientId);
     }
 
-    clients.setClientMetaValues(clientId, {
-      name: client.name,
-      hash: clients.getEmailHash(client.email)
-    });
+    if (client.name) {
+      clients.setClientMetaValues(clientId, {
+        name: client.name,
+        hash: clients.getEmailHash(client.email)
+      });
 
-    self.publishClients();
+      self.publishReady();
+      self.publishClients();
+    }
+  };
+
+  this.publishReady = function() {
+    socket.emit('ready');
   };
 
   this.broadcast = function(where, what) {
