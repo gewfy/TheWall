@@ -12,12 +12,16 @@
         $elements = {
           'splash':       $('#splash'),
           'contextMenu':  $('#contextMenu'),
+          'publishAll':   $('#publish-all'),
 
           'messageCount': $('#text-messageCount'),
           'clientCount':  $('#text-clientCount'),
 
           editIframe:     $('#edit')
-        };
+        },
+
+        editIframe  = $elements.editIframe.get(0),
+        editContext = editIframe.contentDocument ||editIframe.contentWindow.document;
 
     this.receiveReady = function() {
       $elements.splash.fadeOut();
@@ -81,17 +85,34 @@
           var pos = $elements.contextMenu.position();
 
           $elements.contextMenu.fadeOut('fast', function() {
-            var editIframe  = $elements.editIframe.get(0),
-                editContext = editIframe.contentDocument ||editIframe.contentWindow.document;
-
             callback(
               pos.left,
               pos.top,
-              $('body', editContext)
+              $('body', editContext),
+              self.publish
             );
           });
         })
         .appendTo($elements.contextMenu);
+    };
+
+    this.publish = function() {
+      var $editContext  = $('body', editContext),
+          html          = $editContext.html();
+
+      app.socket.emit('message', html);
+
+      $editContext.empty();
+
+      self.hidePublishAll();
+    };
+
+    this.showPublishAll = function() {
+      $elements.publishAll.show();
+    };
+
+    this.hidePublishAll = function() {
+      $elements.publishAll.hide();
     };
   };
 })(jQuery, this);

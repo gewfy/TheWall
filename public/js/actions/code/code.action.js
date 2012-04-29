@@ -1,55 +1,102 @@
 (function($, global) {
   global.codeAction = function() {
-    var self = this;
+    var self = this,
 
-    this.show = function(x, y, $context) {
-      $message.appendTo(this.$element).animate({
-        height: '343px'
-      }, function () {
-        $(this).on('click', '.btn.hide', function (e) {
-          e.preventDefault();
-          $(this).removeClass('hide').addClass('show').html('Show').closest('.message').animate({height: '43px'});
-        });
+        callback,
 
-        $(this).on('click', '.btn.show', function (e) {
-          e.preventDefault();
-          $(this).removeClass('show').addClass('hide').html('Hide').closest('.message').animate({height: '343px'});
-        });
-      });
+        $editor,
+        editor,
 
-      var editor = CodeMirror.fromTextArea($('.message.code-editor > .input > textarea').get(0), {
-        mode: "application/xml",
-        lineNumbers: true,
-        lineWrapping: true,
-        onCursorActivity: function() {
-          editor.setLineClass(hlLine, null);
-          hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
-        },
-        onChange: function() {
-          clearTimeout(delay);
-          delay = setTimeout(function () {
-            var $codeHolder = $(document.createElement('div')).addClass('custom-code'),
-                code        = editor.getValue();
+        $context;
 
-            $(this).removeClass('preview').addClass('edit').html('Edit');
+    this.init = function(x, y, $editContext, publishCallback) {
 
-            if ($editCanvas.find('.custom-code').length > 0) {
-              $('#edit').get(0).contentDocument.open();
-              $('#edit').get(0).contentDocument.write(code);
-              $('#edit').get(0).contentDocument.close();
-            } else {
-              $('#edit').get(0).contentDocument.open();
-              $('#edit').get(0).contentDocument.write(code);
-              $('#edit').get(0).contentDocument.close();
-              $editCanvas.append($codeHolder);
-            }
-          }, 300);
+      $context  = $editContext;
+      callback  = publishCallback;
+
+      if (!$editor) {
+        $editor = $('#tpl-action-code').tmpl().appendTo('body');
+
+        $editor
+          .on('click', '.btn.publish',  self.publish)
+          .on('click', '.btn.show',     self.showEditor)
+          .on('click', '.btn.hide',     self.hideEditor)
+          .on('click', '.btn.cancel',   self.closeEditor);
+
+        self.initEditor();
+      }
+
+      $editor.animate({ height: '343px' });
+    };
+
+    this.initEditor = function() {
+      var updateDelay;
+
+      editor = CodeMirror.fromTextArea(
+        $editor.find('.input > textarea').get(0),
+        {
+          mode:         'text/html',
+          lineNumbers:  true,
+          lineWrapping: true,
+          onChange:     function() {
+            clearTimeout(updateDelay);
+            updateDelay = setTimeout(function () {
+              self.updateContext(editor.getValue());
+            }, 300);
+          }
         }
-      });
+      );
+    };
 
-      var hlLine = editor.setLineClass(0, "activeline");
-    }
+    this.updateContext = function(html) {
+      var canvas    = $context.get(0),
+          document  = canvas.ownerDocument;
 
-    this.open
+      canvas.innerHTML = html;
+
+      var scripts = canvas.getElementsByTagName('script');
+      for ( var i = 0; scripts[i]; i++ ) {
+        var script = scripts[i];
+        if (!script.type || script.type.toLowerCase() === 'text/javascript') {
+          var data    = (script.text || script.textContent || script.innerHTML || ""),
+
+              head    = document.getElementsByTagName('head')[0] || document.documentElement,
+              element = document.createElement('script');
+
+          element.type = 'text/javascript';
+          element.appendChild(document.createTextNode(data));
+          head.insertBefore(element, head.firstChild);
+          head.removeChild(element);
+        }
+      }
+    };
+
+    this.publish = function() {
+      self.closeEditor();
+      callback();
+    };
+
+    this.showEditor = function() {
+      $(this)
+        .removeClass('show')
+        .addClass('hide')
+        .html('Hide');
+
+      $editor.animate({height: '343px'});
+    };
+
+    this.hideEditor = function() {
+      $(this)
+        .removeClass('hide')
+        .addClass('show')
+        .html('Show');
+
+      $editor.animate({height: '43px'});
+    };
+
+    this.closeEditor = function() {
+      $editor.remove();
+      $editor = null;
+    };
   }
 })(jQuery, this);

@@ -9,7 +9,7 @@
 <body>
   <div id="thewall"></div>
 
-  <span class="publish-all"><a href="#">Publish</a> you have unpublished messages</span>
+  <span id="publish-all" class="publish-all"><a href="#">Publish</a> you have unpublished messages</span>
 
   <nav>
     <ul>
@@ -91,5 +91,96 @@
   <script type="text/x-jquery-tmpl" id="tpl-contextMenu">
     {{html includeTemplate('views/contextMenu.html')}}
   </script>
+
+  <!-- Code action -->
+  <script src="/js/actions/code/codemirror.js"></script>
+  <script src="/js/actions/code/mode/css/css.js"></script>
+  <script src="/js/actions/code/mode/javascript/javascript.js"></script>
+  <script src="/js/actions/code/mode/xml/xml.js"></script>
+  <script src="/js/actions/code/mode/htmlmixed/htmlmixed.js"></script>
+
+  <script src="/js/actions/code/code.action.js"></script>
+
+  <script type="text/x-jquery-tmpl" id="tpl-action-code">
+    <div class="message code-editor">
+      <div class="toolbox">
+        <button class="btn publish inline">Publish</button>
+        <button class="btn hide inline">Hide</button>
+        <button class="btn cancel inline">Cancel</button>
+      </div>
+      <div class="input">
+        <textarea name="code"></textarea>
+      </div>
+    </div>
+  </script>
+<!--
+  <script type="text/x-jquery-tmpl" id="img-message">
+    <div class="message image">
+      <div class="slider">
+        <input type="range" step="1" min="10" value="2000" max="2000" name="range">
+      </div>
+      <div class="input">
+      </div>
+      <div class="toolbox rounded arrow">
+        <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</a></button>
+        <input type="text" class="input url" placeholder="Image url">
+        <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-jquery-tmpl" id="tpl-sketchboard">
+    <div class="sketchboard message">
+      <div class="toolbox rounded vertical">
+        <button class="btn publish"><i class="icon-ok icon-large"></i></button>
+        <button class="btn"><i class="icon-pencil icon-large"></i></button>
+        <button class="btn colorpick"><span></span></button>
+        <button class="btn cancel"><i class="icon-remove icon-large"></i></button>
+      </div>
+      <div class="inner">
+      </div>
+    </div>
+  </script>
+
+  <script id="text-message" type="text/x-jquery-tmpl">
+    <div class="message text">
+      <div class="input">
+        <p contenteditable="true"></p>
+      </div>
+      <div class="toolbox rounded arrow">
+        <button class="btn publish"><i class="icon-ok icon-large"></i> Publish</button>
+        <button class="btn font-style" rel="bold"><strong>B</strong></button>
+        <button class="btn font-style" rel="italic"><em>I</em></button>
+        <button class="btn font-style" rel="underline"><ins>U</ins></button>
+        <div class="select">
+          <span>Helvetica</span>
+          <i class="icon-chevron-down icon-large"></i>
+
+          <select class="font-face">
+            <option>Satisfy</option>
+            <option>Designosaur</option>
+            <option>Journal</option>
+            <option>Salsa</option>
+            <option>Ubuntu Mono</option>
+            <option>Arial</option>
+            <option selected="selected">Helvetica</option>
+          </select>
+        </div>
+        <div class="select">
+          <span>Medium</span>
+          <i class="icon-chevron-down icon-large"></i>
+
+          <select class="font-size">
+            <option value="1">Tiny</option>
+            <option value="3">Small</option>
+            <option value="5" selected="selected">Medium</option>
+            <option value="7">Large</option>
+          </select>
+        </div>
+        <button class="btn cancel right"><i class="icon-remove icon-large"></i> Remove</button>
+      </div>
+    </div>
+  </script>
+-->
 </body>
 </html>

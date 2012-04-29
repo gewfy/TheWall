@@ -20,11 +20,19 @@ jQuery(function($) {
     })
 
     .on('contextmenu',  '#thewall', function(){ return false; })
-    .on('mousedown',    '#thewall', app.theWall.contextMenu);
-  
+    .on('mousedown',    '#thewall', app.theWall.contextMenu)
+
+    .on('click',        '#publish-all > a', app.theWall.publish);
+
+  $($('#edit').get(0).contentDocument).on('DOMSubtreeModified', app.theWall.showPublishAll);
+
+  app.actions = {
+    code: new codeAction
+  };
+
   app.theWall.addAction('Add text');
   app.theWall.addAction('Add image');
   app.theWall.addAction('Add video');
   app.theWall.addAction('Add drawing');
-  app.theWall.addAction('Add custom code', null, true);
+  app.theWall.addAction('Add custom code', app.actions.code.init, true);
 });
