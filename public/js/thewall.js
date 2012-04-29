@@ -12,26 +12,17 @@
       this.$element = $(element);
       this.editIframe = $('#edit').get(0);
       this.$editCanvas = $('body', this.editIframe.contentDocument);
+
+      app.socket = io.connect('/');
       
-      app.faye = {
-        client: new Faye.Client('/faye')
-      };
-      
-      app.faye.client.addExtension({ outgoing: function(message, callback) {
-        if (!message.ext) message.ext = {};
-      
-        message.ext.clientId = app.clientId;
-        callback(message);
-      }});
-      
-      app.faye.client.subscribe('/messages', function(messages) {
+      app.socket.on('messages', function(messages) {
         $('#tpl-iframe').tmpl(messages).appendTo('#messages');
         $('#tpl-layer').tmpl(messages).appendTo('#layers');
       
         $('#text-messageCount').text(messages.count);
       });
       
-      app.faye.client.subscribe('/clients', function(clients) {
+      app.socket.on('clients', function(clients) {
         var $clients = $('#clients');
       
         $clients.empty();
@@ -86,9 +77,9 @@
               $(this).removeClass('preview').addClass('edit').html('Edit');
                   
               if ($editCanvas.find('.custom-code').length > 0) {
-                $editCanvas.find('.custom-code').html(code);
+                $editCanvas.find('.custom-code').get(0).innerHTML = (code);
               } else {    
-                $codeHolder.html(code);
+                $codeHolder.get(0).innerHTML = code;
                 $editCanvas.append($codeHolder);
               }
             }, 300);
@@ -158,7 +149,7 @@
         
         $message.fadeOut(200, function () {
           $message.html($image).find('.toolbox').remove();
-          app.faye.client.publish('/message', $message.html());
+          app.socket.emit('message', $message.html());
           
           $message.remove();
           
@@ -175,7 +166,7 @@
           }
         });
         
-        app.faye.client.publish('/message', $editCanvas.html()); 
+        app.socket.emit('message', $editCanvas.html());
         $editCanvas.empty();    
 	    } else {
         $message.clone().appendTo($dummy).find('*').removeAttr('contenteditable');
@@ -184,7 +175,7 @@
 	    
 	      $message.find('.toolbox').animate({bottom: '-=50px', opacity: 0}, 200, function () {
           $message.remove();
-          app.faye.client.publish('/message', $dummy.html());
+          app.socket.emit('message', $dummy.html());
           
           if ($thewall.find('.message').length < 1) {
             $('.publish-all').css('opacity', 0);
@@ -208,7 +199,7 @@
           
           $message.fadeOut(200, function () {
             $message.html($image).find('.toolbox').remove();
-            app.faye.client.publish('/message', $message.html());
+            app.socket.emit('message', $message.html());
             
             $message.remove();
           });
@@ -217,7 +208,7 @@
             $(this).remove();
           });
           
-          app.faye.client.publish('/message', $editCanvas.html());     
+          app.socket.emit('message', $editCanvas.html());
         } else {
           $message.clone().appendTo($dummy).find('*').removeAttr('contenteditable');
           $dummy.find('.toolbox').remove();
@@ -225,7 +216,7 @@
         
           $message.find('.toolbox').animate({bottom: '-=50px', opacity: 0}, 200, function () {
             $message.remove();
-            app.faye.client.publish('/message', $dummy.html());
+            app.socket.emit('message', $dummy.html());
           });
         }
       });

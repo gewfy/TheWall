@@ -7,26 +7,18 @@ app.express.get('/',        expressController.index);
 app.express.get('/message', expressController.message);
 app.express.get('/edit',    expressController.edit);
 
+/* SOCKET IO */
+var SocketController = require('./controllers/socket_controller');
+app.io = require('socket.io').listen(app.express);
 
-/* FAYE BAYEUX */
-var faye        = require('faye'),
-    bayeux      = new faye.NodeAdapter({
-      mount:    '/faye',
-      timeout:  10
-    }),
-    fayeController = require('./controllers/faye_controller');
+app.io.sockets.on('connection', function (socket) {
+  var controller = new SocketController(socket);
 
-bayeux.attach(app.express);
-bayeux.addExtension({ incoming: fayeController.incoming });
-
-app.faye = {
-  server: bayeux,
-  client: bayeux.getClient()
-};
-
-/* Set up routes */
-app.faye.client.subscribe('/message', fayeController.receiveMessage);
-app.faye.client.subscribe('/client',  fayeController.receiveClient);
+  socket.on('message',      controller.receiveMessage);
+  socket.on('client',       controller.receiveClient);
+  socket.on('disconnect',   controller.disconnect);
+});
 
 /* Set up purge interval */
-setInterval(fayeController.purgeClients, 9000);
+/*
+setInterval(socketController.purgeClients, 9000);*/

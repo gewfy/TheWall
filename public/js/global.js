@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
   $('#form-setName').submit(function(e) {
     e.preventDefault();
 
-    app.faye.client.publish(
+    app.socket.emit(
       $(this).attr('action'),
       {
         clientId: app.clientId,

@@ -10,7 +10,7 @@ module.exports = (function() {
       if (bitlength > 32) {
         var parts  = Math.ceil(bitlength / 32),
             string = '';
-        while (parts--) string += random(32);
+        while (parts--) { string += random(32); }
         return string;
       }
       var limit   = Math.pow(2, bitlength) - 1,
@@ -117,7 +117,7 @@ module.exports = (function() {
 
     this.getEmailHash = function(email) {
       email = email.replace(/^\s*|\s*$/g, '').toLowerCase();
-      
+
       var hash = crypto.createHash('md5');
       hash.update(email);
 
