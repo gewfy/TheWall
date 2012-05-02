@@ -50,7 +50,7 @@ jQuery(function($) {
      			reader.onload = function (evt) {
              $('<img/>')
                .css({
-                 position: 'absolyte',
+                 position: 'absolute',
                  left:     x,
                  top:      y
                })
