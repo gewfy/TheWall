@@ -37,7 +37,11 @@
         .on('click',  '.font-style',  self.changeFontStyle)
         .on('click',  '.publish',     self.publish)
         .on('click',  '.cancel',      self.cancel)
-        .appendTo('body');
+        .appendTo('body')
+        .draggable({
+          handle: '.move',
+          drag:   self.moveMessage
+        });
 
       self.showToolbar();
     };
@@ -60,6 +64,17 @@
       if (selection.focusNode === null) {
         $toolbar.hide();
       }
+    };
+
+    this.moveMessage = function(e, ui) {
+      var pos     = ui.offset,
+          width   = ($message.outerWidth() / 2) - ($toolbar.outerWidth() / 2),
+          height  = $message.outerHeight();
+
+      $message.css({
+          left: pos.left - width,
+          top:  pos.top - height
+        })
     };
 
     this.changeFontFace = function() {
