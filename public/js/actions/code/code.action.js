@@ -18,15 +18,15 @@
         $editor = $('#tpl-action-code').tmpl().appendTo('body');
 
         $editor
-          .on('click', '.btn.publish',  self.publish)
-          .on('click', '.btn.show',     self.showEditor)
-          .on('click', '.btn.hide',     self.hideEditor)
-          .on('click', '.btn.cancel',   self.closeEditor);
+          .on('click', '.action.publish',  self.publish)
+          .on('click', '.action.show',     self.showEditor)
+          .on('click', '.action.hide',     self.hideEditor)
+          .on('click', '.action.cancel',   self.closeEditor);
 
         self.initEditor();
       }
 
-      $editor.animate({ height: '343px' });
+      $editor.animate({ height: '338px' });
     };
 
     this.initEditor = function() {
@@ -91,7 +91,7 @@
         .addClass('show')
         .html('Show');
 
-      $editor.animate({height: '43px'});
+      $editor.animate({height: '38px'});
     };
 
     this.closeEditor = function() {
