@@ -32,15 +32,10 @@ jQuery(function($) {
     .on('contextmenu',        function(){ return false; })
     .on('mousedown',          app.theWall.contextMenu);
 
-  app.actions = {
-    code: new codeAction,
-    text: new textAction,
-    sketchboard: new sketchboardAction,
-  };
 
-  app.theWall.addAction('Add text', app.actions.text.init);
+  app.theWall.addAction('Add text',         textAction);
   app.theWall.addAction('Add image');
   app.theWall.addAction('Add video');
-  app.theWall.addAction('Add drawing', app.actions.sketchboard.init);
-  app.theWall.addAction('Add custom code', app.actions.code.init, true);
+  app.theWall.addAction('Add drawing',      sketchboardAction);
+  app.theWall.addAction('Add custom code',  codeAction, true);
 });

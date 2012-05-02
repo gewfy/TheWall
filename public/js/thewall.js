@@ -22,6 +22,8 @@
           'messages':     $('#messages')
         },
 
+        inited      = [],
+
         editIframe  = $elements.editIframe.get(0),
         editContext = editIframe.contentDocument ||editIframe.contentWindow.document;
 
@@ -75,19 +77,22 @@
       }
     };
 
-    this.addAction = function(action, callback, delimited) {
+    this.addAction = function(label, callback, delimited) {
       $templates.contextMenu
         .tmpl({
-          'action':     action,
+          'label':      label,
           'delimited':  delimited
         })
         .on('click', function(e) {
           e.preventDefault();
 
-          var pos = $elements.contextMenu.position();
+          var action  = new callback,
+              pos     = $elements.contextMenu.position();
+
+          inited.push(action);
 
           $elements.contextMenu.fadeOut('fast', function() {
-            callback(
+            action.init(
               pos.left,
               pos.top,
               $('body', editContext),
@@ -127,4 +132,4 @@
       $elements.messages.find('iframe').show();
     };
   };
-})(jQuery, this);
+})(jQuery, window);

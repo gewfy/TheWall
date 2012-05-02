@@ -147,12 +147,10 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
     .message.image > .slider { display: none; }
     .message.image.has  > .slider { display: block; }
 
-  .message.text > .toolbox {
+  .text.toolbar {
+    display: none;
     position: absolute;
-    bottom: -50px;
-    left: 50%;
-    margin-left: -294px;
-    width: 600px;
+    width: auto;
   }
 
   .message.text > .input > p { 
