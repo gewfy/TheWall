@@ -119,7 +119,8 @@
 
     this.focusLayer = function(index) {
       var $iframes = $elements.messages.find('iframe');
-      $iframes.not($iframes.eq(index)).hide();
+      $iframes.hide();
+      $iframes.eq(index).show();
     };
 
     this.unfocusLayers = function() {
