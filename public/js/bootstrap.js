@@ -30,7 +30,39 @@ jQuery(function($) {
   $($('#edit').get(0).contentDocument)
     .on('DOMSubtreeModified', app.theWall.showPublishAll)
     .on('contextmenu',        function(){ return false; })
-    .on('mousedown',          app.theWall.contextMenu);
+    .on('mousedown',          app.theWall.contextMenu)
+    .on('dragover',           function(e) { e.preventDefault();  e.stopPropagation(); return false; })
+    .on('dragenter',          function(e) { e.preventDefault();  e.stopPropagation(); return false; })
+    .on('drop',               function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var evt   = e.originalEvent,
+          x     = evt.clientX,
+          y     = evt.clientY,
+          files = evt.dataTransfer.files;
+
+      if (files.length > 0) {
+     		var file = files[0];
+     		if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+     			var reader = new FileReader();
+
+     			reader.onload = function (evt) {
+             $('<img/>')
+               .css({
+                 position: 'absolyte',
+                 left:     x,
+                 top:      y
+               })
+               .attr('src', evt.target.result)
+               .appendTo($('body', $('#edit').get(0).contentDocument))
+               .draggable()
+
+     			};
+     			reader.readAsDataURL(file);
+     		}
+     	}
+    });
 
 
   app.theWall.addAction('Add text',         textAction);
