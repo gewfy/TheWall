@@ -1,35 +1,180 @@
-/*  Font Awesome
-    the iconic font designed for use with Twitter Bootstrap
-    -------------------------------------------------------
-    The full suite of pictographic icons, examples, and documentation
-    can be found at: http://fortawesome.github.com/Font-Awesome/
+/* Toolbars
+----------------------------------- */
 
-    License
-    -------------------------------------------------------
-    The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
-    http://creativecommons.org/licenses/by/3.0/ A mention of
-    'Font Awesome - http://fortawesome.github.com/Font-Awesome' in human-readable
-    source code is considered acceptable attribution (most common on the web).
-    If human readable source code is not available to the end user, a mention in
-    an 'About' or 'Credits' screen is considered acceptable (most common in desktop
-    or mobile software).
+/*
+  This is what a toolbar looks like.
+  It's purpose is simply to hold action buttons and likes.
+  
+    <div class="toolbar"></div> */
 
-    Contact
-    -------------------------------------------------------
-    Email: dave@davegandy.com
-    Twitter: http://twitter.com/fortaweso_me
-    Work: http://lemonwi.se co-founder
+.toolbar {
+  width: 100%; 
+  text-align: center; 
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px;
+  background: #dddad1 url(/css/gfx/bg.png) repeat;
+  min-height: 38px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  clear: both;
+  margin-top: 10px;
+}
 
-    */
+.toolbar:first-child { margin-top: 0; }
+
+/*
+ A toolbar does not have rounded corners by default, but with a class added that can be done.
+ 
+    <div class="toolbar rounded"></div> */
+
+.toolbar.rounded {
+  border-radius: 3px;
+}
+
+/*
+ If you like the toolbar to be dynamic in width instead of full width, add a class.
+ 
+    <div class="toolbar dynamic"></div> */
+
+.toolbar.dynamic {
+  width: auto;
+  display: inline-block;
+}
+
+/*
+ A toolbar can be vertical with the class "vertical"
+ No need to set the class "single" on the buttons, the toolbar takes care of that.
+  
+    <div class="toolbar vertical">
+      <button class="action positive"><i class="icon-ok"></i></button>
+      <button class="action"><i class="icon-pencil"></i></button>
+      <button class="action negative"><i class="icon-remove"></i></button>
+    </div>*/
+    
+.toolbar.vertical {
+  width: 42px;
+}
+
+  .toolbar.vertical > .action {
+    text-align: center;
+    width: 30px;
+    padding: 0;
+    margin-top: 5px;
+  }
+  
+  .toolbar.vertical > .action:first-child {
+    margin-top: 0;
+  }
+
+/*
+ You can also add a arrow to the toolbar
+ 
+    <div class="toolbar arrow"></div>
+    <div class="toolbar arrow-left"></div> */
+
+.toolbar[class*="arrow"]:after {
+  width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #dddad1;
+	content: "";
+	position: absolute;
+	top: -8px;
+	right: 50%;
+	margin-right: -4px;
+	opacity: 0.9;
+}
+
+.toolbar.arrow-left:after {
+  width: 0;
+  height: 0;
+	border-top: 8px solid transparent;
+	border-right: 8px solid #dddad1;
+	border-bottom: 8px solid transparent;
+	left: -16px;
+	top: 50%;
+	margin-top: -6px;
+}
+
+/* Buttons
+----------------------------------- */
+
+/*
+ A action button is exactly what it says.
+ It was made for the toolbar but can live everywhere.
+ Every element can be a action button, just add the class "action" to it.
+ 
+    <button class="action">Button</button> */
+
+.action {
+  display: inline-block;
+  overflow: hidden; 
+  border: none; 
+  color: #fff !important; 
+  padding: 0 15px; 
+  border-radius: 3px; 
+  background: #a19f98 url(/css/gfx/bg.png) repeat;
+  font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; 
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  cursor: pointer;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.action:hover, .action:focus { background-color: #1e909e; }
+
+.action:active { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2); }
+
+/*
+ The action button is by default the normal gray.
+ Use the "positive" class to make it green, maybe to a publish button
+ 
+    <button class="action positive">Publish</button> */
+
+.action.positive { background-color: #8dae1b; }
+
+.action.positive:hover, .action.positive:focus { background-color: #708b15; }
+
+/*
+ The class "negative" makes a action button red.
+ 
+    <button class="action negative">Cancel</button> */
+
+.action.negative { background-color: #ae1b1b; }
+
+.action.negative:hover, .action.negative:focus { background-color: #861515; }
+
+/*
+ You can simple float a action button to the left with the class "left"
+ 
+    <button class="action left">To the left</button> */
+
+.action.left { float: left; }
+
+/*
+ You can also float it to the right
+ 
+    <button class="action right">To the right</button> */
+
+.action.right { float: right; }
+
+/* Icons
+----------------------------------- */
 
 @font-face {
     font-family: 'FontAwesome';
-    src: url('../fonts/fontawesome-webfont.eot');
-    src: url('../fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
+    src: url('/css/fonts/fontawesome-webfont.eot');
+    src: url('/css/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('/css/fonts/fontawesome-webfont.woff') format('woff'), url('/css/fonts/fontawesome-webfont.ttf') format('truetype'), url('/css/font/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('/css/font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
-/* sprites.less reset */
+ 
 [class^="icon-"], [class*=" icon-"] {
     display: inline;
     width: auto;
@@ -43,8 +188,7 @@
 li[class^="icon-"], li[class*=" icon-"] {
     display: block;
 }
-/*  Font Awesome styles
-    ------------------------------------------------------- */
+
 [class^="icon-"]:before, [class*=" icon-"]:before {
     font-family: FontAwesome;
     font-weight: normal;
@@ -56,13 +200,11 @@ a [class^="icon-"], a [class*=" icon-"] {
     display: inline-block;
     text-decoration: inherit;
 }
-/* makes the font 33% larger relative to the icon container */
 .icon-large:before {
     vertical-align: top;
     font-size: 1.3333333333333333em;
 }
 .btn [class^="icon-"], .btn [class*=" icon-"] {
-    /* keeps button heights with and without icons the same */
     line-height: .9em;
 }
 li [class^="icon-"], li [class*=" icon-"] {
@@ -71,7 +213,6 @@ li [class^="icon-"], li [class*=" icon-"] {
     text-align: center;
 }
 li .icon-large[class^="icon-"], li .icon-large[class*=" icon-"] {
-    /* 1.5 increased font size for icon-large * 1.25 width */
     width: 1.875em;
 }
 li[class^="icon-"], li[class*=" icon-"] {
@@ -85,8 +226,153 @@ li[class^="icon-"]:before, li[class*=" icon-"]:before {
 li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
     text-indent: -1.3333333333333333em;
 }
-/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-    readers do not read off random characters that represent icons */
+
+/*
+  Icons are made possible by Font Awesome. 
+  To insert a icon use the class "icon-" followed by the icon name you want on whatever element.
+  Additionally if you put it inside a action button, you can apply the class "single" to the action element
+  
+    <button class="action single"><i class="icon-glass"></i></button>
+    <button class="action single"><i class="icon-music"></i></button>
+    <button class="action single"><i class="icon-search"></i></button>
+    <button class="action single"><i class="icon-envelope"></i></button>
+    <button class="action single"><i class="icon-heart"></i></button>              
+    <button class="action single"><i class="icon-star"></i></button>               
+    <button class="action single"><i class="icon-star-empty"></i></button>         
+    <button class="action single"><i class="icon-user"></i></button>               
+    <button class="action single"><i class="icon-film"></i></button>               
+    <button class="action single"><i class="icon-th-large"></i></button>           
+    <button class="action single"><i class="icon-th"></i></button>                 
+    <button class="action single"><i class="icon-th-list"></i></button>            
+    <button class="action single"><i class="icon-ok"></i></button>                 
+    <button class="action single"><i class="icon-remove"></i></button>             
+    <button class="action single"><i class="icon-zoom-in"></i></button>            
+    <button class="action single"><i class="icon-zoom-out"></i></button>           
+    <button class="action single"><i class="icon-off"></i></button>                
+    <button class="action single"><i class="icon-signal"></i></button>             
+    <button class="action single"><i class="icon-cog"></i></button>                
+    <button class="action single"><i class="icon-trash"></i></button>              
+    <button class="action single"><i class="icon-home"></i></button>               
+    <button class="action single"><i class="icon-file"></i></button>               
+    <button class="action single"><i class="icon-time"></i></button>               
+    <button class="action single"><i class="icon-road"></i></button>               
+    <button class="action single"><i class="icon-download-alt"></i></button>       
+    <button class="action single"><i class="icon-download"></i></button>           
+    <button class="action single"><i class="icon-upload"></i></button>             
+    <button class="action single"><i class="icon-inbox"></i></button>              
+    <button class="action single"><i class="icon-play-circle"></i></button>        
+    <button class="action single"><i class="icon-repeat"></i></button>             
+    <button class="action single"><i class="icon-refresh"></i></button>            
+    <button class="action single"><i class="icon-list-alt"></i></button>           
+    <button class="action single"><i class="icon-lock"></i></button>               
+    <button class="action single"><i class="icon-flag"></i></button>               
+    <button class="action single"><i class="icon-headphones"></i></button>         
+    <button class="action single"><i class="icon-volume-off"></i></button>         
+    <button class="action single"><i class="icon-volume-down"></i></button>        
+    <button class="action single"><i class="icon-volume-up"></i></button>          
+    <button class="action single"><i class="icon-qrcode"></i></button>             
+    <button class="action single"><i class="icon-barcode"></i></button>            
+    <button class="action single"><i class="icon-tag"></i></button>                
+    <button class="action single"><i class="icon-tags"></i></button>               
+    <button class="action single"><i class="icon-book"></i></button>               
+    <button class="action single"><i class="icon-bookmark"></i></button>           
+    <button class="action single"><i class="icon-print"></i></button>              
+    <button class="action single"><i class="icon-camera"></i></button>             
+    <button class="action single"><i class="icon-font"></i></button>               
+    <button class="action single"><i class="icon-bold"></i></button>               
+    <button class="action single"><i class="icon-italic"></i></button>             
+    <button class="action single"><i class="icon-text-height"></i></button>        
+    <button class="action single"><i class="icon-text-width"></i></button>         
+    <button class="action single"><i class="icon-align-left"></i></button>         
+    <button class="action single"><i class="icon-align-center"></i></button>       
+    <button class="action single"><i class="icon-align-right"></i></button>        
+    <button class="action single"><i class="icon-align-justify"></i></button>      
+    <button class="action single"><i class="icon-list"></i></button>               
+    <button class="action single"><i class="icon-indent-left"></i></button>        
+    <button class="action single"><i class="icon-indent-right"></i></button>       
+    <button class="action single"><i class="icon-facetime-video"></i></button>     
+    <button class="action single"><i class="icon-picture"></i></button>            
+    <button class="action single"><i class="icon-pencil"></i></button>             
+    <button class="action single"><i class="icon-map-marker"></i></button>         
+    <button class="action single"><i class="icon-adjust"></i></button>             
+    <button class="action single"><i class="icon-tint"></i></button>               
+    <button class="action single"><i class="icon-edit"></i></button>               
+    <button class="action single"><i class="icon-share"></i></button>              
+    <button class="action single"><i class="icon-check"></i></button>              
+    <button class="action single"><i class="icon-move"></i></button>               
+    <button class="action single"><i class="icon-step-backward"></i></button>      
+    <button class="action single"><i class="icon-fast-backward"></i></button>      
+    <button class="action single"><i class="icon-backward"></i></button>           
+    <button class="action single"><i class="icon-play"></i></button>               
+    <button class="action single"><i class="icon-pause"></i></button>              
+    <button class="action single"><i class="icon-stop"></i></button>               
+    <button class="action single"><i class="icon-forward"></i></button>            
+    <button class="action single"><i class="icon-fast-forward"></i></button>       
+    <button class="action single"><i class="icon-step-forward"></i></button>       
+    <button class="action single"><i class="icon-eject"></i></button>              
+    <button class="action single"><i class="icon-chevron-left"></i></button>       
+    <button class="action single"><i class="icon-chevron-right"></i></button>      
+    <button class="action single"><i class="icon-plus-sign"></i></button>          
+    <button class="action single"><i class="icon-minus-sign"></i></button>         
+    <button class="action single"><i class="icon-remove-sign"></i></button>        
+    <button class="action single"><i class="icon-ok-sign"></i></button>            
+    <button class="action single"><i class="icon-question-sign"></i></button>      
+    <button class="action single"><i class="icon-info-sign"></i></button>          
+    <button class="action single"><i class="icon-screenshot"></i></button>         
+    <button class="action single"><i class="icon-remove-circle"></i></button>      
+    <button class="action single"><i class="icon-ok-circle"></i></button>          
+    <button class="action single"><i class="icon-ban-circle"></i></button>         
+    <button class="action single"><i class="icon-arrow-left"></i></button>         
+    <button class="action single"><i class="icon-arrow-right"></i></button>        
+    <button class="action single"><i class="icon-arrow-up"></i></button>           
+    <button class="action single"><i class="icon-arrow-down"></i></button>         
+    <button class="action single"><i class="icon-share-alt"></i></button>          
+    <button class="action single"><i class="icon-resize-full"></i></button>        
+    <button class="action single"><i class="icon-resize-small"></i></button>       
+    <button class="action single"><i class="icon-plus"></i></button>               
+    <button class="action single"><i class="icon-minus"></i></button>              
+    <button class="action single"><i class="icon-asterisk"></i></button>           
+    <button class="action single"><i class="icon-exclamation-sign"></i></button>   
+    <button class="action single"><i class="icon-gift"></i></button>               
+    <button class="action single"><i class="icon-leaf"></i></button>               
+    <button class="action single"><i class="icon-fire"></i></button>               
+    <button class="action single"><i class="icon-eye-open"></i></button>           
+    <button class="action single"><i class="icon-eye-close"></i></button>          
+    <button class="action single"><i class="icon-warning-sign"></i></button>       
+    <button class="action single"><i class="icon-plane"></i></button>              
+    <button class="action single"><i class="icon-calendar"></i></button>           
+    <button class="action single"><i class="icon-random"></i></button>             
+    <button class="action single"><i class="icon-comment"></i></button>            
+    <button class="action single"><i class="icon-magnet"></i></button>             
+    <button class="action single"><i class="icon-chevron-up"></i></button>         
+    <button class="action single"><i class="icon-chevron-down"></i></button>       
+    <button class="action single"><i class="icon-retweet"></i></button>            
+    <button class="action single"><i class="icon-shopping-cart"></i></button>      
+    <button class="action single"><i class="icon-folder-close"></i></button>       
+    <button class="action single"><i class="icon-folder-open"></i></button>        
+    <button class="action single"><i class="icon-resize-vertical"></i></button>    
+    <button class="action single"><i class="icon-resize-horizontal"></i></button>  
+    <button class="action single"><i class="icon-bar-chart"></i></button>          
+    <button class="action single"><i class="icon-twitter-sign"></i></button>       
+    <button class="action single"><i class="icon-facebook-sign"></i></button>      
+    <button class="action single"><i class="icon-camera-retro"></i></button>       
+    <button class="action single"><i class="icon-key"></i></button>                
+    <button class="action single"><i class="icon-cogs"></i></button>               
+    <button class="action single"><i class="icon-comments"></i></button>           
+    <button class="action single"><i class="icon-thumbs-up"></i></button>          
+    <button class="action single"><i class="icon-thumbs-down"></i></button>        
+    <button class="action single"><i class="icon-star-half"></i></button>          
+    <button class="action single"><i class="icon-heart-empty"></i></button>        
+    <button class="action single"><i class="icon-signout"></i></button>            
+    <button class="action single"><i class="icon-linkedin-sign"></i></button>      
+    <button class="action single"><i class="icon-pushpin"></i></button>            
+    <button class="action single"><i class="icon-external-link"></i></button>      
+    <button class="action single"><i class="icon-signin"></i></button>             
+    <button class="action single"><i class="icon-trophy"></i></button>             
+    <button class="action single"><i class="icon-github-sign"></i></button>        
+    <button class="action single"><i class="icon-upload-alt"></i></button>         
+    <button class="action single"><i class="icon-lemon"></i></button>*/
+
 .icon-glass:before              { content: "\f000"; }
 .icon-music:before              { content: "\f001"; }
 .icon-search:before             { content: "\f002"; }
@@ -119,7 +405,6 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-play-circle:before        { content: "\f01d"; }
 .icon-repeat:before             { content: "\f01e"; }
 
-/* \f020 is not a valid unicode character. all shifted one down */
 .icon-refresh:before            { content: "\f021"; }
 .icon-list-alt:before           { content: "\f022"; }
 .icon-lock:before               { content: "\f023"; }
@@ -238,234 +523,193 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-upload-alt:before         { content: "\f093"; }
 .icon-lemon:before              { content: "\f094"; }
 
-.ui-draggable .toolbox {
-  cursor: move;
+.action.single {
+  text-align: center;
+  width: 30px;
+  padding: 0;
 }
 
+/* Form controls (input, select, radio...)
+----------------------------------- */
 
-/* =Toolbox
-------------------------------------------------------------------------------------------------------- */
-.toolbox {
-  width: 100%; 
-  text-align: center; 
-  padding: 5px; 
-  box-sizing: border-box; 
-  background: #dddad1 url(../gfx/bg.png) repeat;
-  height: 43px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+/*
+ A action button can simply be transformed to a select box.
+ Use a div element with the classes "action" and "select"
+ 
+    <div class="action select">
+      <select>
+        <option selected="selected">Selected item</option>
+        <option>Another item</option>
+      </select>
+    </div> */
+    
+.action.select {
+  padding: 0;
   position: relative;
-  clear: both;
 }
 
-.toolbox.arrow:after {
-  width: 0;
-	height: 0;
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
-	border-bottom: 8px solid #dddad1;
-	content: "";
-	position: absolute;
-	top: -8px;
-	right: 50%;
-	margin-right: -4px;
-	opacity: 0.9;
-}
-
-.toolbox.rounded {
-  border-radius: 3px;
-}
-
-.toolbox.vertical {
-  overflow: hidden;
-  width: 47px;
-  height: auto;
-}
-
-  .toolbox.vertical > .btn {
-    padding: 0 9px;
-    width: 34px;
-    margin-top: 5px;
-  }
-  
-  .toolbox.vertical > .btn:first-child {
-    margin-top: 0;
-  }
-
-/* =Buttons
-------------------------------------------------------------------------------------------------------- */
-.btn {
-  display: block;
-  height: 30px; 
-  float: left; 
-  overflow: hidden; 
-  margin-right: 5px; 
-  border: none; 
-  color: #fff; 
-  padding: 0 15px; 
-  border-radius: 3px; 
-  background: rgba(51, 51, 51, 0.3);
-  background: #a19f98 url(../gfx/bg.png) repeat;
-  font: bold 12px/30px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; 
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  text-decoration: none;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.btn:hover, .btn:focus {
-  background-color: #1e909e;
-}
-
-.btn:active {
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.btn.publish {
-  background-color: #8dae1b;
-}
-
-.btn.publish:hover, .btn.publish:focus {
-  background-color: #708b15;
-}
-
-.btn.cancel {
-  background-color: #ae1b1b;
-}
-
-.btn.cancel:hover, .btn.cancel:focus {
-  background-color: #861515;
-}
-
-.btn.inline {
+.action.select:after {
+  content: "\f078";
+  font-family: FontAwesome;
+  font-weight: bold;
   display: inline-block;
-  float: none;
-}
-
-.btn.right {
-  float: right;
-  margin-right: 0;
-}
-
-  .btn > [class^="icon"] {
-    line-height: 28px;
-  }
-  
-.btn.colorpick {
-  padding: 3px !important;
-}
-  
-  .btn.colorpick > span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    background: black;
-  }
-
-/* =Form
-------------------------------------------------------------------------------------------------------- */
-.slider { line-height: 30px; width: 100%; position: absolute; top: -30px; left: 0; z-index: 9000; }
-
-  .slider > strong > span { color: #698a12; }
-.slider #date-range-slider, .slider input { -webkit-appearance:	none; width: 100%; top: -4px; height: 10px; background: #d8d6cb; display: inline-block; border-radius: 5px; box-shadow: 0 1px 2px #fff, inset 0 1px 2px rgba(0, 0, 0, 0.5); position: relative;  }
-  .slider #date-range-slider > .ui-slider-range { background: #aba9a0; position: absolute; height: 100%; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5); border-radius: 5px; }
-  .slider #date-range-slider > a, .slider input::-webkit-slider-thumb { -webkit-appearance:	none; display: block; outline: none !important; position: absolute; width: 14px; height: 14px; margin: -3px 0 0 -8px; border-radius: 2px; background: #25acbc url(/css/gfx/bg.png) repeat; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0px rgba(255, 255, 255, 0.3); border: 1px solid #20919e; }
-  .slider input::-webkit-slider-thumb { position: relative; width: 16px; height: 16px; }
-
-input.input {
-  display: block;
-  height: 28px; 
-  float: left; 
-  overflow: hidden; 
-  margin-right: 5px; 
-  border: none; 
-  color: #fff; 
-  padding: 0 15px; 
-  border-radius: 3px; 
-  background: rgba(51, 51, 51, 0.3);
-  background: #a19f98 url(../gfx/bg.png) repeat;
-  font: bold 12px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; 
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  width: 150px;
-}
-
-input.input::-webkit-input-placeholder { color: #eee; }
-
-input.input:focus {
-  outline: none;
-  background-color: #1e909e;
-}
-
-.select {
-  display: block;
-  height: 28px; 
-  float: left; 
-  overflow: hidden; 
-  margin-right: 5px; 
-  border: none; 
-  color: #fff; 
-  padding: 0 15px; 
-  border-radius: 3px; 
-  background: rgba(51, 51, 51, 0.3);
-  background: #a19f98 url(../gfx/bg.png) repeat;
-  font: bold 12px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; 
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 30px;
 }
 
   .select > select {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    border-bottom: 14px solid;
-  }
-  
-  .select > span {
-    display: block;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: normal;
     color: #fff;
-    height: 100%;
-    line-height: 30px;
-    text-align: left;
-    padding-right: 20px;
+    border: none;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 40px 0 15px;
+    height: 30px;
   }
   
-  .select > [class^="icon"] {
-    position: absolute;
-    top: 8px;
-    right: 15px;
-  }
-  
+/*
+ This is a input field.
+ By adding the classes "success" or "error" you can give the user feedback
+ 
+    <input type="text" class="input" placeholder="Placeholder text">
+    <input type="text" class="input success" value="This is ok">
+    <input type="text" class="input error" value="This is wrong">*/
+    
+input.input {
+  width: 120px;
+  padding: 0 10px !important;
+  border: 1px solid #A19F98;
+  border-radius: 3px;
+  color: #fff;
+  background: #A19F98 url(/css/gfx/bg.png) repeat;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+  position: relative;
+}
 
-/* =Colorpicker
-------------------------------------------------------------------------------------------------------- */
-.colorpicker{width:356px; height:176px; overflow:hidden; z-index: 10; position:absolute; background:url(/css/gfx/colorpicker/colorpicker_background.png); font-family:Arial,Helvetica,sans-serif; display:none}
-.colorpicker_color{width:150px; height:150px; left:14px; top:13px; position:absolute; background:#f00; overflow:hidden; cursor:crosshair}
-.colorpicker_color div{position:absolute; top:0; left:0; width:150px; height:150px; background:url(/css/gfx/colorpicker/colorpicker_overlay.png)}
-.colorpicker_color div div{position:absolute; top:0; left:0; width:11px; height:11px; overflow:hidden; background:url(/css/gfx/colorpicker/colorpicker_select.gif); margin:-5px 0 0 -5px}
-.colorpicker_hue{position:absolute; top:13px; left:171px; width:35px; height:150px; cursor:n-resize}
-.colorpicker_hue div{position:absolute; width:35px; height:9px; overflow:hidden; background:url(/css/gfx/colorpicker/colorpicker_indic.gif) left top; margin:-4px 0 0 0; left:0px}
-.colorpicker_new_color{position:absolute; width:60px; height:30px; left:213px; top:13px; background:#f00}
-.colorpicker_current_color{position:absolute; width:60px; height:30px; left:283px; top:13px; background:#f00}
-.colorpicker input{background-color:transparent; border:1px solid transparent; position:absolute; font-size:10px; font-family:Arial,Helvetica,sans-serif; color:#898989; top:4px; right:11px; text-align:right; margin:0; padding:0; height:11px}
-.colorpicker_hex{position:absolute; width:72px; height:22px; background:url(/css/gfx/colorpicker/colorpicker_hex.png) top; left:212px; top:142px}
-.colorpicker_hex input{right:6px}
-.colorpicker_field{height:22px; width:62px; background-position:top; position:absolute}
-.colorpicker_field span{position:absolute; width:12px; height:22px; overflow:hidden; top:0; right:0; cursor:n-resize}
-.colorpicker_rgb_r{background-image:url(/css/gfx/colorpicker/colorpicker_rgb_r.png); top:52px; left:212px}
-.colorpicker_rgb_g{background-image:url(/css/gfx/colorpicker/colorpicker_rgb_g.png); top:82px; left:212px}
-.colorpicker_rgb_b{background-image:url(/css/gfx/colorpicker/colorpicker_rgb_b.png); top:112px; left:212px}
-.colorpicker_hsb_h{background-image:url(/css/gfx/colorpicker/colorpicker_hsb_h.png); top:52px; left:282px}
-.colorpicker_hsb_s{background-image:url(/css/gfx/colorpicker/colorpicker_hsb_s.png); top:82px; left:282px}
-.colorpicker_hsb_b{background-image:url(/css/gfx/colorpicker/colorpicker_hsb_b.png); top:112px; left:282px}
-.colorpicker_submit{position:absolute; width:22px; height:22px; background:url(/css/gfx/colorpicker/colorpicker_submit.png) top; left:322px; top:142px; overflow:hidden}
-.colorpicker_focus{background-position:center}
-.colorpicker_hex.colorpicker_focus{background-position:bottom}
-.colorpicker_submit.colorpicker_focus{background-position:bottom}
-.colorpicker_slider{background-position:bottom}
+input.input.success {
+  background-color: #fff;
+  color: #8dae1b !important;
+}
+
+input.input.success:before {
+  content:"\00a0";
+  
+  display: block;
+  
+  background: #8dae1b;
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  z-index: 5;
+}
+
+input.input.success:after {
+  content:"\00a0";
+  display:block;
+  width: 3px;
+  height: 6px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  position:absolute;
+  right: 13px;
+  bottom: 11px;
+  z-index: 6;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+
+input.input.error {
+  background-color: #fff;
+  color: #ae1b1b !important;
+}
+
+input.input.error:before {
+  content:"\00a0";
+  display: block;
+  background: #ae1b1b;
+  border-radius: 8px;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  z-index: 5;
+}
+
+input.input.error:after {
+  content:"\00D7";
+  display:block;  
+  position:absolute;
+  right: 10px;
+  bottom: 7px;
+  z-index: 6;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1;
+}
+
+input.input::-webkit-input-placeholder, input.input::-moz-placeholder { color: #e0dcd4; }
+
+input.input:focus {
+  outline: none;
+  background-color: #fff;
+  color: #7d7b79;
+  border-color: #A19F98;
+}
+
+input.input:focus::-webkit-input-placeholder, input.input:focus::-moz-placeholder { color: #adaaa3; }
+
+/* Alert messages
+----------------------------------- */
+
+/* 
+ Alerts are supposed to notify the user that something has happend.
+ This is the default.
+ 
+    <div class="alert">
+      <strong>Warning!</strong> Something went wrong!
+    </div>*/
+    
+.alert {
+  background-color: #FCF8E3;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #FBEED5;
+  color: #C09853;
+  font: normal 12px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+}
+
+/*
+ If you want to do a success message just add the class alert-success
+ 
+    <div class="alert alert-success">
+      <strong>Well done!</strong> You successfully read this important alert message.
+    </div>*/
+    
+.alert-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border-color: #D6E9C6;
+}
+
+/*
+ And of course you can also do a error message.
+ 
+    <div class="alert alert-error">
+      <strong>Oh snap!</strong> Change a few things up and try submitting again.
+    </div>*/
+    
+.alert-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border-color: #EED3D7;
+}

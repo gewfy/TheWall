@@ -540,10 +540,10 @@
 			var $element = $(this),
 					sketchboard;
 	
-			if ($element.children('.inner').data('sketchboard')) return;
+			if ($element.children('.input').data('sketchboard')) return;
 	
-			sketchboard = new Sketchboard($element.children('.inner').get(0), options);
-			$element.children('.inner').data('sketchboard', sketchboard);
+			sketchboard = new Sketchboard($element.children('.input').get(0), options);
+			$element.children('.input').data('sketchboard', sketchboard);
 			
 			sketchboard.init();
 			
