@@ -33,12 +33,13 @@ jQuery(function($) {
   $($('#edit').get(0).contentDocument).on('DOMSubtreeModified', app.theWall.showPublishAll);
 
   app.actions = {
-    code: new codeAction
+    code: new codeAction,
+    sketchboard: new sketchboardAction
   };
 
   app.theWall.addAction('Add text');
   app.theWall.addAction('Add image');
   app.theWall.addAction('Add video');
-  app.theWall.addAction('Add drawing');
+  app.theWall.addAction('Add drawing', app.actions.sketchboard.init);
   app.theWall.addAction('Add custom code', app.actions.code.init, true);
 });
