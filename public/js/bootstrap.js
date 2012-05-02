@@ -19,24 +19,25 @@ jQuery(function($) {
       });
     })
 
-    .on('contextmenu',  '#thewall',         function(){ return false; })
-    .on('mousedown',    '#thewall',         app.theWall.contextMenu)
-
     .on('click',        '#publish-all > a', app.theWall.publish)
 
     .on('mouseenter',   '#layers li',       function () {
       app.theWall.focusLayer($(this).index());
     })
 
-    .on('mouseleave',   '#layers li',       app.theWall.unfocusLayers);
+    .on('mouseleave',   '#layers',       app.theWall.unfocusLayers);
 
-  $($('#edit').get(0).contentDocument).on('DOMSubtreeModified', app.theWall.showPublishAll);
+  $($('#edit').get(0).contentDocument)
+    .on('DOMSubtreeModified', app.theWall.showPublishAll)
+    .on('contextmenu',        function(){ return false; })
+    .on('mousedown',          app.theWall.contextMenu);
 
   app.actions = {
-    code: new codeAction
+    code: new codeAction,
+    text: new textAction
   };
 
-  app.theWall.addAction('Add text');
+  app.theWall.addAction('Add text', app.actions.text.init);
   app.theWall.addAction('Add image');
   app.theWall.addAction('Add video');
   app.theWall.addAction('Add drawing');
