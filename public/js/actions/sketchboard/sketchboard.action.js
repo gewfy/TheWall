@@ -41,7 +41,9 @@
       
       if ($popover.length < 1) {
         $sketchboard.find('.popover:visible').hide();
-        $popover = $('#tpl-action-sketchboard-popover').tmpl().css({top: posTop - 45, left: posLeft + 48}).appendTo($sketchboard);
+        $popover = $('#tpl-action-sketchboard-popover').tmpl().hide().appendTo($sketchboard);
+        $popover.css({top: posTop - ($popover.height() / 2), left: posLeft + 48}).show();
+        
       } else {
         $sketchboard.find('.popover:visible').hide();
         $popover.show();
@@ -69,7 +71,9 @@
       
       if ($colorpicker.length < 1) {
         $sketchboard.find('.popover:visible').hide();
-        $('#tpl-action-sketchboard-colorpicker').tmpl().css({top: posTop - 96, left: posLeft + 48}).appendTo($sketchboard);
+        $colorpicker = $('#tpl-action-sketchboard-colorpicker').tmpl().hide().appendTo($sketchboard);
+        $colorpicker.css({top: posTop - ($colorpicker.height() / 2), left: posLeft + 48}).show();
+        
         self.colorpicker($button);
       } else {
         $sketchboard.find('.popover:visible').hide();
