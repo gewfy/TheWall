@@ -36,7 +36,8 @@
       var $popover = $sketchboard.find('.toolbar.brushSettings'),
           $button = $(this),
           posLeft = $button.offset().left,
-          posTop  = $button.offset().top;
+          posTop  = $button.offset().top,
+          sliderTimeout;
       
       if ($popover.length < 1) {
         $sketchboard.find('.popover:visible').hide();
@@ -47,7 +48,12 @@
       }
       
       $popover.on('change', '.slider > input', function () {
-        $sketchboard.attr('data-size', $(this).val()).trigger('sizechanged');
+        var val = $(this).val();
+        clearTimeout(sliderTimeout);
+        
+        sliderTimeout = setTimeout(function () {
+          $sketchboard.attr('data-size', val).trigger('sizechanged');
+        }, 300);
       });
       
       $popover.on('change', '.brush-style', function () {

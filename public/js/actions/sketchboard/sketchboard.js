@@ -51,6 +51,7 @@
 			this.context.lineCap = settings.lineCap;
 			this.context.globalCompositeOperation = 'source-over';
 			this.context.strokeStyle = 'rgba(' + this.rgb[0] + ', ' + this.rgb[1] + ', ' + this.rgb[2] + ', ' + settings.opacity + ')';
+			this.context.lineWidth = settings.lineWidth;
 			
 			styles[settings.style].init();
 		};
