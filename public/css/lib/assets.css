@@ -63,6 +63,8 @@
     width: 30px;
     padding: 0;
     margin-top: 5px;
+    display: block;
+    height: 30px;
   }
   
   .toolbar.vertical > .action:first-child {
@@ -99,6 +101,48 @@
 	top: 50%;
 	margin-top: -6px;
 }
+
+/*
+ A toolbar can also act like a popover.
+ What this does is that it adds position absolute for you to position it.
+ It also has a fixed width.
+ 
+    <div class="toolbar popover arrow-left"></div>*/
+    
+.toolbar.popover {
+  width: 200px;
+  position: absolute;
+  z-index: 10 !important;
+}
+
+  .toolbar.popover > div {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .toolbar.popover > div:first-child {
+    margin-top: 0;
+  }
+  
+  .toolbar.popover > .close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-size: 11px;
+    color: white;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #a19f98 url(/css/gfx/bg.png) repeat;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    padding: 0;
+  }
+  
+  .toolbar.popover > .close:hover { background-color: #1e909e; }
 
 /* Buttons
 ----------------------------------- */
@@ -547,6 +591,7 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .action.select {
   padding: 0;
   position: relative;
+  text-align: left;
 }
 
 .action.select:after {
@@ -668,6 +713,11 @@ input.input:focus {
 }
 
 input.input:focus::-webkit-input-placeholder, input.input:focus::-moz-placeholder { color: #adaaa3; }
+
+.slider > strong { color: #121212; font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; display: block; margin-bottom: 5px; text-align: left; }
+.slider input { -webkit-appearance:	none; width: 100%; top: -4px; height: 10px; background: #A19F98 url(/css/gfx/bg.png) repeat; display: inline-block; border-radius: 5px; box-shadow: 0 1px 2px #fff, inset 0 1px 2px rgba(0, 0, 0, 0.5); position: relative;  }
+  .slider input::-webkit-slider-thumb { -webkit-appearance:	none; display: block; outline: none !important; position: absolute; width: 14px; height: 14px; margin: -3px 0 0 -8px; border-radius: 2px; background: #25acbc url(/css/gfx/bg.png) repeat; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0px rgba(255, 255, 255, 0.3); border: 1px solid #20919e; }
+  .slider input::-webkit-slider-thumb { position: relative; width: 16px; height: 16px; }
 
 /* Alert messages
 ----------------------------------- */

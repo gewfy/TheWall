@@ -101,22 +101,6 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
     opacity: 1 !important;
     text-align: center;
   }
-
-.message.sketchboard {
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(255, 255, 255, 0.6);
-  cursor: crosshair;
-}
-
-  .message.sketchboard > .toolbar {
-    position: absolute;
-    top: 200px;
-    left: 40px;
-    z-index: 2;
-  }
   
   .message > .toolbox {
     -webkit-transition: opacity .3s;
@@ -125,15 +109,6 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
   
   .message.focus > .toolbox, .message:hover > .toolbox {
     opacity: 1;
-  }
-  
-  .message.sketchboard > .input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
   }
 
   .message.image > .toolbox {

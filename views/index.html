@@ -4,6 +4,7 @@
   <title>New design</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/codemirror.css">
+  <link rel="stylesheet" href="/css/actions/sketchboard/sketchboard.action.css">
 </head>
 
 <body>
@@ -159,11 +160,41 @@
     <div class="message sketchboard">
       <div class="toolbar vertical rounded">
         <button class="action positive publish"><i class="icon-ok"></i></button>
-        <button class="action change-brush"><i class="icon-pencil"></i></button>
+        <button class="action brush-settings"><i class="icon-pencil"></i></button>
+        <button class="action colorpicker"><span></span></button>
         <button class="action negative cancel"><i class="icon-remove"></i></button>
       </div>
       <div class="input">
       </div>
+    </div>
+  </script>
+  
+  <script type="text/x-jquery-tmpl" id="tpl-action-sketchboard-popover">
+    <div class="toolbar rounded popover brushSettings arrow-left">
+      <div class="action select">
+        <select class="brush-style">
+          <option value="ribbon" selected="selected">Ribbon</option>
+          <option value="web">Web</option>
+          <option value="sketchy">Sketchy</option>
+          <option value="simple">Simple</option>
+          <option value="longfur">Longfur</option>
+          <option value="circles">Circles</option>
+          <option value="chrome">Chrome</option>
+          <option value="squares">Squares</option>
+        </select>
+      </div>
+      <div class="slider">
+        <strong>Brush size</strong>
+        <input type="range" step="1" min="1" value="1" max="10" class="brush-size">
+      </div>
+      <button class="close"><i class="icon-remove"></i></button>
+    </div>
+  </script>
+  
+  <script type="text/x-jquery-tmpl" id="tpl-action-sketchboard-colorpicker">
+    <div class="toolbar rounded popover colorpicker arrow-left">
+      <canvas id="colorpicker" width="188" height="188"></canvas>
+      <button class="close"><i class="icon-remove"></i></button>
     </div>
   </script>
 </body>

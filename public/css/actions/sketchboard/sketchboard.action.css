@@ -1,0 +1,35 @@
+.message.sketchboard {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+  .message.sketchboard > .toolbar {
+    position: absolute;
+    top: 200px;
+    left: 40px;
+    z-index: 2;
+  }
+  
+  .message.sketchboard > .input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+.action.colorpicker {
+  padding: 2px !important;
+}
+
+  .action.colorpicker > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
