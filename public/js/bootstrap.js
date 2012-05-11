@@ -25,7 +25,9 @@ jQuery(function($) {
       app.theWall.focusLayer($(this).index());
     })
 
-    .on('mouseleave',   '#layers',       app.theWall.unfocusLayers);
+    .on('mouseleave',   '#layers',       app.theWall.unfocusLayers)
+    .on('dragstart resizestart', function() { $(this).addClass('dragging'); })
+    .on('dragstop resizestop', function() { $(this).removeClass('dragging'); });
 
   $($('#edit').get(0).contentDocument)
     .on('DOMSubtreeModified', app.theWall.showPublishAll)
@@ -48,18 +50,11 @@ jQuery(function($) {
      			var reader = new FileReader();
 
      			reader.onload = function (evt) {
-             $('<img/>')
-               .css({
-                 position: 'absolute',
-                 left:     x,
-                 top:      y
-               })
-               .attr('src', evt.target.result)
-               .appendTo($('body', $('#edit').get(0).contentDocument))
-               .draggable()
-
+             var image = new imageAction;
+             image.init(x, y, $('body', $('#edit').get(0).contentDocument), app.theWall.publish);
+             image.setSource(evt.target.result);
      			};
-     			reader.readAsDataURL(file);
+          reader.readAsDataURL(file);
      		}
      	}
     });
