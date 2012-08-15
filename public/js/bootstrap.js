@@ -40,38 +40,21 @@ jQuery(function($) {
 
   $($('#edit').get(0).contentDocument)
     .on('DOMSubtreeModified', app.theWall.showPublishAll)
+
     .on('contextmenu',        function(){ return false; })
     .on('mousedown',          app.theWall.contextMenu)
+
     .on('dragover',           function(e) { e.preventDefault();  e.stopPropagation(); return false; })
     .on('dragenter',          function(e) { e.preventDefault();  e.stopPropagation(); return false; })
-    .on('drop',               function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    .on('drop',               app.theWall.fileDrop);
 
-      var evt   = e.originalEvent,
-          x     = evt.clientX,
-          y     = evt.clientY,
-          files = evt.dataTransfer.files;
+  /* Context menu actions */
+  app.theWall.addContextMenuAction('Add text',         textAction);
+  app.theWall.addContextMenuAction('Add image');
+  app.theWall.addContextMenuAction('Add video');
+  app.theWall.addContextMenuAction('Add drawing',      sketchboardAction);
+  app.theWall.addContextMenuAction('Add custom code',  codeAction, true);
 
-      if (files.length > 0) {
-     		var file = files[0];
-     		if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
-     			var reader = new FileReader();
-
-     			reader.onload = function (evt) {
-             var image = new imageAction;
-             image.init(x, y, $('body', $('#edit').get(0).contentDocument), app.theWall.publish);
-             image.setSource(evt.target.result);
-     			};
-          reader.readAsDataURL(file);
-     		}
-     	}
-    });
-
-
-  app.theWall.addAction('Add text',         textAction);
-  app.theWall.addAction('Add image');
-  app.theWall.addAction('Add video');
-  app.theWall.addAction('Add drawing',      sketchboardAction);
-  app.theWall.addAction('Add custom code',  codeAction, true);
+  /* File drop actions */
+  app.theWall.addFileDropAction('image', imageAction);
 });

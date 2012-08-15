@@ -22,10 +22,10 @@
           'messages':     $('#messages')
         },
 
-        inited      = [],
+        editIframe      = $elements.editIframe.get(0),
+        editContext     = editIframe.contentDocument || editIframe.contentWindow.document,
 
-        editIframe  = $elements.editIframe.get(0),
-        editContext = editIframe.contentDocument ||editIframe.contentWindow.document;
+        fileDropActions = [];
 
     this.receiveReady = function() {
       $elements.splash.fadeOut();
@@ -77,7 +77,7 @@
       }
     };
 
-    this.addAction = function(label, callback, delimited) {
+    this.addContextMenuAction = function(label, callback, delimited) {
       $templates.contextMenu
         .tmpl({
           'label':      label,
@@ -89,8 +89,6 @@
           var action  = new callback,
               pos     = $elements.contextMenu.position();
 
-          inited.push(action);
-
           $elements.contextMenu.fadeOut('fast', function() {
             action.init(
               pos.left,
@@ -101,6 +99,51 @@
           });
         })
         .appendTo($elements.contextMenu);
+    };
+
+    this.fileDrop = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var evt   = e.originalEvent,
+          x     = evt.clientX,
+          y     = evt.clientY,
+          files = evt.dataTransfer.files;
+
+      if (files.length > 0) {
+        var file = files[0];
+
+        if (typeof FileReader !== 'undefined' && fileDropActions.length) {
+          var reader = new FileReader();
+
+          reader.onload = function (evt) {
+            for (var i in fileDropActions) {
+              if (fileDropActions.hasOwnProperty(i)) {
+                var actionType = fileDropActions[i];
+
+                if (file.type.indexOf(actionType.mime) != -1) {
+                  var action = new actionType.action;
+                  action.init(
+                    x,
+                    y,
+                    $('body', editContext),
+                    app.theWall.publish,
+                    evt.target.result
+                  );
+                }
+              }
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    };
+
+    this.addFileDropAction = function(mime, action) {
+      fileDropActions.push({
+        mime:   mime,
+        action: action
+      });
     };
 
     this.publish = function() {

@@ -12,7 +12,7 @@
         $image,
         $overlay;
 
-    this.init = function(posX, posY, $editContext, publishCallback) {
+    this.init = function(posX, posY, $editContext, publishCallback, source) {
 
       $context  = $editContext;
       callback  = publishCallback;
@@ -21,6 +21,10 @@
       y = posY;
 
       document  = $context.get(0).ownerDocument;
+
+      if (source) {
+        self.setSource(source);
+      }
     };
 
     this.setSource = function(source) {
@@ -57,10 +61,13 @@
           'height':   $image.height(),
           'zIndex':   6
         })
-        .on('drag', self.moveImage)
+        .on('drag',   self.moveImage)
         .on('resize', self.resizeImage)
         .appendTo('body')
-        .resizable({ aspectRatio: true, alsoReize: $image })
+        .resizable({
+          aspectRatio:  true,
+          handles:      'ne, se, sw, nw'
+        })
         .draggable();
     };
 
@@ -75,7 +82,12 @@
       $image.css({
         width:  ui.size.width,
         height: ui.size.height
-      })
+      });
+
+      x = ui.position.left;
+      y = ui.position.top;
+
+      self.setPosition();
     };
   }
 })(jQuery, this);
