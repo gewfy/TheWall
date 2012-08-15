@@ -10,10 +10,13 @@
         x, y,
 
         $image,
-        $overlay;
+        $overlay,
+
+        $toolbar,
+        $input;
+
 
     this.init = function(posX, posY, $editContext, publishCallback, source) {
-
       $context  = $editContext;
       callback  = publishCallback;
 
@@ -25,19 +28,47 @@
       if (source) {
         self.setSource(source);
       }
+      else {
+        $toolbar  = $('#tpl-action-image-toolbar').tmpl();
+        $input    = $toolbar.find('.source');
+        $toolbar
+          .on('keypress', '.source', function(e) {
+            if (e.keyCode === 13) {
+              self.setSourceFromInput();
+            }
+          })
+          .on('click', '.add', self.setSourceFromInput)
+
+          .appendTo('body')
+          .show()
+          .css({
+            left: x - ($toolbar.outerWidth(true) / 2),
+            top:  y
+          });
+
+        $input.focus();
+      }
     };
 
     this.setSource = function(source) {
       if (!$image) {
         $image = $('<img/>');
         $image
-          .on('load', self.initOverlay)
+          .on('error',  self.removeImage)
+          .on('load',   self.initOverlay)
           .attr('src', source)
           .appendTo($context);
       }
 
       self.setPosition();
+    };
 
+    this.setSourceFromInput = function() {
+      var source = $input.val();
+      if (source) {
+        self.setSource($input.val());
+        $toolbar.remove();
+      }
     };
 
     this.setPosition = function() {
@@ -88,6 +119,10 @@
       y = ui.position.top;
 
       self.setPosition();
+    };
+
+    this.removeImage = function() {
+      $image.remove();
     };
   }
 })(jQuery, this);

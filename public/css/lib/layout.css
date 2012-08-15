@@ -132,6 +132,12 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
     white-space: nowrap;
   }
 
+  .image.toolbar {
+    display: none;
+    position: absolute;
+    white-space: nowrap;
+  }
+
   .message.text > .input > p { 
     outline: none; 
     text-shadow: 0 0 3px red; 

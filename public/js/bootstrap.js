@@ -49,11 +49,11 @@ jQuery(function($) {
     .on('drop',               app.theWall.fileDrop);
 
   /* Context menu actions */
-  app.theWall.addContextMenuAction('Add text',         textAction);
-  app.theWall.addContextMenuAction('Add image');
+  app.theWall.addContextMenuAction('Add text',        textAction);
+  app.theWall.addContextMenuAction('Add image',       imageAction);
   app.theWall.addContextMenuAction('Add video');
-  app.theWall.addContextMenuAction('Add drawing',      sketchboardAction);
-  app.theWall.addContextMenuAction('Add custom code',  codeAction, true);
+  app.theWall.addContextMenuAction('Add drawing',     sketchboardAction);
+  app.theWall.addContextMenuAction('Add custom code', codeAction, true);
 
   /* File drop actions */
   app.theWall.addFileDropAction('image', imageAction);
