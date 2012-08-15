@@ -29,7 +29,7 @@
     };
 
     this.initSketchboard = function() {
-      $sketchboard.sketchboard({style: 'ribbon'})
+      $sketchboard.sketchboard({style: 'simple'})
     };
     
     this.showBrushSettings = function () {
