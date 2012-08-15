@@ -56,9 +56,9 @@
       app.socket.emit(
         'client',
         {
-          clientId: app.clientId,
-          name:     $('#input-name').val(),
-          email:    $('#input-email').val()
+          clientId: data.clientId,
+          name:     data.name,
+          email:    data.email
         }
       );
     };
