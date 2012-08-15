@@ -63,8 +63,9 @@ module.exports = function(socket) {
 
     if (client.name) {
       clients.setClientMetaValues(clientId, {
-        name: client.name,
-        hash: clients.getEmailHash(client.email)
+        name:   client.name,
+        email:  client.email,
+        hash:   clients.getEmailHash(client.email)
       });
 
       self.publishReady();

@@ -15,8 +15,9 @@ module.exports = (function() {
       res.render('index', {
         as: global,
         client: {
-          name: clients.getClientMeta(req.session.clientId, 'name'),
-          hash: clients.getClientMeta(req.session.clientId, 'gravatar')
+          name:   clients.getClientMeta(req.session.clientId, 'name'),
+          email:  clients.getClientMeta(req.session.clientId, 'email'),
+          hash:   clients.getClientMeta(req.session.clientId, 'hash')
         },
         messages:         messages.getMessages(),
         clients:          clients.getClientsWithMeta('name'),

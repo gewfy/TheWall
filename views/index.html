@@ -40,22 +40,22 @@
   </div>
   
   {{if !client.name}}
-  <div id="splash">
-    <div>
-      <h1><span>Welcome to</span> THE WALL</h1>
-      
-      <form id="form-setName">
-        <p>
-          <input type="text" id="input-name" name="name" placeholder="choose a username…" />
-          <input type="text" id="input-email" name="email" placeholder="email (not visible)…" />
-          <div class="gravatar-use"><span>Gravatar use only</span></div>
-        </p>
-        <p><button type="submit"><span>Sign in!</span></button></p>
-      </form>
-      
-      <a href="#" class="what">What is this?</a>
+    <div id="splash">
+      <div>
+        <h1><span>Welcome to</span> THE WALL</h1>
+
+        <form id="form-setName">
+          <p>
+            <input type="text" id="input-name" name="name" placeholder="choose a username…" />
+            <input type="text" id="input-email" name="email" placeholder="email (not visible)…" />
+            <div class="gravatar-use"><span>Gravatar use only</span></div>
+          </p>
+          <p><button type="submit"><span>Sign in!</span></button></p>
+        </form>
+
+        <a href="#" class="what">What is this?</a>
+      </div>
     </div>
-  </div>
   {{/if}}
   
   <ul id="contextMenu">
@@ -67,7 +67,13 @@
   </div-->
   
   <script type="text/javascript">
-    var app = { clientId: '${session.clientId}'};
+    var app = {
+      clientId: '${session.clientId}',
+      client:   {
+        name:     '${client.name}',
+        email:    '${client.email}'
+      }
+    };
   </script>
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>

@@ -8,6 +8,15 @@ jQuery(function($) {
   app.socket.on('messages', app.theWall.receiveMessages);
   app.socket.on('clients',  app.theWall.receiveClients);
 
+  /* Client already registered - publish client */
+  if (app.client.name) {
+    app.theWall.publishClient({
+      clientId: app.clientId,
+      name:     app.client.name,
+      email:    app.client.email
+    });
+  }
+
   $('body')
     .on('submit', '#form-setName', function(e) {
       e.preventDefault();
