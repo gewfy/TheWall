@@ -105,7 +105,7 @@
         context.drawImage(image, 0, 0);
       };
       
-      image.src = '/css/actions/sketchboard/colorpicker.png';
+      image.src = '/actions/sketchboard/css/gfx/colorpicker.png';
       
       $(colorpicker).on('mousedown', function (e) {
         clearTimeout(colorTimeout);
