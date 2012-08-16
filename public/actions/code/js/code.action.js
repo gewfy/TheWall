@@ -24,9 +24,8 @@
           .on('click', '.action.cancel',   self.closeEditor);
 
         self.initEditor();
+        $editor.animate({ height: '338px' });
       }
-
-      $editor.animate({ height: '338px' });
     };
 
     this.initEditor = function() {
