@@ -51,7 +51,7 @@ jQuery(function($) {
   /* Context menu actions */
   app.theWall.addContextMenuAction('Add text',        textAction);
   app.theWall.addContextMenuAction('Add image',       imageAction);
-  app.theWall.addContextMenuAction('Add video');
+  app.theWall.addContextMenuAction('Add video',       videoAction);
   app.theWall.addContextMenuAction('Add drawing',     sketchboardAction);
   app.theWall.addContextMenuAction('Add custom code', codeAction, true);
 
