@@ -38,6 +38,7 @@
             }
           })
           .on('click', '.add', self.setSourceFromInput)
+          .on('click', '.cancel', self.cancel)
 
           .appendTo('body')
           .show()
@@ -123,6 +124,10 @@
 
     this.removeImage = function() {
       $image.remove();
+    };
+    
+    this.cancel = function() {
+      $toolbar.remove();
     };
   }
 })(jQuery, this);
