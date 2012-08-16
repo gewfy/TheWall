@@ -99,7 +99,9 @@
     };
 
     this.beforePublish = function() {
-      $editor.remove();
+      if ($editor) {
+        $editor.remove();
+      }
     }
   }
 })(jQuery, this);
