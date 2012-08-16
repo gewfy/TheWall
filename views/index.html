@@ -100,119 +100,15 @@
   </script>
 
   <!-- Text action -->
-  <script src="/actions/text/js/text.action.js"></script>
-
-  <script type="text/x-jquery-tmpl" id="tpl-action-text-message">
-    <div class="message text" contenteditable="true"><p>&nbsp;</p></div>
-  </script>
-
-  <script type="text/x-jquery-tmpl" id="tpl-action-text-toolbar">
-    <div class="text toolbar dynamic rounded arrow">
-      <button class="action positive publish"><i class="icon-ok icon-large"></i> Publish</button>
-      <button class="action negative cancel"><i class="icon-remove icon-large"></i> Remove</button>
-      <button class="action font-style" rel="bold"><strong>B</strong></button>
-      <button class="action font-style" rel="italic"><em>I</em></button>
-      <button class="action font-style" rel="underline"><ins>U</ins></button>
-      <div class="action select">
-        <select class="font-face">
-          <option>Satisfy</option>
-          <option>Designosaur</option>
-          <option>Journal</option>
-          <option>Salsa</option>
-          <option>Ubuntu Mono</option>
-          <option>Arial</option>
-          <option selected="selected">Helvetica</option>
-        </select>
-      </div>
-      <div class="action select">
-        <select class="font-size">
-          <option value="1">Tiny</option>
-          <option value="3">Small</option>
-          <option value="5" selected="selected">Medium</option>
-          <option value="7">Large</option>
-        </select>
-      </div>
-      <a class="action move"><i class="icon-move"></i></a>
-    </div>
-  </script>
+  {{html includeTemplate('public/actions/text/views/includes.html')}}
 
   <!-- Code action -->
-  <script src="/actions/code/js/codemirror.js"></script>
-  <script src="/actions/code/js/mode/css/css.js"></script>
-  <script src="/actions/code/js/mode/javascript/javascript.js"></script>
-  <script src="/actions/code/js/mode/xml/xml.js"></script>
-  <script src="/actions/code/js/mode/htmlmixed/htmlmixed.js"></script>
+  {{html includeTemplate('public/actions/code/views/includes.html')}}
 
-  <script src="/actions/code/js/code.action.js"></script>
-
-  <script type="text/x-jquery-tmpl" id="tpl-action-code">
-    <div class="message code-editor">
-      <div class="toolbar">
-        <button class="action positive publish">Publish</button>
-        <button class="action hide">Hide</button>
-        <button class="action negative cancel">Cancel</button>
-      </div>
-      <div class="input">
-        <textarea name="code"></textarea>
-      </div>
-    </div>
-  </script>
-  
   <!-- Sketchboard action -->
-  <script src="/actions/sketchboard/js/sketchboard.js"></script>
-  <script src="/actions/sketchboard/js/sketchboard.action.js"></script>
-  
-  <script type="text/x-jquery-tmpl" id="tpl-action-sketchboard">
-    <div class="message sketchboard">
-      <div class="toolbar vertical rounded">
-        <button class="action positive publish"><i class="icon-ok"></i></button>
-        <button class="action brush-settings"><i class="icon-pencil"></i></button>
-        <button class="action colorpicker"><span></span></button>
-        <button class="action negative cancel"><i class="icon-remove"></i></button>
-      </div>
-      <div class="input">
-      </div>
-    </div>
-  </script>
-  
-  <script type="text/x-jquery-tmpl" id="tpl-action-sketchboard-popover">
-    <div class="toolbar rounded popover brushSettings arrow-left">
-      <div class="action select">
-        <select class="brush-style">
-          <option value="simple" selected="selected">Simple</option>
-          <option value="ribbon">Ribbon</option>
-          <option value="web">Web</option>
-          <option value="sketchy">Sketchy</option>
-          <option value="longfur">Longfur</option>
-          <option value="circles">Circles</option>
-          <option value="chrome">Chrome</option>
-          <option value="squares">Squares</option>
-        </select>
-      </div>
-      <!--div class="slider">
-        <strong>Brush size</strong>
-        <input type="range" step="1" min="1" value="1" max="10" class="brush-size">
-      </div-->
-      <button class="close"><i class="icon-remove"></i></button>
-    </div>
-  </script>
-  
-  <script type="text/x-jquery-tmpl" id="tpl-action-sketchboard-colorpicker">
-    <div class="toolbar rounded popover colorpicker arrow-left">
-      <canvas id="colorpicker" width="188" height="188"></canvas>
-      <button class="close"><i class="icon-remove"></i></button>
-    </div>
-  </script>
+  {{html includeTemplate('public/actions/sketchboard/views/includes.html')}}
 
   <!-- Image action -->
-  <script src="/actions/image/js/image.action.js"></script>
-
-  <script type="text/x-jquery-tmpl" id="tpl-action-image-toolbar">
-    <div class="text toolbar dynamic rounded">
-      <input class="input source"/>
-      <button class="action positive add"><i class="icon-ok icon-large"></i> Add</button>
-      <button class="action negative cancel"><i class="icon-remove icon-large"></i> Remove</button>
-    </div>
-  </script>
+  {{html includeTemplate('public/actions/image/views/includes.html')}}
 </body>
 </html>
