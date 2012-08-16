@@ -129,5 +129,14 @@
     this.cancel = function() {
       $toolbar.remove();
     };
+
+    this.beforePublish = function() {
+      if ($toolbar) {
+        $toolbar.remove();
+      }
+      if ($overlay) {
+        $overlay.remove();
+      }
+    }
   }
 })(jQuery, this);

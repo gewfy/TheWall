@@ -104,5 +104,10 @@
       $message.remove();
       $toolbar.remove();
     };
+
+    this.beforePublish = function() {
+      $toolbar.remove();
+      $message.removeAttr('contenteditable');
+    }
   }
 })(jQuery, this);

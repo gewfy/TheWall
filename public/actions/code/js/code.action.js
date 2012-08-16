@@ -97,5 +97,9 @@
       $editor.remove();
       $editor = null;
     };
+
+    this.beforePublish = function() {
+      $editor.remove();
+    }
   }
 })(jQuery, this);

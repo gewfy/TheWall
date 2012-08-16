@@ -25,6 +25,7 @@
         editIframe      = $elements.editIframe.get(0),
         editContext     = editIframe.contentDocument || editIframe.contentWindow.document,
 
+        activeActions   = [],
         fileDropActions = [];
 
     this.receiveReady = function() {
@@ -96,6 +97,8 @@
               $('body', editContext),
               self.publish
             );
+
+            activeActions.push(action);
           });
         })
         .appendTo($elements.contextMenu);
@@ -130,6 +133,8 @@
                     app.theWall.publish,
                     evt.target.result
                   );
+
+                  activeActions.push(action);
                 }
               }
             }
@@ -147,6 +152,14 @@
     };
 
     this.publish = function() {
+      for (var i in activeActions) {
+        if (activeActions.hasOwnProperty(i) && typeof activeActions[i].beforePublish === 'function') {
+          activeActions[i].beforePublish();
+          delete activeActions[i];
+        }
+      }
+      activeActions = [];
+
       var $editContext  = $('body', editContext),
           html          = $editContext.html();
 
