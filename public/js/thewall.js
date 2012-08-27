@@ -78,7 +78,7 @@
       }
     };
 
-    this.addContextMenuAction = function(label, callback, delimited) {
+    this.addContextMenuAction = function(label, action, delimited) {
       $templates.contextMenu
         .tmpl({
           'label':      label,
@@ -87,18 +87,10 @@
         .on('click', function(e) {
           e.preventDefault();
 
-          var action  = new callback,
-              pos     = $elements.contextMenu.position();
+          var pos = $elements.contextMenu.position();
 
           $elements.contextMenu.fadeOut('fast', function() {
-            action.init(
-              pos.left,
-              pos.top,
-              $('body', editContext),
-              self.publish
-            );
-
-            activeActions.push(action);
+            self.initAction(action, pos.left, pos.top);
           });
         })
         .appendTo($elements.contextMenu);
@@ -125,16 +117,7 @@
                 var actionType = fileDropActions[i];
 
                 if (file.type.indexOf(actionType.mime) != -1) {
-                  var action = new actionType.action;
-                  action.init(
-                    x,
-                    y,
-                    $('body', editContext),
-                    app.theWall.publish,
-                    evt.target.result
-                  );
-
-                  activeActions.push(action);
+                  self.initAction(actionType.action, x, y, evt.target.result);
                 }
               }
             }
@@ -149,6 +132,19 @@
         mime:   mime,
         action: action
       });
+    };
+
+    this.initAction = function(action, x, y, source) {
+      action = new action;
+      action.init(
+        x,
+        y,
+        $('body', editContext),
+        self.publish,
+        source
+      );
+
+      activeActions.push(action);
     };
 
     this.publish = function() {
@@ -186,6 +182,14 @@
 
     this.unfocusLayers = function() {
       $elements.messages.find('iframe').show();
+    };
+
+    this.loadSource = function(index) {
+      $.get('/source?id=' + index, self.viewSource);
+    };
+
+    this.viewSource = function(html) {
+      self.initAction(codeAction, 0, 0,html);
     };
   };
 })(jQuery, window);

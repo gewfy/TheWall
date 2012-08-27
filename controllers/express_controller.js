@@ -38,6 +38,17 @@ module.exports = (function() {
       }
     };
 
+    this.source = function(req, res) {
+      var id      = req.param('id'),
+          message = messages.getMessage(id);
+
+      if (message) {
+        if ((id - 0) == id && id.length > 0) {
+          res.send(message);
+        }
+      }
+    };
+
     this.edit = function(req, res) {
       res.render('edit');
     };

@@ -8,7 +8,7 @@
 
         $context;
 
-    this.init = function(x, y, $editContext, publishCallback) {
+    this.init = function(x, y, $editContext, publishCallback, source) {
 
       $context  = $editContext;
       callback  = publishCallback;

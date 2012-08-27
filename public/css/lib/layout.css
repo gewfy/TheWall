@@ -154,7 +154,7 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
   }
   
 #splash { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; text-align: center; }
-  #splash > div { position: relative; width: 452px; position: absolute; top: 50%; left: 50%; margin: -200px 0 0 -226px; }
+  #splash > div { width: 452px; position: absolute; top: 50%; left: 50%; margin: -200px 0 0 -226px; }
   #splash form { position: relative; }
   #splash h1 { font: bold 72px "Designosaur", "Helvetica Neue", Helvetica, arial, sans-serif; margin: 0; color: #fff; text-align: center; text-shadow: 0 1px 3px #000; }
   #splash h1 > span { font: 60px "Journal", "Designosaur", "Helvetica Neue", Helvetica, arial, sans-serif; font-weight: bold; display: block; line-height: 60px; }
@@ -172,18 +172,20 @@ body { background: #faf7ee url(../gfx/bg.png) repeat; width: 100%; height: 100%;
   #splash .gravatar-use > span { -webkit-transform: rotate(14deg); display: block; }
 
 body > .publish-all { display: none; -webkit-transition: opacity .3s; position: absolute; left: 20px; top: 0; z-index: 100; font: 16px Satisfy; text-shadow: 0 0 10px white }
-  body > .publish-all > a { display: block; float: left; height: 25px; margin-right: 5px; color: #fff; text-decoration: none; display: block; height: 100%; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; background: #25acbc url(/css/gfx/bg.png) repeat; padding: 0 10px; border-radius: 0 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+  body > .publish-all > a { display: block; float: left; margin-right: 5px; color: #fff; text-decoration: none; display: block; height: 100%; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; background: #25acbc url(/css/gfx/bg.png) repeat; padding: 0 10px; border-radius: 0 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
   
 body > nav { position: absolute; right: 20px; top: 0; z-index: 100; }
   body > nav > ul { list-style: none; margin: 0; padding: 0; }
     body > nav > ul > li { display: block; float: left; position: relative; height: 25px; margin-left: 5px; }
       body > nav > ul > li > a { color: #fff; text-decoration: none; display: block; height: 100%; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; background: #25acbc url(/css/gfx/bg.png) repeat; padding: 0 10px; border-radius: 0 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
       body > nav > ul > li:hover > a { padding-bottom: 10px; }
-      body > nav > ul > li > ul { display: none; position: absolute; top: 30px; right: 0; margin: 0; padding: 0; list-style: none; width: 200px; background: #25ACBC url(/css/gfx/bg.png) repeat; padding: 5px; border-radius: 3px 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+      body > nav > ul > li > ul { display: none; position: absolute; top: 30px; right: 0; margin: 0; list-style: none; width: 200px; background: #25ACBC url(/css/gfx/bg.png) repeat; padding: 5px; border-radius: 3px 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
       body > nav > ul > li:hover > ul { display: block; }
         body > nav > ul > li:hover > ul > li { overflow: hidden; padding-top: 5px; margin-top: 5px; border-top: 1px solid rgba(255, 255, 255, 0.4); color: #fff; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; }
         body > nav > ul > li:hover > ul > li:first-child { margin-top: 0; padding-top: 0; border: none; }
           body > nav > ul > li:hover > ul > li > img { float: left; margin-right: 5px; }
+          body > nav > ul > li:hover > ul > li > a { float: right; font-weight: normal; color: white; }
+          body > nav > ul > li:hover > ul > li > a:hover { text-decoration: none; }
 
 .ui-draggable {
   cursor: move;

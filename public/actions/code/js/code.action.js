@@ -11,7 +11,7 @@
 
           $context;
 
-      this.init = function(x, y, $editContext, publishCallback) {
+      this.init = function(x, y, $editContext, publishCallback, source) {
 
         $context  = $editContext;
         callback  = publishCallback;
@@ -26,6 +26,10 @@
             .on('click', '.action.cancel',   self.closeEditor);
 
           self.initEditor();
+        }
+
+        if (source) {
+          self.setContent(source);
         }
 
         self.showEditor();
@@ -73,9 +77,13 @@
         }
       };
 
+      this.setContent = function(source) {
+        editor.setValue(source);
+      };
+
       this.publish = function() {
-        self.closeEditor();
         callback();
+        self.closeEditor();
       };
 
       this.showEditor = function() {
@@ -97,6 +105,7 @@
       };
 
       this.closeEditor = function() {
+        $context.empty();
         $editor.remove();
         $editor = null;
       };

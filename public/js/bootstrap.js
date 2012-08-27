@@ -28,15 +28,21 @@ jQuery(function($) {
       });
     })
 
-    .on('click',        '#publish-all > a', app.theWall.publish)
+    .on('click', '#publish-all > a', app.theWall.publish)
 
-    .on('mouseenter',   '#layers li',       function () {
+    .on('mouseenter', '#layers > li', function () {
       app.theWall.focusLayer($(this).index());
     })
 
-    .on('mouseleave',   '#layers',       app.theWall.unfocusLayers)
-    .on('dragstart resizestart', function() { $(this).addClass('dragging'); })
-    .on('dragstop resizestop', function() { $(this).removeClass('dragging'); });
+    .on('click', '#layers > li > a', function (e) {
+      e.preventDefault();
+
+      app.theWall.loadSource($(this).parent().index());
+    })
+
+    .on('mouseleave', '#layers', app.theWall.unfocusLayers)
+    .on('dragstart resizestart',  function() { $(this).addClass('dragging'); })
+    .on('dragstop resizestop',    function() { $(this).removeClass('dragging'); });
 
   $($('#edit').get(0).contentDocument)
     .on('DOMSubtreeModified', app.theWall.showPublishAll)
