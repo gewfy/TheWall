@@ -1,0 +1,36 @@
+{
+  "name": "TheWall",
+  "version": "0.1.0",
+  "author": "Jakob Öhman <jakob@vinnovera.se>",
+  "description": "A nice description",
+  "contributors": [ 
+    {
+      "name": "Tobias Bleckert",
+      "email": "tbleckert@gmail.com"
+    },
+    {
+      "name": "micoco",
+      "email": "github@micoco.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gewfy/TheWall.git"
+  },
+  "keywords": [
+    "node.js",
+    "express",
+    "connect",
+    "javascript"
+  ],
+  "dependencies" : {
+    "connect"   :  "2.4.5",
+    "express"   :  "2.5.9",
+    "jqtpl"     :  "1.0.7",
+    "socket.io" :  "0.9.6"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
