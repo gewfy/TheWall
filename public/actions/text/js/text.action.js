@@ -37,6 +37,7 @@
         .on('click',  '.font-style',  self.changeFontStyle)
         .on('click',  '.publish',     self.publish)
         .on('click',  '.cancel',      self.cancel)
+        .on('click',  '.action.colorpicker', self.showColorpicker)
         .appendTo('body')
         .draggable({
           handle: '.move',
@@ -44,6 +45,9 @@
         });
 
       self.showToolbar();
+      
+      document.execCommand('fontname', false, 'Helvetica');
+      document.execCommand('fontsize', false, 5);
     };
 
     this.showToolbar = function() {
@@ -64,6 +68,12 @@
       if (selection.focusNode === null) {
         $toolbar.hide();
       }
+    };
+    
+    this.showColorpicker = function () {
+      app.theWall.showColorpicker($(this), function (color) {
+        document.execCommand('foreColor', false, color);
+      });
     };
 
     this.moveMessage = function(e, ui) {

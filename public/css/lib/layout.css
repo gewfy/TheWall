@@ -99,6 +99,12 @@ body {
     opacity: 0;
   }
   
+  .toolbar .row {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
   .message.focus > .toolbox, .message:hover > .toolbox {
     opacity: 1;
   }

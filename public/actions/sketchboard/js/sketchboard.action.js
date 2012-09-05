@@ -12,6 +12,7 @@
 
       $context  = $editContext;
       callback  = publishCallback;
+      app.theWall = new theWall;
 
       if (!$sketchboard) {
         $sketchboard = $('#tpl-action-sketchboard').tmpl().appendTo('body');
@@ -64,85 +65,10 @@
     };
     
     this.showColorpicker = function () {
-      var $colorpicker = $sketchboard.find('.toolbar.colorpicker'),
-          $button = $(this),
-          posLeft = $button.offset().left,
-          posTop  = $button.offset().top;
-      
-      if ($colorpicker.length < 1) {
-        $sketchboard.find('.popover:visible').hide();
-        $colorpicker = $('#tpl-action-sketchboard-colorpicker').tmpl().hide().appendTo($sketchboard);
-        $colorpicker.css({top: posTop - ($colorpicker.height() / 2), left: posLeft + 48}).show();
-        
-        self.colorpicker($button);
-      } else {
-        $sketchboard.find('.popover:visible').hide();
-        $colorpicker.show();
-      }
-    };
-    
-    this.componentToHex = function (c) {
-      var hex = c.toString(16);
-      return hex.length == 1 ? "0" + hex : hex;
-    };
-    
-    this.rgbToHex = function (r, g, b) {
-      return "#" + self.componentToHex(r) + self.componentToHex(g) + self.componentToHex(b);
-    };
-    
-    this.colorpicker = function ($button) {
-      var colorpicker = $('#colorpicker').get(0),
-          context     = colorpicker.getContext('2d'),
-          image       = new Image(),
-          imageData,
-          color,
-          colorTimeout,
-          mousePressed = false;
-          
-      colorpicker.style.cursor = 'crosshair';
-          
-      image.onload = function() {
-        context.drawImage(image, 0, 0);
-      };
-      
-      image.src = '/actions/sketchboard/css/gfx/colorpicker.png';
-      
-      $(colorpicker).on('mousedown', function (e) {
-        clearTimeout(colorTimeout);
-        
-        var x = e.pageX - $(this).offset().left,
-            y = e.pageY - $(this).offset().top;
-            
-        imageData = context.getImageData(x, y, 1, 1).data;
-        color = self.rgbToHex(imageData[0], imageData[1], imageData[2]);
-        
-        $button.children('span').css('background-color', color);
-        
-        mousePressed = true;
+      app.theWall.showColorpicker($(this), function (color) {
+        $sketchboard.attr('data-color', color).trigger('colorchanged');
       });
-      
-      $(colorpicker).on('mousemove', function (e) {
-        if (!mousePressed) return;
-        
-        clearTimeout(colorTimeout);
-        
-        var x = e.pageX - $(this).offset().left,
-            y = e.pageY - $(this).offset().top;
-            
-        imageData = context.getImageData(x, y, 1, 1).data;
-        color = self.rgbToHex(imageData[0], imageData[1], imageData[2]);
-        
-        $button.children('span').css('background-color', color);
-      });
-      
-      $(colorpicker).on('mouseup', function (e) {
-        colorTimeout = setTimeout(function () {
-          $sketchboard.attr('data-color', color).trigger('colorchanged');
-        }, 300);
-        
-        mousePressed = false;
-      });
-    }
+    };
     
     this.hidePopover = function () {
       $(this).closest('.popover').hide();

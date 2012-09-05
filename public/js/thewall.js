@@ -133,6 +133,93 @@
         action: action
       });
     };
+    
+    /* Colorpicker – Maybe make it an action? */
+    this.componentToHex = function (c) {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    };
+    
+    this.rgbToHex = function (r, g, b) {
+      return "#" + self.componentToHex(r) + self.componentToHex(g) + self.componentToHex(b);
+    };
+    
+    this.colorpicker = function ($button, callback) {
+      var colorpicker = $('#colorpicker').get(0),
+          context     = colorpicker.getContext('2d'),
+          image       = new Image(),
+          imageData,
+          color,
+          colorTimeout,
+          mousePressed = false;
+          
+      colorpicker.style.cursor = 'crosshair';
+          
+      image.onload = function() {
+        context.drawImage(image, 0, 0);
+      };
+      
+      image.src = '/actions/sketchboard/css/gfx/colorpicker.png';
+      
+      $(colorpicker).on('mousedown', function (e) {
+        clearTimeout(colorTimeout);
+        
+        var x = e.pageX - $(this).offset().left,
+            y = e.pageY - $(this).offset().top;
+            
+        imageData = context.getImageData(x, y, 1, 1).data;
+        color = self.rgbToHex(imageData[0], imageData[1], imageData[2]);
+        
+        $button.children('span').css('background-color', color);
+        
+        mousePressed = true;
+      });
+      
+      $(colorpicker).on('mousemove', function (e) {
+        if (!mousePressed) return;
+        
+        clearTimeout(colorTimeout);
+        
+        var x = e.pageX - $(this).offset().left,
+            y = e.pageY - $(this).offset().top;
+            
+        imageData = context.getImageData(x, y, 1, 1).data;
+        color = self.rgbToHex(imageData[0], imageData[1], imageData[2]);
+        
+        $button.children('span').css('background-color', color);
+      });
+      
+      $(colorpicker).on('mouseup', function (e) {
+        colorTimeout = setTimeout(function () {
+          if (typeof(callback) === 'function') callback(color);
+        }, 300);
+        
+        mousePressed = false;
+      });
+    };
+    
+    this.showColorpicker = function ($button, callback) {
+      var $colorpicker = $('body').find('.toolbar.colorpicker'),
+          posLeft = $button.offset().left,
+          posTop  = $button.offset().top;
+      
+      if ($colorpicker.length < 1) {
+        //$sketchboard.find('.popover:visible').hide();
+        $colorpicker = $('#tpl-action-colorpicker').tmpl().hide().appendTo($('body'));
+        $colorpicker.css({top: posTop - ($colorpicker.height() / 2), left: posLeft + 48}).show();
+        
+        self.colorpicker($button, callback);
+      } else {
+        //$sketchboard.find('.popover:visible').hide();
+        $colorpicker.css({top: posTop - ($colorpicker.height() / 2), left: posLeft + 48}).show();
+        $colorpicker.show();
+      }
+      
+      $colorpicker.on('click', '.close', function (e) {
+        e.preventDefault();
+        $colorpicker.remove();
+      });
+    };
 
     this.initAction = function(action, x, y, source) {
       action = new action;
