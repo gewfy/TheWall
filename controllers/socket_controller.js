@@ -1,13 +1,13 @@
 module.exports = function(socket) {
   var self      = this,
 
-    fs        = require('fs'),
-    jqtpl     = require('jqtpl'),
+      fs        = require('fs'),
+      jqtpl     = require('jqtpl'),
 
-    clients   = require('../models/clients'),
-    messages  = require('../models/messages'),
+      clients   = require('../models/clients'),
+      messages  = require('../models/messages'),
 
-    clientId;
+      clientId;
 
   this.disconnect = function() {
     if (clientId) {
