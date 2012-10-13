@@ -28,12 +28,21 @@ module.exports = (function() {
     };
 
     this.addMessage = function(message, meta) {
+      message = message || '';
+      meta    = meta || {};
+
       var nextId = messages.push({
           message:  message,
           meta:     meta
       });
 
       return nextId - 1;
+    };
+
+    this.setMessageMeta = function(messageId, key, value) {
+      if (messages.hasOwnProperty(messageId)) {
+        messages[messageId].meta[key] = value;
+      }
     };
 
     this.removeMessage = function(messageId) {

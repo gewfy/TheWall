@@ -20,7 +20,8 @@ module.exports = function() {
       },
       messages:         messages.getMessages(),
       clients:          clients.getClientsWithMeta('name'),
-      includeTemplate:  includeTemplate
+      includeTemplate:  includeTemplate,
+      config:           app.config
     });
   };
 
@@ -31,7 +32,8 @@ module.exports = function() {
     if (message) {
       if ((id - 0) == id && id.length > 0) {
         res.render('message', {
-          message: message
+          message:  message,
+          config:   app.config
         });
       }
     }

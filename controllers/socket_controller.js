@@ -18,12 +18,15 @@ module.exports = function(socket) {
 
   this.receiveMessage = function(message) {
     if (clientId) {
-      var meta = clients.getClientMeta(clientId),
-          id = messages.addMessage(message, {
+      var meta  = clients.getClientMeta(clientId),
+          id    = messages.addMessage(message, {
             clientId: clientId,
             name:     meta.name,
             hash:     meta.hash
-          });
+          }),
+          base  = app.config.domainSecurity ? 'http://message' + id + '.' + app.config.base : '';
+
+      messages.setMessageMeta(id, 'base', base);
 
       self.publishMessage(id);
     }
@@ -35,8 +38,7 @@ module.exports = function(socket) {
 
     self.broadcast('messages', {
       id:     id,
-      name:   meta.name,
-      hash:   meta.hash,
+      meta:   meta,
       count:  count
     });
   };

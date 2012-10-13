@@ -18,9 +18,7 @@
       <li>
         <a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a>
         <ul id="layers">
-          {{each(i) messages}}
-            {{partial((messages[i].meta)) "layer"}}
-          {{/each}}
+          {{partial(messages) "layer"}}
         </ul>
       </li>
       <li>
@@ -36,7 +34,7 @@
   
   <div id="messages">
     {{each(i) messages}}
-      {{partial({id: i}) "iframe"}}
+      {{partial({id: i, meta: messages[i].meta}) "iframe"}}
     {{/each}}
   </div>
   
@@ -73,6 +71,10 @@
       client:   {
         name:     '${client.name}',
         email:    '${client.email}'
+      },
+      config:   {
+        messageBase:    '${config.messageBase}',
+        maxMessages:    ${config.maxMessages}
       }
     };
   </script>
