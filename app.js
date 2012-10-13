@@ -5,6 +5,9 @@ var config      = require('./config'),
     socketIO    = require('socket.io'),
     jqtpl       = require('jqtpl');
 
+/* Config */
+app.config = config;
+
 /* Express app */
 app.express = express.createServer();
 
@@ -54,6 +57,6 @@ require('./bootstrap');
 
 // Only listen on $ node app.js
 if (!module.parent) {
-  app.express.listen(config.port);
+  app.express.listen(app.config.port);
   console.log("Express server listening on port %d", app.express.address().port);
 }

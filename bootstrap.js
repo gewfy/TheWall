@@ -6,7 +6,7 @@ var expressController = require('./controllers/express_controller'),
   var controller = new expressController;
 
   app.express.get('/',        controller.index);
-  app.express.get('/message', expressController.message);
+  app.express.get('/message', controller.message);
   app.express.get('/source',  controller.source);
   app.express.get('/edit',    controller.edit);
 })();
