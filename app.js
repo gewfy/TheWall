@@ -1,6 +1,8 @@
 app = {};
 
-var express     = require('express'),
+var config      = require('./config'),
+    express     = require('express'),
+    socketIO    = require('socket.io'),
     jqtpl       = require('jqtpl');
 
 /* Express app */
@@ -11,7 +13,7 @@ app.express.configure(function(){
   app.express.set('views', __dirname + '/views');
   app.express.set('view engine', 'html');
   app.express.set('view options', { layout: false });
-  app.express.register(".html", jqtpl.express);
+  app.express.register('.html', jqtpl.express);
   app.express.use(express.bodyParser());
   app.express.use(express.methodOverride());
   app.express.use(express.cookieParser());
@@ -34,11 +36,24 @@ app.express.configure('production', function(){
   app.express.use(express.errorHandler());
 });
 
+/* Socket.IO app */
+app.io = socketIO.listen(app.express);
+
+app.io.configure('development', function(){
+});
+
+app.io.configure('production', function(){
+  app.io.enable('browser client minification');  // send minified client
+  app.io.enable('browser client etag');          // apply etag caching logic based on version number
+  app.io.enable('browser client gzip');          // gzip the file
+  app.io.set('log level', 1);                    // reduce logging
+});
+
 /* Bootstrap */
 require('./bootstrap');
 
 // Only listen on $ node app.js
 if (!module.parent) {
-  app.express.listen(8000);
+  app.express.listen(config.port);
   console.log("Express server listening on port %d", app.express.address().port);
 }

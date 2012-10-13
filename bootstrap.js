@@ -1,25 +1,21 @@
-/* EXPRESS */
+var expressController = require('./controllers/express_controller'),
+    socketController  = require('./controllers/socket_controller');
 
-var expressController = require('./controllers/express_controller');
+/* Express routes */
+(function() {
+  var controller = new expressController;
 
-/* Set up routes */
-app.express.get('/',        expressController.index);
-app.express.get('/message', expressController.message);
-app.express.get('/source',  expressController.source);
-app.express.get('/edit',    expressController.edit);
+  app.express.get('/',        controller.index);
+  app.express.get('/message', expressController.message);
+  app.express.get('/source',  controller.source);
+  app.express.get('/edit',    controller.edit);
+})();
 
-/* SOCKET IO */
-var SocketController = require('./controllers/socket_controller');
-app.io = require('socket.io').listen(app.express);
-
+/* IO routes */
 app.io.sockets.on('connection', function (socket) {
-  var controller = new SocketController(socket);
+  var controller = new socketController(socket);
 
   socket.on('message',      controller.receiveMessage);
   socket.on('client',       controller.receiveClient);
   socket.on('disconnect',   controller.disconnect);
 });
-
-/* Set up purge interval */
-/*
-setInterval(socketController.purgeClients, 9000);*/
