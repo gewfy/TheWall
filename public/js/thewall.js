@@ -19,7 +19,9 @@
 
           'editIframe':   $('#edit'),
 
-          'messages':     $('#messages')
+          'messages':     $('#messages'),
+
+          'layers':       $('#layers')
         },
 
         editIframe      = $elements.editIframe.get(0),
@@ -33,10 +35,12 @@
     };
 
     this.receiveMessages = function(messages) {
-      $templates.iframe.tmpl(messages).appendTo('#messages');
-      $templates.layer.tmpl(messages).appendTo('#layers');
+      $templates.iframe.tmpl(messages).appendTo($elements.messages);
+      $templates.layer.tmpl(messages).appendTo($elements.layers);
 
       $elements.messageCount.text(messages.count);
+
+      self.hideOldMessages();
     };
 
     this.receiveClients = function(clients) {
@@ -51,6 +55,14 @@
       }
 
       $elements.clientCount.text(clients.length);
+    };
+
+    this.hideOldMessages = function() {
+      var $messages = $elements.messages.find('.message'),
+          count     = $messages.length,
+          max       = app.config.maxMessages;
+
+      $messages.eq(count - max).prevAll().addClass('inactive');
     };
 
     this.publishClient = function(data) {
@@ -262,13 +274,13 @@
     };
 
     this.focusLayer = function(index) {
-      var $iframes = $elements.messages.find('iframe');
+      var $iframes = $elements.messages.find('.message');
       $iframes.hide();
       $iframes.eq(index).show();
     };
 
     this.unfocusLayers = function() {
-      $elements.messages.find('iframe').show();
+      $elements.messages.find('.message').css('display', '');
     };
 
     this.loadSource = function(index) {

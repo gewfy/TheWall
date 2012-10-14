@@ -12,5 +12,5 @@ module.exports = {
   domainSecurity: false,
 
   /* Amount of simultaneous messages in the clients */
-  maxMessages:    2
+  maxMessages:    20
 };

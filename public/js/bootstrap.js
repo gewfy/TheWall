@@ -63,4 +63,7 @@ jQuery(function($) {
 
   /* File drop actions */
   app.theWall.addFileDropAction('image', imageAction);
+
+  /* Hide old messages */
+  app.theWall.hideOldMessages();
 });
