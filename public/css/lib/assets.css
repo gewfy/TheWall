@@ -11,10 +11,11 @@
   width: 100%; 
   text-align: center; 
   -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 5px;
   background: #dddad1 url(/css/gfx/bg.png) repeat;
-  min-height: 38px;
+  min-height: 30px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.05);
   position: relative;
@@ -120,7 +121,8 @@
     margin-top: 10px;
   }
   
-  .toolbar.popover > div:first-child {
+  .toolbar.popover > div:first-child,
+  .toolbar.popover > div:only-child {
     margin-top: 0;
   }
   
@@ -166,10 +168,17 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
   text-decoration: none;
   cursor: pointer;
+  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
   vertical-align: top;
+  height: 30px;
+}
+
+.action::-moz-focus-inner {
+  padding: 0;
+  border: 0;
 }
 
 .action:hover, .action:focus { background-color: #1e909e; }
@@ -219,7 +228,7 @@
   .action.colorpicker > span {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 24px;
     background: #000;
   }
 
@@ -614,21 +623,37 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
   font-weight: bold;
   display: inline-block;
   position: absolute;
-  top: 0;
-  right: 15px;
-  line-height: 30px;
+  top: 1px;
+  right: 0;
+  padding-right: 15px;
+  line-height: 29px;
+  background: #a19f98 url(/css/gfx/bg.png) repeat;
 }
+
+.action.select:hover:after { background-color: #1e909e; }
 
   .select > select {
     background: transparent;
     -webkit-appearance: none;
-    -moz-appearance: normal;
     color: #fff;
     border: none;
     font-weight: bold;
     margin: 0;
-    padding: 0 40px 0 15px;
+    padding: 8px 30px 0 15px;
     height: 30px;
+    display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 120%;
+    outline: none;
+    position: relative;
+  }
+  
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+  	.select > select {
+  		padding: 0 40px 0 15px;
+  	}
   }
   
 /*
@@ -649,6 +674,10 @@ input.input {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
   font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
   position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 30px;
 }
 
 input.input.success {
