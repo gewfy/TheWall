@@ -4,39 +4,44 @@
   <div class="message text" contenteditable="true"><p>&nbsp;</p></div>
 </script>
 
+<script type="text/x-jquery-tmpl" id="tpl-action-text-move">
+	<button class="action move"><i class="icon-move"></i></button>
+</script>
+
 <script type="text/x-jquery-tmpl" id="tpl-action-text-toolbar">
-  <div class="text toolbar dynamic rounded arrow">    
-    <div class="row">
-      <button class="action font-style" rel="bold"><strong>B</strong></button>
-      <button class="action font-style" rel="italic"><em>I</em></button>
-      <button class="action font-style" rel="underline"><ins>U</ins></button>
-      <button class="action colorpicker"><span></span></button>
-      <a class="action move"><i class="icon-move"></i></a>
+  <div class="text toolbar vertical rounded">    
+    <button class="action font-style" rel="bold"><strong>B</strong></button>
+    <button class="action font-style" rel="italic"><em>I</em></button>
+    <button class="action font-style" rel="underline"><ins>U</ins></button>
+    <button class="action colorpicker"><span></span></button>
+    <button class="action font-settings"><i class="icon-font icon-large"></i></button>
+
+    <button class="action positive publish left"><i class="icon-ok icon-large"></i></button>
+    <button class="action negative cancel right"><i class="icon-remove icon-large"></i></button>
+  </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tpl-action-text-popover">
+  <div class="toolbar rounded popover fontSettings arrow-left">
+    <div class="action select">
+      <select class="font-face">
+        <option>Satisfy</option>
+        <option>Designosaur</option>
+        <option>Journal</option>
+        <option>Salsa</option>
+        <option>Ubuntu Mono</option>
+        <option>Arial</option>
+        <option selected="selected">Helvetica</option>
+      </select>
     </div>
-    
-    <div class="row">
-      <div class="action select">
-        <select class="font-face">
-          <option>Satisfy</option>
-          <option>Designosaur</option>
-          <option>Journal</option>
-          <option>Salsa</option>
-          <option>Ubuntu Mono</option>
-          <option>Arial</option>
-          <option selected="selected">Helvetica</option>
-        </select>
-      </div>
-      <div class="action select">
-        <select class="font-size">
-          <option value="1">Tiny</option>
-          <option value="3">Small</option>
-          <option value="5" selected="selected">Medium</option>
-          <option value="7">Large</option>
-        </select>
-      </div>
+    <div class="action select">
+      <select class="font-size">
+        <option value="1">Tiny</option>
+        <option value="3">Small</option>
+        <option value="5" selected="selected">Medium</option>
+        <option value="7">Large</option>
+      </select>
     </div>
-    
-    <button class="action positive publish left"><i class="icon-ok icon-large"></i> Publish</button>
-    <button class="action negative cancel right"><i class="icon-remove icon-large"></i> Remove</button>
+    <button class="close"><i class="icon-remove"></i></button>
   </div>
 </script>

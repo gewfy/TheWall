@@ -134,7 +134,7 @@
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    background: #a19f98 url(/css/gfx/bg.png) repeat;
+    background: #E74C3C repeat;
     font-weight: bold;
     text-align: center;
     line-height: 20px;
@@ -142,7 +142,7 @@
     padding: 0;
   }
   
-  .toolbar.popover > .close:hover { background-color: #1e909e; }
+  .toolbar.popover > .close:hover { background-color: #C0392B; }
 
 /* Buttons
 ----------------------------------- */

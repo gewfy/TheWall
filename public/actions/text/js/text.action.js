@@ -37,12 +37,11 @@
         .on('click',  '.font-style',  self.changeFontStyle)
         .on('click',  '.publish',     self.publish)
         .on('click',  '.cancel',      self.cancel)
+        .on('click',  '.action.font-settings', self.showFontSettings)
         .on('click',  '.action.colorpicker', self.showColorpicker)
-        .appendTo('body')
-        .draggable({
-          handle: '.move',
-          drag:   self.moveMessage
-        });
+        .appendTo('body');
+        
+      $('body').on('click',  '.popover > .close', self.hidePopover);
 
       self.showToolbar();
       
@@ -56,10 +55,6 @@
           height  = $message.outerHeight();
 
       $toolbar
-        .css({
-          left: pos.left + width,
-          top:  pos.top + height
-        })
         .show();
     };
 
@@ -74,6 +69,27 @@
       app.theWall.showColorpicker($(this), function (color) {
         document.execCommand('foreColor', false, color);
       });
+    };
+    
+    this.showFontSettings = function () {
+      var $popover = $toolbar.find('.toolbar.fontSettings'),
+          $button = $(this),
+          posLeft = $button.offset().left,
+          posTop  = $button.offset().top;
+      
+      if ($popover.length < 1) {
+        $('body').find('.popover:visible').hide();
+        $popover = $('#tpl-action-text-popover').tmpl().hide().appendTo($('body'));
+        $popover.css({top: posTop - ($popover.height() / 2), left: posLeft + 48}).show();
+        
+      } else {
+        $('body').find('.popover:visible').hide();
+        $popover.show();
+      }
+    };
+    
+    this.hidePopover = function () {
+      $(this).closest('.popover').hide();
     };
 
     this.moveMessage = function(e, ui) {
