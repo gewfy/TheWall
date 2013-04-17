@@ -13,11 +13,9 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 5px;
-  background: #dddad1 url(/css/gfx/bg.png) repeat;
+  padding: 20px;
+  background: #ECF0F1;
   min-height: 30px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
   position: relative;
   clear: both;
   margin-top: 10px;
@@ -83,7 +81,7 @@
 	height: 0;
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
-	border-bottom: 8px solid #dddad1;
+	border-bottom: 8px solid #ECF0F1;
 	content: "";
 	position: absolute;
 	top: -8px;
@@ -96,7 +94,7 @@
   width: 0;
   height: 0;
 	border-top: 8px solid transparent;
-	border-right: 8px solid #dddad1;
+	border-right: 8px solid #ECF0F1;
 	border-bottom: 8px solid transparent;
 	left: -16px;
 	top: 50%;
@@ -162,10 +160,9 @@
   color: #fff !important; 
   padding: 0 15px; 
   border-radius: 3px; 
-  background: #a19f98 url(/css/gfx/bg.png) repeat;
-  font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; 
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #3498DB;
+  border: none;
+  font: bold 12px/28px Lato, Helvetica, Arial;
   text-decoration: none;
   cursor: pointer;
   -webkit-box-sizing: border-box;
@@ -181,9 +178,7 @@
   border: 0;
 }
 
-.action:hover, .action:focus { background-color: #1e909e; }
-
-.action:active { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2); }
+.action:hover, .action:focus { background-color: #2980B9; }
 
 /*
  The action button is by default the normal gray.
@@ -191,18 +186,18 @@
  
     <button class="action positive">Publish</button> */
 
-.action.positive { background-color: #8dae1b; }
+.action.positive { background-color: #2ECC71; }
 
-.action.positive:hover, .action.positive:focus { background-color: #708b15; }
+.action.positive:hover, .action.positive:focus { background-color: #27AE60; }
 
 /*
  The class "negative" makes a action button red.
  
     <button class="action negative">Cancel</button> */
 
-.action.negative { background-color: #ae1b1b; }
+.action.negative { background-color: #E74C3C; }
 
-.action.negative:hover, .action.negative:focus { background-color: #861515; }
+.action.negative:hover, .action.negative:focus { background-color: #C0392B; }
 
 /*
  You can simple float a action button to the left with the class "left"
@@ -220,7 +215,7 @@
 
 /* Specific styling for showing a colorpicker */
 .action.colorpicker {
-  padding: 2px !important;
+  padding: 4px !important;
   height: 30px;
   width: 30px;
 }
@@ -228,7 +223,7 @@
   .action.colorpicker > span {
     display: block;
     width: 100%;
-    height: 24px;
+    height: 22px;
     background: #000;
   }
 
@@ -627,10 +622,10 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
   right: 0;
   padding-right: 15px;
   line-height: 29px;
-  background: #a19f98 url(/css/gfx/bg.png) repeat;
+  background: #3498DB repeat;
 }
 
-.action.select:hover:after { background-color: #1e909e; }
+.action.select:hover:after { background-color: #2980B9; }
 
   .select > select {
     background: transparent;

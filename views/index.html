@@ -17,15 +17,19 @@
     <ul>
       <li>
         <a href="#">Layers(<span id="text-messageCount">${messages.length}</span>)</a>
-        <ul id="layers">
-          {{partial(messages) "layer"}}
-        </ul>
+        <div>
+	        <ul id="layers">
+	          {{partial(messages) "layer"}}
+	        </ul>
+        </div>
       </li>
       <li>
         <a href="#">Online(<span id="text-clientCount">${clients.length}</span>)</a>
-        <ul id="clients">
-          {{partial(clients) "client"}}
-        </ul>
+        <div>
+	        <ul id="clients">
+	          {{partial(clients) "client"}}
+	        </ul>
+	       </div>
       </li>
     </ul>
   </nav>

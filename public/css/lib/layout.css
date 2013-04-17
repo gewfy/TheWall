@@ -4,7 +4,7 @@ html {
 }
 
 body { 
-  background: #faf7ee url(../gfx/bg.png) repeat; 
+  background: #fff; 
   width: 100%; 
   height: 100%; 
 }
@@ -170,21 +170,138 @@ body {
   #splash .gravatar-use { position: absolute; right: -190px; top: -138px; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); height: 130px; width: 200px; color: #fff; text-align: right; background: url(/css/gfx/arrow.png) left bottom no-repeat; font: bold 30px "Journal", "Helvetica Neue", Helvetica, arial, sans-serif;  }
   #splash .gravatar-use > span { -webkit-transform: rotate(14deg); display: block; }
 
-body > .publish-all { display: none; -webkit-transition: opacity .3s; position: absolute; left: 20px; top: 0; z-index: 100; font: 16px Satisfy; text-shadow: 0 0 10px white }
-  body > .publish-all > a { display: block; float: left; margin-right: 5px; color: #fff; text-decoration: none; display: block; height: 100%; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; background: #25acbc url(/css/gfx/bg.png) repeat; padding: 0 10px; border-radius: 0 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+body > .publish-all { display: none; -webkit-transition: opacity .3s; position: absolute; left: 20px; top: 0; z-index: 100; font: 16px Satisfy; }
+  body > .publish-all > a {
+  		color: #fff; 
+  		text-decoration: none; 
+  		display: inline-block; 
+  		height: 35px;
+  		background: #3498DB;
+  		font: bold 12px/33px Lato, Helvetica, Arial;
+  		padding: 0 20px; 
+  		border-radius: 0 0 3px 3px;
+  		-webkit-transition: background .3s;
+  		-moz-transition: background .3s;
+  		-ms-transition: background .3s;
+  		transition: background .3s;
+  }
   
-body > nav { position: absolute; right: 20px; top: 0; z-index: 100; }
-  body > nav > ul { list-style: none; margin: 0; padding: 0; }
-    body > nav > ul > li { display: block; float: left; position: relative; height: 25px; margin-left: 5px; }
-      body > nav > ul > li > a { color: #fff; text-decoration: none; display: block; height: 100%; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; background: #25acbc url(/css/gfx/bg.png) repeat; padding: 0 10px; border-radius: 0 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
-      body > nav > ul > li:hover > a { padding-bottom: 10px; }
-      body > nav > ul > li > ul { display: none; position: absolute; top: 30px; right: 0; margin: 0; list-style: none; width: 200px; background: #25ACBC url(/css/gfx/bg.png) repeat; padding: 5px; border-radius: 3px 0 3px 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
-      body > nav > ul > li:hover > ul { display: block; }
-        body > nav > ul > li:hover > ul > li { overflow: hidden; padding-top: 5px; margin-top: 5px; border-top: 1px solid rgba(255, 255, 255, 0.4); color: #fff; font: bold 12px/25px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial; }
-        body > nav > ul > li:hover > ul > li:first-child { margin-top: 0; padding-top: 0; border: none; }
-          body > nav > ul > li:hover > ul > li > img { float: left; margin-right: 5px; }
-          body > nav > ul > li:hover > ul > li > a { float: right; font-weight: normal; color: white; }
-          body > nav > ul > li:hover > ul > li > a:hover { text-decoration: none; }
+body > nav { 
+	position: absolute; 
+	right: 20px; 
+	top: 0; 
+	z-index: 100;
+}
+
+  body > nav > ul { 
+  	list-style: none; 
+  	margin: 0; 
+  	padding: 0; 
+  }
+    
+    body > nav > ul > li { 
+    	display: block; 
+    	float: left; 
+    	position: relative; 
+    	height: 35px; 
+    	margin-left: 5px; 
+    }
+    
+    body > nav > ul > li:hover {
+    	height: 55px;
+    }
+    
+      body > nav > ul > li > a { 
+      	color: #fff; 
+      	text-decoration: none; 
+      	display: block; 
+      	height: 35px;
+      	background: #3498DB;
+      	font: bold 12px/33px Lato, Helvetica, Arial;
+      	padding: 0 20px; 
+      	border-radius: 0 0 3px 3px;
+      	-webkit-transition: background .3s;
+      	-moz-transition: background .3s;
+      	-ms-transition: background .3s;
+      	transition: background .3s;
+      }
+      
+      body > nav > ul > li:hover > a {
+      	background-color: #34495e;
+      }
+      
+      body > nav > ul > li > div { 
+      	opacity: 0;
+      	visibility: hidden;
+      	margin-top: -10px;
+      	position: absolute; 
+      	top: 45px; 
+      	right: 0;
+      	width: 200px;
+      	background-color: #34495e;
+      	border-radius: 5px;
+      	margin: 0;
+      	max-height: 244px;
+      	padding: 20px;
+      	-webkit-transition: opacity .3s, margin-top .3s;
+      	-moz-transition: opacity .3s, margin-top .3s;
+      	-ms-transition: opacity .3s, margin-top .3s;
+      	transition: opacity .3s, margin-top .3s;
+      	color: #fff;
+      }
+      
+      body > nav > ul > li > div::before {
+      	content: "";
+      	border-style: solid;
+      	border-width: 0 9px 9px 9px;
+      	border-color: transparent transparent #34495e transparent;
+      	height: 0px;
+      	position: absolute;
+      	right: 10px;
+      	top: -8px;
+      	width: 0px;
+      	-webkit-transform: rotate(360deg);
+      	-moz-transform: rotate(360deg);
+      	-ms-transform: rotate(360deg);
+      	transform: rotate(360deg);
+      }
+      
+      body > nav > ul > li:hover > div { 
+      	visibility: visible;
+      	opacity: 1;
+      	margin-top: 10px;
+      }
+      
+      	body > nav > ul > li > div > ul {
+      		list-style: none;
+      		margin: 0;
+      		padding: 0;
+      	}
+      	
+      		body > nav > ul > li > div > ul > li {
+      			line-height: 29px;
+      			overflow: hidden;
+      			margin-top: 10px;
+      			padding-top: 10px;
+      			border-top: 1px solid #fff;
+      		}
+      		
+      		body > nav > ul > li > div > ul > li:first-child {
+      			margin-top: 0;
+      			padding-top: 0;
+      			border: none;
+      		}
+      		
+      			body > nav > ul > li > div > ul > li > img {
+      				float: left;
+      				border: 2px solid #fff;
+      				margin-right: 10px;
+      			}
+      			
+      			body > nav > ul > li > div > ul > li > a {
+      				color: #fff;
+      				text-decoration: underline;
+      			}
 
 .ui-draggable {
   cursor: move;
