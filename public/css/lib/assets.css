@@ -54,7 +54,7 @@
     </div>*/
     
 .toolbar.vertical {
-  width: 42px;
+  width: 70px;
 }
 
   .toolbar.vertical > .action {
@@ -109,7 +109,7 @@
     <div class="toolbar popover arrow-left"></div>*/
     
 .toolbar.popover {
-  width: 200px;
+  width: 228px;
   position: absolute;
   z-index: 10 !important;
 }
@@ -662,12 +662,11 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 input.input {
   width: 130px;
   padding: 0 10px !important;
-  border: 1px solid #A19F98;
+  border: none;
   border-radius: 3px;
   color: #fff;
-  background: #A19F98 url(/css/gfx/bg.png) repeat;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-  font: bold 12px/28px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+  background: #A19F98 repeat;
+  font: bold 12px/28px Lato, Helvetica, Arial;
   position: relative;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;

@@ -101,7 +101,7 @@
           .addClass('show')
           .html('Show');
 
-        $editor.animate({height: '38px'});
+        $editor.animate({height: '70px'});
       };
 
       this.closeEditor = function() {
